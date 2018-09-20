@@ -12,16 +12,16 @@ import UIKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
     var window: UIWindow?
-    private var previousState: UIApplication.State?
+    private var previousState: UIApplicationState?
     
     func application(_ application: UIApplication,
-                     willFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil) -> Bool {
+                     willFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]? = nil) -> Bool {
         let stateInfo = getStateInfo()
         print(stateInfo + "\(#function)")
         return true
     }
     
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         let stateInfo = getStateInfo()
         print(stateInfo + "\(#function)")
         // Override point for customization after application launch.
@@ -68,7 +68,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return "Application moved from \(previousStateString) to \(currentStateString): "
     }
     
-    private func getState(for currentState: UIApplication.State?) -> String {
+    private func getState(for currentState: UIApplicationState?) -> String {
         switch currentState?.rawValue {
         case 0:
             return "active"
