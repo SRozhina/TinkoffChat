@@ -12,9 +12,10 @@ import UIKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
     var window: UIWindow?
-    private var previousState: UIApplication.State? = nil
+    private var previousState: UIApplication.State?
     
-    func application(_ application: UIApplication, willFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
+    func application(_ application: UIApplication,
+                     willFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil) -> Bool {
         let stateInfo = getStateInfo()
         print(stateInfo + "\(#function)")
         return true
@@ -80,4 +81,3 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
     }
 }
-
