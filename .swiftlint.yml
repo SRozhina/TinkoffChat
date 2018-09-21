@@ -1,0 +1,51 @@
+warning_threshold: 15
+
+excluded:
+ - Pods
+
+opt_in_rules:
+- private_outlet
+- private_action
+- attributes
+- closure_spacing
+- multiline_arguments
+- multiline_function_chains
+- operator_usage_whitespace
+- single_test_class
+- vertical_parameter_alignment
+- vertical_parameter_alignment_on_call    
+
+disabled_rules:
+ - trailing_whitespace
+ - force_cast
+ - identifier_name
+ - switch_case_alignment
+
+line_length:
+  warning: 150
+  error: 250
+  ignores_urls: true
+  ignores_comments: true
+
+function_parameter_count:
+  warning: 7
+  error: 10
+
+file_length:
+  warning: 500
+  ignore_comment_only_lines: true
+
+type_body_length:
+  warning: 400
+  error: 450
+
+function_body_length:
+  warning: 60
+  error: 200
+
+attributes:
+  always_on_same_line: ["@IBAction", "@IBOutlet"]
+  always_on_line_above: ["@available", "@convention", "@discardableResult", "@dynamicMemberLookup", "@objcMembers", "@IBDesignable", "@IBInspectable", "@objc", "@NSCopying", "@NSManaged", "@inlinable", "@nonobjc", "@usableFromInline"]
+
+multiline_arguments:
+  first_argument_location: next_line
