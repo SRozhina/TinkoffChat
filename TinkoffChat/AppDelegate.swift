@@ -62,22 +62,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     private func getStateInfo() -> String {
         let currentState = UIApplication.shared.applicationState
-        let currentStateString = getState(for: currentState)
-        let previousStateString = getState(for: previousState)
+        let currentStateString = currentState.toString
+        let previousStateString = previousState?.toString ?? "not running"
         previousState = currentState
         return "Application moved from \(previousStateString) to \(currentStateString): "
-    }
-    
-    private func getState(for currentState: UIApplicationState?) -> String {
-        switch currentState?.rawValue {
-        case 0:
-            return "active"
-        case 1:
-            return "inactive"
-        case 2:
-            return "background"
-        default:
-            return "not running"
-        }
     }
 }
