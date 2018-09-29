@@ -28,7 +28,7 @@ class ProfileViewController: UIViewController, UINavigationControllerDelegate {
         super.viewDidLoad()
         
         setupUIElements()
-        setupPrifileData()
+        setupProfileData()
         print("Edit button frame in viewDidLoad \(editButton.frame)")
     }
     
@@ -46,7 +46,7 @@ class ProfileViewController: UIViewController, UINavigationControllerDelegate {
         editButton.layer.borderWidth = 1
     }
     
-    private func setupPrifileData {
+    private func setupProfileData() {
         if let image = getAvatar() {
             avatarImageView.image = image
         }
