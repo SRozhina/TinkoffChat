@@ -10,7 +10,7 @@
 		25A589ED8B085F1A3DB9498A /* Pods_TinkoffChat.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 542C4CD015D0489F445068C4 /* Pods_TinkoffChat.framework */; };
 		C344392E2153A5F20056F34D /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = C344392D2153A5F20056F34D /* Podfile */; };
 		C35707AF2152E61E00244E5E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C35707AE2152E61E00244E5E /* AppDelegate.swift */; };
-		C35707B12152E61E00244E5E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C35707B02152E61E00244E5E /* ViewController.swift */; };
+		C35707B12152E61E00244E5E /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C35707B02152E61E00244E5E /* ProfileViewController.swift */; };
 		C35707B42152E61E00244E5E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C35707B22152E61E00244E5E /* Main.storyboard */; };
 		C35707B62152E62100244E5E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C35707B52152E62100244E5E /* Assets.xcassets */; };
 		C35707B92152E62100244E5E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C35707B72152E62100244E5E /* LaunchScreen.storyboard */; };
@@ -24,7 +24,7 @@
 		C344392D2153A5F20056F34D /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; };
 		C35707AB2152E61E00244E5E /* TinkoffChat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TinkoffChat.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C35707AE2152E61E00244E5E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		C35707B02152E61E00244E5E /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		C35707B02152E61E00244E5E /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		C35707B32152E61E00244E5E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		C35707B52152E62100244E5E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C35707B82152E62100244E5E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -85,7 +85,7 @@
 			children = (
 				C35707C02156ED8600244E5E /* Extensions */,
 				C35707AE2152E61E00244E5E /* AppDelegate.swift */,
-				C35707B02152E61E00244E5E /* ViewController.swift */,
+				C35707B02152E61E00244E5E /* ProfileViewController.swift */,
 				C35707B22152E61E00244E5E /* Main.storyboard */,
 				C35707B52152E62100244E5E /* Assets.xcassets */,
 				C35707B72152E62100244E5E /* LaunchScreen.storyboard */,
@@ -212,7 +212,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C35707C22156EDA700244E5E /* UIApplicationState.swift in Sources */,
-				C35707B12152E61E00244E5E /* ViewController.swift in Sources */,
+				C35707B12152E61E00244E5E /* ProfileViewController.swift in Sources */,
 				C35707AF2152E61E00244E5E /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -362,6 +362,7 @@
 			baseConfigurationReference = A1DF6E4940474C0A970C8446 /* Pods-TinkoffChat.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 7U8A899S5N;
 				INFOPLIST_FILE = TinkoffChat/Info.plist;
@@ -372,6 +373,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = ru.SofiaRozhina.TinkoffChat;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -382,6 +384,7 @@
 			baseConfigurationReference = 586B77D09CDBE0735567996D /* Pods-TinkoffChat.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 7U8A899S5N;
 				INFOPLIST_FILE = TinkoffChat/Info.plist;
@@ -392,6 +395,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = ru.SofiaRozhina.TinkoffChat;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
