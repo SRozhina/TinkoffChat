@@ -83,7 +83,7 @@ class ProfileViewController: UIViewController, UINavigationControllerDelegate {
         }
     }
     
-    private func showImagePickerController(with sourceType: UIImagePickerController.SourceType) {
+    private func showImagePickerController(with sourceType: UIImagePickerControllerSourceType) {
         let imagePickerController = UIImagePickerController()
         imagePickerController.delegate = self
         imagePickerController.sourceType = sourceType
@@ -119,7 +119,7 @@ class ProfileViewController: UIViewController, UINavigationControllerDelegate {
     
     private func showAlert(with title: String,
                            message: String?,
-                           style: UIAlertController.Style,
+                           style: UIAlertControllerStyle,
                            actions: [UIAlertAction]) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: style)
         for action in actions {

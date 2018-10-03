@@ -14,7 +14,6 @@
 		C35707B42152E61E00244E5E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C35707B22152E61E00244E5E /* Main.storyboard */; };
 		C35707B62152E62100244E5E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C35707B52152E62100244E5E /* Assets.xcassets */; };
 		C35707B92152E62100244E5E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C35707B72152E62100244E5E /* LaunchScreen.storyboard */; };
-		C35707C22156EDA700244E5E /* UIApplicationState.swift in Sources */ = {isa = PBXBuildFile; fileRef = C35707C12156EDA700244E5E /* UIApplicationState.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -29,7 +28,6 @@
 		C35707B52152E62100244E5E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C35707B82152E62100244E5E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		C35707BA2152E62100244E5E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		C35707C12156EDA700244E5E /* UIApplicationState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIApplicationState.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -83,7 +81,6 @@
 		C35707AD2152E61E00244E5E /* TinkoffChat */ = {
 			isa = PBXGroup;
 			children = (
-				C35707C02156ED8600244E5E /* Extensions */,
 				C35707AE2152E61E00244E5E /* AppDelegate.swift */,
 				C35707B02152E61E00244E5E /* ProfileViewController.swift */,
 				C35707B22152E61E00244E5E /* Main.storyboard */,
@@ -92,14 +89,6 @@
 				C35707BA2152E62100244E5E /* Info.plist */,
 			);
 			path = TinkoffChat;
-			sourceTree = "<group>";
-		};
-		C35707C02156ED8600244E5E /* Extensions */ = {
-			isa = PBXGroup;
-			children = (
-				C35707C12156EDA700244E5E /* UIApplicationState.swift */,
-			);
-			path = Extensions;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -211,7 +200,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C35707C22156EDA700244E5E /* UIApplicationState.swift in Sources */,
 				C35707B12152E61E00244E5E /* ProfileViewController.swift in Sources */,
 				C35707AF2152E61E00244E5E /* AppDelegate.swift in Sources */,
 			);
