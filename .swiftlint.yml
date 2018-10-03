@@ -46,6 +46,3 @@ function_body_length:
 attributes:
   always_on_same_line: ["@IBAction", "@IBOutlet"]
   always_on_line_above: ["@available", "@convention", "@discardableResult", "@dynamicMemberLookup", "@objcMembers", "@IBDesignable", "@IBInspectable", "@objc", "@NSCopying", "@NSManaged", "@inlinable", "@nonobjc", "@usableFromInline"]
-
-multiline_arguments:
-  first_argument_location: next_line
