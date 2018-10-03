@@ -100,7 +100,7 @@ class ProfileViewController: UIViewController, UINavigationControllerDelegate {
     }
     
     private func saveAvatar(_ image: UIImage) {
-        if let data = UIImagePNGRepresentation(image) {
+        if let data = UIImageJPEGRepresentation(image, 1) {
             let filePaht = getFilePath()
             try? data.write(to: filePaht)
         }
