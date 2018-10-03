@@ -11,16 +11,15 @@ import UIKit
 class ConversationsListViewController: UIViewController {
     @IBOutlet private weak var tableView: UITableView!
     private let conversationsListCellName = String(describing: ConversationsListCell.self)
-    private var onlineConversations: [Conversation] = []
-    private var historyConversations: [Conversation] = []
+    private var onlineConversations: [ConversationPreview] = []
+    private var historyConversations: [ConversationPreview] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         registerNibs()
         setupNavBar()
-        onlineConversations = ConversationsInMemoryStorage().getOnlineConversations()
-        historyConversations = ConversationsInMemoryStorage().getHistoryConversations()
+        setupData()
     }
     
     private func registerNibs() {
@@ -31,6 +30,11 @@ class ConversationsListViewController: UIViewController {
         let searchController = UISearchController(searchResultsController: self)
         navigationItem.searchController = searchController
         navigationItem.hidesSearchBarWhenScrolling = true
+    }
+    
+    private func setupData() {
+        onlineConversations = ConversationsInMemoryStorage().getOnlineConversations()
+        historyConversations = ConversationsInMemoryStorage().getHistoryConversations()
     }
     
     @IBAction private func profileButtonTapped(_ sender: UIBarButtonItem) {
@@ -60,7 +64,7 @@ extension ConversationsListViewController: UITableViewDataSource {
                                                        for: indexPath) as? ConversationsListCell else {
                                                         return UITableViewCell()
         }
-        let conversation: Conversation
+        let conversation: ConversationPreview
         switch indexPath.section {
         case 0:
             conversation = onlineConversations[indexPath.row]
@@ -78,5 +82,15 @@ extension ConversationsListViewController: UITableViewDataSource {
         default:
             return "History"
         }
+    }
+}
+
+// MARK: - UITableViewDelegate
+extension ConversationsListViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        let profileStoryboard = UIStoryboard(name: "", bundle: nil)
+        guard let profileViewController = profileStoryboard.instantiateInitialViewController() else { return }
+        navigationController?.pushViewController(profileViewController, animated: true)
     }
 }

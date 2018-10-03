@@ -17,7 +17,7 @@ class ConversationsListCell: UITableViewCell {
         super.awakeFromNib()
     }
     
-    internal func setup(with configuration: Conversation) {
+    internal func setup(with configuration: ConversationPreview) {
         nameLabel.text = configuration.name
         setupMessageWith(text: configuration.message, isUnread: configuration.hasUnreadMessages)
         dateLabel.text = formatDate(configuration.date)

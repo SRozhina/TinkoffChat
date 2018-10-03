@@ -15,7 +15,7 @@ protocol ConversationCellConfiguration: class {
     var hasUnreadMessages: Bool { get set }
 }
 
-class Conversation: ConversationCellConfiguration {
+class ConversationPreview: ConversationCellConfiguration {
     var name: String
     var message: String?
     var date: Date?
