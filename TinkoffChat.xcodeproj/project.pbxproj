@@ -8,10 +8,16 @@
 
 /* Begin PBXBuildFile section */
 		25A589ED8B085F1A3DB9498A /* Pods_TinkoffChat.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 542C4CD015D0489F445068C4 /* Pods_TinkoffChat.framework */; };
+		C32DEFE4216529AA009645D9 /* ConversationsListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C32DEFE3216529AA009645D9 /* ConversationsListViewController.swift */; };
+		C32DEFE6216529EB009645D9 /* ConversationsListViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C32DEFE5216529EB009645D9 /* ConversationsListViewController.storyboard */; };
+		C32DEFE921652B6A009645D9 /* ConversationsListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C32DEFE721652B6A009645D9 /* ConversationsListCell.swift */; };
+		C32DEFEA21652B6A009645D9 /* ConversationsListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C32DEFE821652B6A009645D9 /* ConversationsListCell.xib */; };
+		C32DEFEF21655B78009645D9 /* Conversation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C32DEFEE21655B78009645D9 /* Conversation.swift */; };
+		C32DEFF12165604E009645D9 /* ConversationsInMemoryStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C32DEFF02165604E009645D9 /* ConversationsInMemoryStorage.swift */; };
 		C344392E2153A5F20056F34D /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = C344392D2153A5F20056F34D /* Podfile */; };
 		C35707AF2152E61E00244E5E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C35707AE2152E61E00244E5E /* AppDelegate.swift */; };
 		C35707B12152E61E00244E5E /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C35707B02152E61E00244E5E /* ProfileViewController.swift */; };
-		C35707B42152E61E00244E5E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C35707B22152E61E00244E5E /* Main.storyboard */; };
+		C35707B42152E61E00244E5E /* ProfileViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C35707B22152E61E00244E5E /* ProfileViewController.storyboard */; };
 		C35707B62152E62100244E5E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C35707B52152E62100244E5E /* Assets.xcassets */; };
 		C35707B92152E62100244E5E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C35707B72152E62100244E5E /* LaunchScreen.storyboard */; };
 /* End PBXBuildFile section */
@@ -20,11 +26,17 @@
 		542C4CD015D0489F445068C4 /* Pods_TinkoffChat.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TinkoffChat.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		586B77D09CDBE0735567996D /* Pods-TinkoffChat.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TinkoffChat.release.xcconfig"; path = "Pods/Target Support Files/Pods-TinkoffChat/Pods-TinkoffChat.release.xcconfig"; sourceTree = "<group>"; };
 		A1DF6E4940474C0A970C8446 /* Pods-TinkoffChat.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TinkoffChat.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TinkoffChat/Pods-TinkoffChat.debug.xcconfig"; sourceTree = "<group>"; };
+		C32DEFE3216529AA009645D9 /* ConversationsListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationsListViewController.swift; sourceTree = "<group>"; };
+		C32DEFE5216529EB009645D9 /* ConversationsListViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ConversationsListViewController.storyboard; sourceTree = "<group>"; };
+		C32DEFE721652B6A009645D9 /* ConversationsListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationsListCell.swift; sourceTree = "<group>"; };
+		C32DEFE821652B6A009645D9 /* ConversationsListCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ConversationsListCell.xib; sourceTree = "<group>"; };
+		C32DEFEE21655B78009645D9 /* Conversation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Conversation.swift; sourceTree = "<group>"; };
+		C32DEFF02165604E009645D9 /* ConversationsInMemoryStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationsInMemoryStorage.swift; sourceTree = "<group>"; };
 		C344392D2153A5F20056F34D /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; };
 		C35707AB2152E61E00244E5E /* TinkoffChat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TinkoffChat.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C35707AE2152E61E00244E5E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C35707B02152E61E00244E5E /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
-		C35707B32152E61E00244E5E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		C35707B32152E61E00244E5E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/ProfileViewController.storyboard; sourceTree = "<group>"; };
 		C35707B52152E62100244E5E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C35707B82152E62100244E5E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		C35707BA2152E62100244E5E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -59,6 +71,62 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		C32DEFE221652988009645D9 /* ConverstionsList */ = {
+			isa = PBXGroup;
+			children = (
+				C32DEFE3216529AA009645D9 /* ConversationsListViewController.swift */,
+				C32DEFE5216529EB009645D9 /* ConversationsListViewController.storyboard */,
+				C32DEFE721652B6A009645D9 /* ConversationsListCell.swift */,
+				C32DEFE821652B6A009645D9 /* ConversationsListCell.xib */,
+			);
+			path = ConverstionsList;
+			sourceTree = "<group>";
+		};
+		C32DEFEB21653438009645D9 /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				C35707B02152E61E00244E5E /* ProfileViewController.swift */,
+				C35707B22152E61E00244E5E /* ProfileViewController.storyboard */,
+			);
+			path = Profile;
+			sourceTree = "<group>";
+		};
+		C32DEFEC21653450009645D9 /* SupportingFiles */ = {
+			isa = PBXGroup;
+			children = (
+				C35707AE2152E61E00244E5E /* AppDelegate.swift */,
+				C35707B52152E62100244E5E /* Assets.xcassets */,
+				C35707B72152E62100244E5E /* LaunchScreen.storyboard */,
+				C35707BA2152E62100244E5E /* Info.plist */,
+			);
+			path = SupportingFiles;
+			sourceTree = "<group>";
+		};
+		C32DEFED21655B64009645D9 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				C32DEFEE21655B78009645D9 /* Conversation.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		C32DEFF221656B95009645D9 /* Storages */ = {
+			isa = PBXGroup;
+			children = (
+				C32DEFF02165604E009645D9 /* ConversationsInMemoryStorage.swift */,
+			);
+			path = Storages;
+			sourceTree = "<group>";
+		};
+		C32DEFF321656C89009645D9 /* Screens */ = {
+			isa = PBXGroup;
+			children = (
+				C32DEFEB21653438009645D9 /* Profile */,
+				C32DEFE221652988009645D9 /* ConverstionsList */,
+			);
+			path = Screens;
+			sourceTree = "<group>";
+		};
 		C35707A22152E61E00244E5E = {
 			isa = PBXGroup;
 			children = (
@@ -81,12 +149,10 @@
 		C35707AD2152E61E00244E5E /* TinkoffChat */ = {
 			isa = PBXGroup;
 			children = (
-				C35707AE2152E61E00244E5E /* AppDelegate.swift */,
-				C35707B02152E61E00244E5E /* ProfileViewController.swift */,
-				C35707B22152E61E00244E5E /* Main.storyboard */,
-				C35707B52152E62100244E5E /* Assets.xcassets */,
-				C35707B72152E62100244E5E /* LaunchScreen.storyboard */,
-				C35707BA2152E62100244E5E /* Info.plist */,
+				C32DEFF321656C89009645D9 /* Screens */,
+				C32DEFF221656B95009645D9 /* Storages */,
+				C32DEFED21655B64009645D9 /* Models */,
+				C32DEFEC21653450009645D9 /* SupportingFiles */,
 			);
 			path = TinkoffChat;
 			sourceTree = "<group>";
@@ -151,10 +217,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C32DEFE6216529EB009645D9 /* ConversationsListViewController.storyboard in Resources */,
 				C35707B92152E62100244E5E /* LaunchScreen.storyboard in Resources */,
+				C32DEFEA21652B6A009645D9 /* ConversationsListCell.xib in Resources */,
 				C35707B62152E62100244E5E /* Assets.xcassets in Resources */,
 				C344392E2153A5F20056F34D /* Podfile in Resources */,
-				C35707B42152E61E00244E5E /* Main.storyboard in Resources */,
+				C35707B42152E61E00244E5E /* ProfileViewController.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -200,7 +268,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C32DEFF12165604E009645D9 /* ConversationsInMemoryStorage.swift in Sources */,
+				C32DEFE921652B6A009645D9 /* ConversationsListCell.swift in Sources */,
+				C32DEFE4216529AA009645D9 /* ConversationsListViewController.swift in Sources */,
 				C35707B12152E61E00244E5E /* ProfileViewController.swift in Sources */,
+				C32DEFEF21655B78009645D9 /* Conversation.swift in Sources */,
 				C35707AF2152E61E00244E5E /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -208,12 +280,12 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		C35707B22152E61E00244E5E /* Main.storyboard */ = {
+		C35707B22152E61E00244E5E /* ProfileViewController.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
 				C35707B32152E61E00244E5E /* Base */,
 			);
-			name = Main.storyboard;
+			name = ProfileViewController.storyboard;
 			sourceTree = "<group>";
 		};
 		C35707B72152E62100244E5E /* LaunchScreen.storyboard */ = {
@@ -353,7 +425,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 7U8A899S5N;
-				INFOPLIST_FILE = TinkoffChat/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/TinkoffChat/SupportingFiles/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -375,7 +447,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 7U8A899S5N;
-				INFOPLIST_FILE = TinkoffChat/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/TinkoffChat/SupportingFiles/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

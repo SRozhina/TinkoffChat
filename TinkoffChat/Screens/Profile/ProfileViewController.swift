@@ -29,6 +29,7 @@ class ProfileViewController: UIViewController, UINavigationControllerDelegate {
         
         setupUIElements()
         setupProfileData()
+        navigationItem.largeTitleDisplayMode = .never
         print("Edit button frame in viewDidLoad \(editButton.frame)")
     }
     
@@ -65,6 +66,10 @@ class ProfileViewController: UIViewController, UINavigationControllerDelegate {
                   message: nil,
                   style: .actionSheet,
                   actions: [takePhotoAlertAction, chooseFromLibraryAlertAction, cancelAction])
+    }
+    
+    @IBAction private func closeButtonTapped(_ sender: UIButton) {
+        dismiss(animated: true, completion: nil)
     }
     
     private func takePhotoAction() {

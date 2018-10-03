@@ -40,7 +40,7 @@ type_body_length:
   error: 450
 
 function_body_length:
-  warning: 60
+  warning: 100
   error: 200
 
 attributes:
