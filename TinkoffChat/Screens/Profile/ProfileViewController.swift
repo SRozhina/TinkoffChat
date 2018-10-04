@@ -127,15 +127,15 @@ class ProfileViewController: UIViewController, UINavigationControllerDelegate {
 }
 
 extension ProfileViewController: UIImagePickerControllerDelegate {
-    internal func imagePickerController(_ picker: UIImagePickerController,
-                                        didFinishPickingMediaWithInfo info: [String: Any]) {
+    func imagePickerController(_ picker: UIImagePickerController,
+                               didFinishPickingMediaWithInfo info: [String: Any]) {
         guard let image = info["UIImagePickerControllerOriginalImage"] as? UIImage else { return }
         avatarImageView.image = image
         saveAvatar(image)
         picker.dismiss(animated: true, completion: nil)
     }
     
-    internal func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         picker.dismiss(animated: true, completion: nil)
     }
 }

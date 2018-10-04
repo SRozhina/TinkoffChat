@@ -8,10 +8,9 @@
 
 import UIKit
 
-class ConversationViewController: UIViewController {
+class ConversationViewController: UIViewController, IConversationView {
     @IBOutlet private weak var tableView: UITableView!
-
-    private var conversationPreview: ConversationPreview?
+    var presenter: IConversationPresenter!
     private var messages: [Message] = []
     private let incomingMessageCellIdentifier = String(describing: IncomingMessageCell.self)
     private let outgoingMessageCellIdentifier = String(describing: OutgoingMessageCell.self)
@@ -21,12 +20,19 @@ class ConversationViewController: UIViewController {
         
         setupNavBar()
         reisterNibs()
-        setupData()
+        presenter.setup()
+    }
+    
+    func setMessages(_ messages: [Message]) {
+        self.messages = messages
+    }
+    
+    func setTitle(_ title: String?) {
+        navigationItem.title = title
     }
     
     private func setupNavBar() {
         navigationItem.largeTitleDisplayMode = .never
-        navigationItem.title = conversationPreview?.name
     }
     
     private func reisterNibs() {
@@ -35,11 +41,6 @@ class ConversationViewController: UIViewController {
         tableView.register(UINib(nibName: outgoingMessageCellIdentifier, bundle: nil),
                            forCellReuseIdentifier: outgoingMessageCellIdentifier)
     }
-    
-    private func setupData() {
-        messages = MessagesInMemoryStorage().getMessages()
-    }
-
 }
 
 extension ConversationViewController: UITableViewDataSource {
@@ -66,4 +67,3 @@ extension ConversationViewController: UITableViewDataSource {
         return cell
     }
 }
-

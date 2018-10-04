@@ -25,6 +25,16 @@
 		C354F91A2165F60C0048320E /* ChatCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C354F9192165F60C0048320E /* ChatCell.swift */; };
 		C354F91C2165F6A70048320E /* MessagesInMemoryStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C354F91B2165F6A70048320E /* MessagesInMemoryStorage.swift */; };
 		C354F91F2165F9D30048320E /* SelectedConversatinPreviewService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C354F91E2165F9D30048320E /* SelectedConversatinPreviewService.swift */; };
+		C354F9222165FD550048320E /* SwinjectContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C354F9212165FD550048320E /* SwinjectContainer.swift */; };
+		C354F927216600FA0048320E /* IConversationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C354F926216600FA0048320E /* IConversationView.swift */; };
+		C354F929216601120048320E /* IConversationPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C354F928216601120048320E /* IConversationPresenter.swift */; };
+		C354F92B2166012D0048320E /* ConversationPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C354F92A2166012D0048320E /* ConversationPresenter.swift */; };
+		C354F930216604100048320E /* IConversationsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C354F92F216604100048320E /* IConversationsListView.swift */; };
+		C354F932216604250048320E /* ConversationsListPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C354F931216604250048320E /* ConversationsListPresenter.swift */; };
+		C354F9342166043E0048320E /* IConversationsListPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C354F9332166043E0048320E /* IConversationsListPresenter.swift */; };
+		C354F936216605080048320E /* IConversationsStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C354F935216605080048320E /* IConversationsStorage.swift */; };
+		C354F938216605250048320E /* IMessagesStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C354F937216605250048320E /* IMessagesStorage.swift */; };
+		C354F93A216605410048320E /* ISelectedConversationPreviewService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C354F939216605410048320E /* ISelectedConversationPreviewService.swift */; };
 		C35707AF2152E61E00244E5E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C35707AE2152E61E00244E5E /* AppDelegate.swift */; };
 		C35707B12152E61E00244E5E /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C35707B02152E61E00244E5E /* ProfileViewController.swift */; };
 		C35707B42152E61E00244E5E /* ProfileViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C35707B22152E61E00244E5E /* ProfileViewController.storyboard */; };
@@ -48,11 +58,21 @@
 		C32DEFFA21656FB4009645D9 /* IncomingMessageCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = IncomingMessageCell.xib; sourceTree = "<group>"; };
 		C32DEFFD21656FC9009645D9 /* OutgoingMessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutgoingMessageCell.swift; sourceTree = "<group>"; };
 		C32DEFFE21656FC9009645D9 /* OutgoingMessageCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OutgoingMessageCell.xib; sourceTree = "<group>"; };
-		C344392D2153A5F20056F34D /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; };
+		C344392D2153A5F20056F34D /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		C354F9172165F1270048320E /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 		C354F9192165F60C0048320E /* ChatCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatCell.swift; sourceTree = "<group>"; };
 		C354F91B2165F6A70048320E /* MessagesInMemoryStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagesInMemoryStorage.swift; sourceTree = "<group>"; };
 		C354F91E2165F9D30048320E /* SelectedConversatinPreviewService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectedConversatinPreviewService.swift; sourceTree = "<group>"; };
+		C354F9212165FD550048320E /* SwinjectContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwinjectContainer.swift; sourceTree = "<group>"; };
+		C354F926216600FA0048320E /* IConversationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IConversationView.swift; sourceTree = "<group>"; };
+		C354F928216601120048320E /* IConversationPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IConversationPresenter.swift; sourceTree = "<group>"; };
+		C354F92A2166012D0048320E /* ConversationPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationPresenter.swift; sourceTree = "<group>"; };
+		C354F92F216604100048320E /* IConversationsListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IConversationsListView.swift; sourceTree = "<group>"; };
+		C354F931216604250048320E /* ConversationsListPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationsListPresenter.swift; sourceTree = "<group>"; };
+		C354F9332166043E0048320E /* IConversationsListPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IConversationsListPresenter.swift; sourceTree = "<group>"; };
+		C354F935216605080048320E /* IConversationsStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IConversationsStorage.swift; sourceTree = "<group>"; };
+		C354F937216605250048320E /* IMessagesStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IMessagesStorage.swift; sourceTree = "<group>"; };
+		C354F939216605410048320E /* ISelectedConversationPreviewService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ISelectedConversationPreviewService.swift; sourceTree = "<group>"; };
 		C35707AB2152E61E00244E5E /* TinkoffChat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TinkoffChat.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C35707AE2152E61E00244E5E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C35707B02152E61E00244E5E /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
@@ -94,10 +114,9 @@
 		C32DEFE221652988009645D9 /* ConverstionsList */ = {
 			isa = PBXGroup;
 			children = (
-				C32DEFE3216529AA009645D9 /* ConversationsListViewController.swift */,
-				C32DEFE5216529EB009645D9 /* ConversationsListViewController.storyboard */,
-				C32DEFE721652B6A009645D9 /* ConversationsListCell.swift */,
-				C32DEFE821652B6A009645D9 /* ConversationsListCell.xib */,
+				C354F92E2166018B0048320E /* Presenter */,
+				C354F92D216601840048320E /* View */,
+				C354F92C216601740048320E /* Cells */,
 			);
 			path = ConverstionsList;
 			sourceTree = "<group>";
@@ -136,6 +155,8 @@
 			children = (
 				C32DEFF02165604E009645D9 /* ConversationsInMemoryStorage.swift */,
 				C354F91B2165F6A70048320E /* MessagesInMemoryStorage.swift */,
+				C354F935216605080048320E /* IConversationsStorage.swift */,
+				C354F937216605250048320E /* IMessagesStorage.swift */,
 			);
 			path = Storages;
 			sourceTree = "<group>";
@@ -153,13 +174,9 @@
 		C32DEFF421656DAD009645D9 /* Conversation */ = {
 			isa = PBXGroup;
 			children = (
-				C32DEFF521656DCB009645D9 /* ConversationViewController.swift */,
-				C32DEFF721656E04009645D9 /* ConversationViewController.storyboard */,
-				C32DEFF921656FB4009645D9 /* IncomingMessageCell.swift */,
-				C32DEFFA21656FB4009645D9 /* IncomingMessageCell.xib */,
-				C32DEFFD21656FC9009645D9 /* OutgoingMessageCell.swift */,
-				C32DEFFE21656FC9009645D9 /* OutgoingMessageCell.xib */,
-				C354F9192165F60C0048320E /* ChatCell.swift */,
+				C354F925216600EB0048320E /* Presenter */,
+				C354F924216600E20048320E /* View */,
+				C354F923216600D70048320E /* Cells */,
 			);
 			path = Conversation;
 			sourceTree = "<group>";
@@ -168,8 +185,76 @@
 			isa = PBXGroup;
 			children = (
 				C354F91E2165F9D30048320E /* SelectedConversatinPreviewService.swift */,
+				C354F939216605410048320E /* ISelectedConversationPreviewService.swift */,
 			);
 			path = Services;
+			sourceTree = "<group>";
+		};
+		C354F9202165FD170048320E /* DI Container */ = {
+			isa = PBXGroup;
+			children = (
+				C354F9212165FD550048320E /* SwinjectContainer.swift */,
+			);
+			path = "DI Container";
+			sourceTree = "<group>";
+		};
+		C354F923216600D70048320E /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				C32DEFF921656FB4009645D9 /* IncomingMessageCell.swift */,
+				C32DEFFA21656FB4009645D9 /* IncomingMessageCell.xib */,
+				C32DEFFD21656FC9009645D9 /* OutgoingMessageCell.swift */,
+				C32DEFFE21656FC9009645D9 /* OutgoingMessageCell.xib */,
+				C354F9192165F60C0048320E /* ChatCell.swift */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
+		C354F924216600E20048320E /* View */ = {
+			isa = PBXGroup;
+			children = (
+				C32DEFF521656DCB009645D9 /* ConversationViewController.swift */,
+				C32DEFF721656E04009645D9 /* ConversationViewController.storyboard */,
+				C354F926216600FA0048320E /* IConversationView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		C354F925216600EB0048320E /* Presenter */ = {
+			isa = PBXGroup;
+			children = (
+				C354F928216601120048320E /* IConversationPresenter.swift */,
+				C354F92A2166012D0048320E /* ConversationPresenter.swift */,
+			);
+			path = Presenter;
+			sourceTree = "<group>";
+		};
+		C354F92C216601740048320E /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				C32DEFE721652B6A009645D9 /* ConversationsListCell.swift */,
+				C32DEFE821652B6A009645D9 /* ConversationsListCell.xib */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
+		C354F92D216601840048320E /* View */ = {
+			isa = PBXGroup;
+			children = (
+				C32DEFE3216529AA009645D9 /* ConversationsListViewController.swift */,
+				C32DEFE5216529EB009645D9 /* ConversationsListViewController.storyboard */,
+				C354F92F216604100048320E /* IConversationsListView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		C354F92E2166018B0048320E /* Presenter */ = {
+			isa = PBXGroup;
+			children = (
+				C354F931216604250048320E /* ConversationsListPresenter.swift */,
+				C354F9332166043E0048320E /* IConversationsListPresenter.swift */,
+			);
+			path = Presenter;
 			sourceTree = "<group>";
 		};
 		C35707A22152E61E00244E5E = {
@@ -194,6 +279,7 @@
 		C35707AD2152E61E00244E5E /* TinkoffChat */ = {
 			isa = PBXGroup;
 			children = (
+				C354F9202165FD170048320E /* DI Container */,
 				C354F91D2165F9BC0048320E /* Services */,
 				C32DEFF321656C89009645D9 /* Screens */,
 				C32DEFF221656B95009645D9 /* Storages */,
@@ -215,6 +301,7 @@
 				C35707A82152E61E00244E5E /* Frameworks */,
 				C35707A92152E61E00244E5E /* Resources */,
 				C344392F2153A6B90056F34D /* SwiftLint */,
+				6E1C8100B9BAAAD33E658D61 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -296,6 +383,26 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
+		6E1C8100B9BAAAD33E658D61 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-TinkoffChat/Pods-TinkoffChat-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Swinject/Swinject.framework",
+				"${BUILT_PRODUCTS_DIR}/SwinjectStoryboard/SwinjectStoryboard.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Swinject.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwinjectStoryboard.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-TinkoffChat/Pods-TinkoffChat-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		C344392F2153A6B90056F34D /* SwiftLint */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -318,17 +425,27 @@
 			buildActionMask = 2147483647;
 			files = (
 				C32DEFF621656DCB009645D9 /* ConversationViewController.swift in Sources */,
+				C354F930216604100048320E /* IConversationsListView.swift in Sources */,
 				C32DEFF12165604E009645D9 /* ConversationsInMemoryStorage.swift in Sources */,
 				C354F91A2165F60C0048320E /* ChatCell.swift in Sources */,
+				C354F929216601120048320E /* IConversationPresenter.swift in Sources */,
+				C354F936216605080048320E /* IConversationsStorage.swift in Sources */,
 				C32DEFE921652B6A009645D9 /* ConversationsListCell.swift in Sources */,
+				C354F932216604250048320E /* ConversationsListPresenter.swift in Sources */,
 				C32DEFE4216529AA009645D9 /* ConversationsListViewController.swift in Sources */,
+				C354F938216605250048320E /* IMessagesStorage.swift in Sources */,
 				C354F91C2165F6A70048320E /* MessagesInMemoryStorage.swift in Sources */,
 				C35707B12152E61E00244E5E /* ProfileViewController.swift in Sources */,
 				C32DEFFF21656FC9009645D9 /* OutgoingMessageCell.swift in Sources */,
+				C354F93A216605410048320E /* ISelectedConversationPreviewService.swift in Sources */,
 				C32DEFFB21656FB4009645D9 /* IncomingMessageCell.swift in Sources */,
+				C354F9222165FD550048320E /* SwinjectContainer.swift in Sources */,
+				C354F9342166043E0048320E /* IConversationsListPresenter.swift in Sources */,
+				C354F92B2166012D0048320E /* ConversationPresenter.swift in Sources */,
 				C354F91F2165F9D30048320E /* SelectedConversatinPreviewService.swift in Sources */,
 				C354F9182165F1270048320E /* Message.swift in Sources */,
 				C32DEFEF21655B78009645D9 /* ConversationPreview.swift in Sources */,
+				C354F927216600FA0048320E /* IConversationView.swift in Sources */,
 				C35707AF2152E61E00244E5E /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

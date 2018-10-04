@@ -8,9 +8,9 @@
 
 import UIKit
 
-class ConversationsListViewController: UIViewController {
+class ConversationsListViewController: UIViewController, IConversationsListView {
     @IBOutlet private weak var tableView: UITableView!
-    
+    var presenter: IConversationsListPresenter!
     private let conversationsListCellName = String(describing: ConversationsListCell.self)
     private var onlineConversations: [ConversationPreview] = []
     private var historyConversations: [ConversationPreview] = []
@@ -20,7 +20,15 @@ class ConversationsListViewController: UIViewController {
         
         registerNibs()
         setupNavBar()
-        setupData()
+        presenter.setup()
+    }
+    
+    func setOnlineConversations(_ conversations: [ConversationPreview]) {
+        self.onlineConversations = conversations
+    }
+    
+    func setHistoryConversations(_ conversations: [ConversationPreview]) {
+        self.historyConversations = conversations
     }
     
     private func registerNibs() {
@@ -31,11 +39,6 @@ class ConversationsListViewController: UIViewController {
         let searchController = UISearchController(searchResultsController: self)
         navigationItem.searchController = searchController
         navigationItem.hidesSearchBarWhenScrolling = true
-    }
-    
-    private func setupData() {
-        onlineConversations = ConversationsInMemoryStorage().getOnlineConversations()
-        historyConversations = ConversationsInMemoryStorage().getHistoryConversations()
     }
     
     @IBAction private func profileButtonTapped(_ sender: UIBarButtonItem) {
@@ -89,6 +92,10 @@ extension ConversationsListViewController: UITableViewDataSource {
 // MARK: - UITableViewDelegate
 extension ConversationsListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let conversation = indexPath.section == 0
+            ? onlineConversations[indexPath.row]
+            : historyConversations[indexPath.row]
+        presenter.selectConversation(conversation)
         tableView.deselectRow(at: indexPath, animated: true)
         let conversationStoryboard = UIStoryboard(name: "ConversationViewController", bundle: nil)
         guard let conversationViewController = conversationStoryboard.instantiateInitialViewController() else { return }

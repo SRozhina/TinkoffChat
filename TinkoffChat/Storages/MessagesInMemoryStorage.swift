@@ -6,9 +6,7 @@
 //  Copyright © 2018 Sofia. All rights reserved.
 //
 
-import Foundation
-
-class MessagesInMemoryStorage {
+class MessagesInMemoryStorage: IMessagesStorage {
     func getMessages() -> [Message] {
         return [
             Message(text: "1",

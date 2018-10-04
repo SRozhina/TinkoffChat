@@ -6,8 +6,6 @@
 //  Copyright © 2018 Sofia. All rights reserved.
 //
 
-import Foundation
-
-class SelectedConversationPreviewService {
-    var selectedConversationPreview: ConversationPreview?
+class SelectedConversationPreviewService: ISelectedConversationPreviewService {
+    var selectedPreview: ConversationPreview?
 }

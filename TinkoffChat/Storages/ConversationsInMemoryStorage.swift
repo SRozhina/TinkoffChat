@@ -5,11 +5,10 @@
 //  Created by Sofia on 03/10/2018.
 //  Copyright © 2018 Sofia. All rights reserved.
 //
-
 import Foundation
 
-class ConversationsInMemoryStorage {
-    internal func getOnlineConversations() -> [ConversationPreview] {
+class ConversationsInMemoryStorage: IConversationsStorage {
+    func getOnlineConversations() -> [ConversationPreview] {
         return [
             ConversationPreview(name: "Анна Павловна",
                                 online: true,
@@ -109,7 +108,7 @@ class ConversationsInMemoryStorage {
         ]
     }
     
-    internal func getHistoryConversations() -> [ConversationPreview] {
+    func getHistoryConversations() -> [ConversationPreview] {
         return [
             ConversationPreview(name: "Анна Павловна",
                                 online: false,

@@ -1,5 +1,5 @@
 //
-//  OutgoingMessageCell.swift
+//  IncomingMessageCell.swift
 //  TinkoffChat
 //
 //  Created by Sofia on 04/10/2018.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class OutgoingMessageCell: UITableViewCell, ChatCell {
+class IncomingMessageCell: UITableViewCell, ChatCell {    
     @IBOutlet private weak var messageView: UIView!
     @IBOutlet private weak var messageLabel: UILabel!
     
@@ -17,8 +17,7 @@ class OutgoingMessageCell: UITableViewCell, ChatCell {
         messageView.layer.cornerRadius = 10
     }
     
-    internal func setup(with message: Message) {
+    func setup(with message: Message) {
         messageLabel.text = message.text
     }
-    
 }
