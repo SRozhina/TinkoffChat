@@ -128,7 +128,7 @@ class ProfileViewController: UIViewController, UINavigationControllerDelegate {
 
 extension ProfileViewController: UIImagePickerControllerDelegate {
     internal func imagePickerController(_ picker: UIImagePickerController,
-                               didFinishPickingMediaWithInfo info: [String: Any]) {
+                                        didFinishPickingMediaWithInfo info: [String: Any]) {
         guard let image = info["UIImagePickerControllerOriginalImage"] as? UIImage else { return }
         avatarImageView.image = image
         saveAvatar(image)

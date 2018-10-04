@@ -8,17 +8,16 @@
 
 import UIKit
 
-class IncomingMessageCell: UITableViewCell {
-
+class IncomingMessageCell: UITableViewCell, ChatCell {    
+    @IBOutlet private weak var messageView: UIView!
+    @IBOutlet private weak var messageLabel: UILabel!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
-    }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
+        messageView.layer.cornerRadius = 10
     }
     
+    internal func setup(with message: Message) {
+        messageLabel.text = message.text
+    }
 }

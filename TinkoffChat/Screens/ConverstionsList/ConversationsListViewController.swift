@@ -10,6 +10,7 @@ import UIKit
 
 class ConversationsListViewController: UIViewController {
     @IBOutlet private weak var tableView: UITableView!
+    
     private let conversationsListCellName = String(describing: ConversationsListCell.self)
     private var onlineConversations: [ConversationPreview] = []
     private var historyConversations: [ConversationPreview] = []
@@ -89,8 +90,8 @@ extension ConversationsListViewController: UITableViewDataSource {
 extension ConversationsListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        let profileStoryboard = UIStoryboard(name: "", bundle: nil)
-        guard let profileViewController = profileStoryboard.instantiateInitialViewController() else { return }
-        navigationController?.pushViewController(profileViewController, animated: true)
+        let conversationStoryboard = UIStoryboard(name: "ConversationViewController", bundle: nil)
+        guard let conversationViewController = conversationStoryboard.instantiateInitialViewController() else { return }
+        navigationController?.pushViewController(conversationViewController, animated: true)
     }
 }

@@ -21,6 +21,10 @@
 		C32DEFFF21656FC9009645D9 /* OutgoingMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C32DEFFD21656FC9009645D9 /* OutgoingMessageCell.swift */; };
 		C32DF00021656FC9009645D9 /* OutgoingMessageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C32DEFFE21656FC9009645D9 /* OutgoingMessageCell.xib */; };
 		C344392E2153A5F20056F34D /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = C344392D2153A5F20056F34D /* Podfile */; };
+		C354F9182165F1270048320E /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = C354F9172165F1270048320E /* Message.swift */; };
+		C354F91A2165F60C0048320E /* ChatCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C354F9192165F60C0048320E /* ChatCell.swift */; };
+		C354F91C2165F6A70048320E /* MessagesInMemoryStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C354F91B2165F6A70048320E /* MessagesInMemoryStorage.swift */; };
+		C354F91F2165F9D30048320E /* SelectedConversatinPreviewService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C354F91E2165F9D30048320E /* SelectedConversatinPreviewService.swift */; };
 		C35707AF2152E61E00244E5E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C35707AE2152E61E00244E5E /* AppDelegate.swift */; };
 		C35707B12152E61E00244E5E /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C35707B02152E61E00244E5E /* ProfileViewController.swift */; };
 		C35707B42152E61E00244E5E /* ProfileViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C35707B22152E61E00244E5E /* ProfileViewController.storyboard */; };
@@ -45,6 +49,10 @@
 		C32DEFFD21656FC9009645D9 /* OutgoingMessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutgoingMessageCell.swift; sourceTree = "<group>"; };
 		C32DEFFE21656FC9009645D9 /* OutgoingMessageCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OutgoingMessageCell.xib; sourceTree = "<group>"; };
 		C344392D2153A5F20056F34D /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; };
+		C354F9172165F1270048320E /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
+		C354F9192165F60C0048320E /* ChatCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatCell.swift; sourceTree = "<group>"; };
+		C354F91B2165F6A70048320E /* MessagesInMemoryStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagesInMemoryStorage.swift; sourceTree = "<group>"; };
+		C354F91E2165F9D30048320E /* SelectedConversatinPreviewService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectedConversatinPreviewService.swift; sourceTree = "<group>"; };
 		C35707AB2152E61E00244E5E /* TinkoffChat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TinkoffChat.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C35707AE2152E61E00244E5E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C35707B02152E61E00244E5E /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
@@ -118,6 +126,7 @@
 			isa = PBXGroup;
 			children = (
 				C32DEFEE21655B78009645D9 /* ConversationPreview.swift */,
+				C354F9172165F1270048320E /* Message.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -126,6 +135,7 @@
 			isa = PBXGroup;
 			children = (
 				C32DEFF02165604E009645D9 /* ConversationsInMemoryStorage.swift */,
+				C354F91B2165F6A70048320E /* MessagesInMemoryStorage.swift */,
 			);
 			path = Storages;
 			sourceTree = "<group>";
@@ -149,8 +159,17 @@
 				C32DEFFA21656FB4009645D9 /* IncomingMessageCell.xib */,
 				C32DEFFD21656FC9009645D9 /* OutgoingMessageCell.swift */,
 				C32DEFFE21656FC9009645D9 /* OutgoingMessageCell.xib */,
+				C354F9192165F60C0048320E /* ChatCell.swift */,
 			);
 			path = Conversation;
+			sourceTree = "<group>";
+		};
+		C354F91D2165F9BC0048320E /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				C354F91E2165F9D30048320E /* SelectedConversatinPreviewService.swift */,
+			);
+			path = Services;
 			sourceTree = "<group>";
 		};
 		C35707A22152E61E00244E5E = {
@@ -175,6 +194,7 @@
 		C35707AD2152E61E00244E5E /* TinkoffChat */ = {
 			isa = PBXGroup;
 			children = (
+				C354F91D2165F9BC0048320E /* Services */,
 				C32DEFF321656C89009645D9 /* Screens */,
 				C32DEFF221656B95009645D9 /* Storages */,
 				C32DEFED21655B64009645D9 /* Models */,
@@ -299,11 +319,15 @@
 			files = (
 				C32DEFF621656DCB009645D9 /* ConversationViewController.swift in Sources */,
 				C32DEFF12165604E009645D9 /* ConversationsInMemoryStorage.swift in Sources */,
+				C354F91A2165F60C0048320E /* ChatCell.swift in Sources */,
 				C32DEFE921652B6A009645D9 /* ConversationsListCell.swift in Sources */,
 				C32DEFE4216529AA009645D9 /* ConversationsListViewController.swift in Sources */,
+				C354F91C2165F6A70048320E /* MessagesInMemoryStorage.swift in Sources */,
 				C35707B12152E61E00244E5E /* ProfileViewController.swift in Sources */,
 				C32DEFFF21656FC9009645D9 /* OutgoingMessageCell.swift in Sources */,
 				C32DEFFB21656FB4009645D9 /* IncomingMessageCell.swift in Sources */,
+				C354F91F2165F9D30048320E /* SelectedConversatinPreviewService.swift in Sources */,
+				C354F9182165F1270048320E /* Message.swift in Sources */,
 				C32DEFEF21655B78009645D9 /* ConversationPreview.swift in Sources */,
 				C35707AF2152E61E00244E5E /* AppDelegate.swift in Sources */,
 			);
