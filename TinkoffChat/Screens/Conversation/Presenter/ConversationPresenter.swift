@@ -7,17 +7,20 @@
 //
 
 class ConversationPresenter: IConversationPresenter {
-    private var messagesStorage: IMessagesStorage
-    private var view: IConversationView
+    private let messagesStorage: IMessagesStorage
+    private let selectedConversationPreviewService: ISelectedConversationPreviewService
+    private let view: IConversationView
     private var messages: [Message] = []
     private var conversationPreview: ConversationPreview?
     
-    init(view: IConversationView, messagesStorage: IMessagesStorage) {
+    init(view: IConversationView, messagesStorage: IMessagesStorage, selectedConversationPreviewService: ISelectedConversationPreviewService) {
         self.view = view
         self.messagesStorage = messagesStorage
+        self.selectedConversationPreviewService = selectedConversationPreviewService
     }
     
     func setup() {
+        conversationPreview = selectedConversationPreviewService.selectedPreview
         messages = messagesStorage.getMessages()
         view.setTitle(conversationPreview?.name)
         view.setMessages(messages)

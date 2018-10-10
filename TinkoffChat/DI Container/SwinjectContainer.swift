@@ -25,7 +25,8 @@ extension SwinjectStoryboard {
         
         defaultContainer.register(IConversationPresenter.self) { resolver, view in
             ConversationPresenter(view: view,
-                                  messagesStorage: resolver.resolve(IMessagesStorage.self)!)
+                                  messagesStorage: resolver.resolve(IMessagesStorage.self)!,
+                                  selectedConversationPreviewService: resolver.resolve(ISelectedConversationPreviewService.self)!)
         }
         
         defaultContainer.storyboardInitCompleted(ConversationViewController.self) { resolver, view in
