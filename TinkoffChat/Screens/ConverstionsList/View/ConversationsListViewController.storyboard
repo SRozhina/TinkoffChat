@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="OSQ-Ml-OeK">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Tinkoff Chat-->
+        <scene sceneID="7GY-mQ-g6L">
+            <objects>
+                <viewController id="Gds-RR-H3k" customClass="ConversationsListViewController" customModule="TinkoffChat" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="XYa-Np-gsI">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="lX2-T8-ejE">
+                                <rect key="frame" x="0.0" y="116" width="375" height="551"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <connections>
+                                    <outlet property="dataSource" destination="Gds-RR-H3k" id="pzE-Vv-X5X"/>
+                                    <outlet property="delegate" destination="Gds-RR-H3k" id="p0R-zF-S3y"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="lX2-T8-ejE" firstAttribute="leading" secondItem="FLs-X7-rje" secondAttribute="leading" id="0zI-pr-PmX"/>
+                            <constraint firstItem="lX2-T8-ejE" firstAttribute="top" secondItem="FLs-X7-rje" secondAttribute="top" id="3hT-6e-Ty2"/>
+                            <constraint firstItem="FLs-X7-rje" firstAttribute="bottom" secondItem="lX2-T8-ejE" secondAttribute="bottom" id="IYO-yO-gDQ"/>
+                            <constraint firstItem="FLs-X7-rje" firstAttribute="trailing" secondItem="lX2-T8-ejE" secondAttribute="trailing" id="Lf5-F0-OBN"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="FLs-X7-rje"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="Tinkoff Chat" id="aHm-RH-zbQ">
+                        <barButtonItem key="rightBarButtonItem" image=" profile" id="3NH-sq-bPS">
+                            <connections>
+                                <action selector="profileButtonTapped:" destination="Gds-RR-H3k" id="JwM-rZ-RMp"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="tableView" destination="lX2-T8-ejE" id="ivm-oJ-xsw"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="psy-Ff-qqf" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="984.79999999999995" y="142.57871064467767"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="4CG-Al-zhk">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="OSQ-Ml-OeK" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" largeTitles="YES" id="oAl-8r-f6Q">
+                        <rect key="frame" x="0.0" y="20" width="375" height="96"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="Gds-RR-H3k" kind="relationship" relationship="rootViewController" id="YdM-G7-L3a"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="l0S-lX-I6S" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="45.600000000000001" y="142.57871064467767"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name=" profile" width="100" height="100"/>
+    </resources>
+</document>

@@ -18,24 +18,12 @@ class ProfileViewController: UIViewController, UINavigationControllerDelegate {
     
     private let avatarFileName = "tinkoffChatAvatar.png"
     
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        //print("Edit button frame in init \(editButton.frame)")
-        //app crashes because view doesn't exist yet
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setupUIElements()
         setupProfileData()
-        print("Edit button frame in viewDidLoad \(editButton.frame)")
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        print("Edit button frame in viewDidAppear \(editButton.frame)")
-        //viewDidLoad happens before autolayout is completed. So the position is not yet set by autolayout that was specified in storyboard
+        setupNavBar()
     }
     
     private func setupUIElements() {
@@ -54,6 +42,10 @@ class ProfileViewController: UIViewController, UINavigationControllerDelegate {
         descriptionLabel.text = "Love ❤️ iOS Development, like butterflies, and live in Tinkoff Bank."
     }
     
+    private func setupNavBar() {
+        navigationItem.largeTitleDisplayMode = .never
+    }
+    
     @IBAction private func chooseAvatarButtonTapped(_ sender: UIButton) {
         let takePhotoAlertAction = UIAlertAction(title: "Take photo", style: .default) { _ in self.takePhotoAction() }
         let chooseFromLibraryAlertAction = UIAlertAction(title: "Choose from Library", style: .default) { _ in
@@ -65,6 +57,10 @@ class ProfileViewController: UIViewController, UINavigationControllerDelegate {
                   message: nil,
                   style: .actionSheet,
                   actions: [takePhotoAlertAction, chooseFromLibraryAlertAction, cancelAction])
+    }
+    
+    @IBAction private func closeButtonTapped(_ sender: UIButton) {
+        dismiss(animated: true, completion: nil)
     }
     
     private func takePhotoAction() {
