@@ -1,5 +1,5 @@
 class Company {
-    weak var ceo: CEO?
+    var ceo: CEO?
     
     deinit {
         print("Company deallocated")
@@ -19,7 +19,7 @@ class Person {
 }
 
 class CEO: Person {
-    weak var productManager: ProductManager?
+    var productManager: ProductManager?
     
     lazy var printProductManager = { [weak self] in
         guard let productManager = self?.productManager else {
