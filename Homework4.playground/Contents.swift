@@ -1,5 +1,5 @@
 class Company {
-    var ceo: CEO?
+    weak var ceo: CEO?
     
     deinit {
         print("Company deallocated")
@@ -19,7 +19,7 @@ class Person {
 }
 
 class CEO: Person {
-    var productManager: ProductManager?
+    weak var productManager: ProductManager?
     
     lazy var printProductManager = { [weak self] in
         guard let productManager = self?.productManager else {
@@ -38,9 +38,11 @@ class CEO: Person {
         print("Our Developers: \(developerNames)")
     }
     
-    lazy var printCompany = { [weak self] (productManager: ProductManager) in
-        print("Our Product Manager: \(productManager.name)")
-        let developerNames = productManager.developers.map({ $0.name }).joined(separator: ", ")
+    lazy var printCompany = { (pm: ProductManager) in
+        let ceoName = pm.ceo?.name ?? "none"
+        print ("Our CEO: \(ceoName)")
+        print("Our Product Manager: \(pm.name)")
+        let developerNames = pm.developers.map({ $0.name }).joined(separator: ", ")
         print("Our Developers: \(developerNames)")
     }
 }
