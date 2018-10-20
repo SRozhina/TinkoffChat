@@ -96,7 +96,6 @@ func createCompany(ceo: CEO, productManager: ProductManager, developers: [Develo
     return company
 }
 
-
 func main() {
     let ceo = CEO(name: "CEO")
     let pm = ProductManager(name: "pm")

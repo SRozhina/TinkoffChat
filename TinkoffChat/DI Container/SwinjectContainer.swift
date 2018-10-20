@@ -23,6 +23,10 @@ extension SwinjectStoryboard {
             .register(ISelectedConversationPreviewService.self) { _ in SelectedConversationPreviewService() }
             .inObjectScope(.container)
         
+        defaultContainer
+            .register(IUserInfoStorage.self) { _ in UserInfoStorage() }
+            .inObjectScope(.container)
+        
         defaultContainer.register(IConversationPresenter.self) { resolver, view in
             ConversationPresenter(view: view,
                                   messagesStorage: resolver.resolve(IMessagesStorage.self)!,
@@ -41,6 +45,24 @@ extension SwinjectStoryboard {
         
         defaultContainer.storyboardInitCompleted(ConversationsListViewController.self) { resolver, view in
             view.presenter = resolver.resolve(IConversationsListPresenter.self, argument: view as IConversationsListView)!
+        }
+        
+        defaultContainer.register(IEditProfilePresenter.self) { resolver, view in
+            EditProfilePresenter(view: view,
+                                 userInfoService: resolver.resolve(IUserInfoStorage.self)!)
+        }
+        
+        defaultContainer.storyboardInitCompleted(EditProfileViewController.self) { resolver, view in
+            view.presenter = resolver.resolve(IEditProfilePresenter.self, argument: view as IEditProfileView)!
+        }
+        
+        defaultContainer.register(IProfilePresenter.self) { resolver, view in
+            ProfilePresenter(view: view,
+                             userInfoStorage: resolver.resolve(IUserInfoStorage.self)!)
+        }
+        
+        defaultContainer.storyboardInitCompleted(ProfileViewController.self) { resolver, view in
+            view.presenter = resolver.resolve(IProfilePresenter.self, argument: view as IProfileView)!
         }
     }
 }
