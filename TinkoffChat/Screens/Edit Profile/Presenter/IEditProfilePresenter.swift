@@ -10,6 +10,6 @@ import UIKit
 
 protocol IEditProfilePresenter {
     func setup()
-    func saveUserInfo(_ userInfo: UserInfo, to saveOption: SaveOptions)
+    func saveUserInfo(_ userInfo: UserInfo, to saveOption: StorageType)
     func userInfoDataChanged(name: String?, info: String?, avatar: UIImage?)
 }

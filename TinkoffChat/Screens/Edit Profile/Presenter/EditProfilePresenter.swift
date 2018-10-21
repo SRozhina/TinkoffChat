@@ -11,35 +11,36 @@ import UIKit
 
 class EditProfilePresenter: IEditProfilePresenter {
     private let view: IEditProfileView
-    private let userInfoStorage: IUserInfoStorage
+    private let userInfoStorageProvider: IUserInfoStorageProvider
     
     private var userInfo: UserInfo!
     
-    init(view: IEditProfileView, userInfoService: IUserInfoStorage) {
+    init(view: IEditProfileView, userInfoStorageProvider: IUserInfoStorageProvider) {
         self.view = view
-        self.userInfoStorage = userInfoService
+        self.userInfoStorageProvider = userInfoStorageProvider
     }
     
     func setup() {
+        let userInfoStorage = userInfoStorageProvider.getUserInfoStorage(storageType: .GCD)
         userInfoStorage.getUserInfo { fetchedUserInfo in
             self.userInfo = fetchedUserInfo
-            view.setUserInfo(fetchedUserInfo)
+            self.view.setUserInfo(fetchedUserInfo)
         }
     }
     
-    func saveUserInfo(_ newUserInfo: UserInfo, to saveOption: SaveOptions) {
+    func saveUserInfo(_ newUserInfo: UserInfo, to storageType: StorageType) {
         view.startLoading()
-        userInfoStorage.saveUserInfo(newUserInfo, saveOption: saveOption) { result in
+        let userInfoStorage = userInfoStorageProvider.getUserInfoStorage(storageType: storageType)
+        userInfoStorage.saveUserInfo(newUserInfo) { result in
             if result == .success {
                 self.userInfo = newUserInfo
             }
-            DispatchQueue.main.async {
-                self.view.stopLoading()
-                self.view.showMessage(for: result)
-            }
+            self.view.stopLoading()
+            self.view.setUI(forChangedData: false)
+            self.view.showMessage(for: result)
         }
     }
-    
+        
     func userInfoDataChanged(name: String? = nil, info: String? = nil, avatar: UIImage? = nil) {
         view.setUI(forChangedData: userInfo.name != name || userInfo.info != info || userInfo.avatar != avatar)
     }

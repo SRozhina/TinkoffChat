@@ -10,16 +10,17 @@ import Foundation
 
 class ProfilePresenter: IProfilePresenter {
     private let view: IProfileView
-    private let userInfoStorage: IUserInfoStorage
+    private let userInfoStorageProvider: IUserInfoStorageProvider
     
-    init(view: IProfileView, userInfoStorage: IUserInfoStorage) {
+    init(view: IProfileView, userInfoStorageProvider: IUserInfoStorageProvider) {
         self.view = view
-        self.userInfoStorage = userInfoStorage
+        self.userInfoStorageProvider = userInfoStorageProvider
     }
     
     func setup() {
+        let userInfoStorage = userInfoStorageProvider.getUserInfoStorage(storageType: .GCD)
         userInfoStorage.getUserInfo { userInfo in
-            view.setUserInfo(userInfo)
+            self.view.setUserInfo(userInfo)
         }
     }
 }

@@ -16,7 +16,7 @@ class EditProfileViewController: UIViewController, UINavigationControllerDelegat
     @IBOutlet private weak var infoTextView: UITextView!
     @IBOutlet private weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet private var saveButtons: [UIButton]!
-    private var lastSelectedSaver: SaveOptions = .GCD
+    private var lastSelectedSaver: StorageType = .GCD
     
     var presenter: IEditProfilePresenter!
     

@@ -6,7 +6,7 @@
 //  Copyright © 2018 Sofia. All rights reserved.
 //
 
-enum SaveOptions {
+enum StorageType {
     case GCD
     case Operations
 }
@@ -19,6 +19,6 @@ enum Result {
 typealias SaverCompletion = (Result) -> Void
 
 protocol IUserInfoStorage {
-    func getUserInfo(_ completion: (UserInfo) -> Void)
-    func saveUserInfo(_ userInfo: UserInfo, saveOption: SaveOptions, completion: @escaping SaverCompletion)
+    func getUserInfo(_ completion: @escaping (UserInfo) -> Void)
+    func saveUserInfo(_ userInfo: UserInfo, completion: @escaping SaverCompletion)
 }

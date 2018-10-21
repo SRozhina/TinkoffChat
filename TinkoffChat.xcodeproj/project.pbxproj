@@ -21,6 +21,11 @@
 		C32DEFFF21656FC9009645D9 /* OutgoingMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C32DEFFD21656FC9009645D9 /* OutgoingMessageCell.swift */; };
 		C32DF00021656FC9009645D9 /* OutgoingMessageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C32DEFFE21656FC9009645D9 /* OutgoingMessageCell.xib */; };
 		C344392E2153A5F20056F34D /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = C344392D2153A5F20056F34D /* Podfile */; };
+		C34CE228217CD1620066796A /* OperationsUserInfoStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C34CE227217CD1620066796A /* OperationsUserInfoStorage.swift */; };
+		C34CE22A217CD1950066796A /* UserInfoPathProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = C34CE229217CD1950066796A /* UserInfoPathProvider.swift */; };
+		C34CE22C217CD1AB0066796A /* IUserInfoPathProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = C34CE22B217CD1AB0066796A /* IUserInfoPathProvider.swift */; };
+		C34CE22E217CD7DE0066796A /* UserInfoStorageProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = C34CE22D217CD7DD0066796A /* UserInfoStorageProvider.swift */; };
+		C34CE230217CD7F30066796A /* IUserInfoStorageProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = C34CE22F217CD7F30066796A /* IUserInfoStorageProvider.swift */; };
 		C354F9182165F1270048320E /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = C354F9172165F1270048320E /* Message.swift */; };
 		C354F91A2165F60C0048320E /* ChatCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C354F9192165F60C0048320E /* ChatCell.swift */; };
 		C354F91C2165F6A70048320E /* MessagesInMemoryStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C354F91B2165F6A70048320E /* MessagesInMemoryStorage.swift */; };
@@ -45,12 +50,9 @@
 		C3DC6962217B9B3E00DCEBB1 /* EditProfileViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C3DC6961217B9B3E00DCEBB1 /* EditProfileViewController.storyboard */; };
 		C3DC6964217BA71500DCEBB1 /* UserInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3DC6963217BA71500DCEBB1 /* UserInfo.swift */; };
 		C3DC6966217BB5C900DCEBB1 /* IUserInfoStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3DC6965217BB5C900DCEBB1 /* IUserInfoStorage.swift */; };
-		C3DC6968217BB5E600DCEBB1 /* UserInfoStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3DC6967217BB5E600DCEBB1 /* UserInfoStorage.swift */; };
+		C3DC6968217BB5E600DCEBB1 /* GCDUserInfoStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3DC6967217BB5E600DCEBB1 /* GCDUserInfoStorage.swift */; };
 		C3DC696A217BB7C800DCEBB1 /* IEditProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3DC6969217BB7C800DCEBB1 /* IEditProfileView.swift */; };
 		C3DC696C217BB7F100DCEBB1 /* IEditProfilePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3DC696B217BB7F100DCEBB1 /* IEditProfilePresenter.swift */; };
-		C3DC696E217BCD0700DCEBB1 /* IUserInfoSaver.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3DC696D217BCD0700DCEBB1 /* IUserInfoSaver.swift */; };
-		C3DC6970217BCD2B00DCEBB1 /* GCDUserInfoSaver.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3DC696F217BCD2B00DCEBB1 /* GCDUserInfoSaver.swift */; };
-		C3DC6972217BCD4800DCEBB1 /* OperationsUserInfoSaver.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3DC6971217BCD4800DCEBB1 /* OperationsUserInfoSaver.swift */; };
 		C3DC6976217BD0A000DCEBB1 /* IProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3DC6975217BD0A000DCEBB1 /* IProfileView.swift */; };
 		C3DC6978217BD0B500DCEBB1 /* IProfilePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3DC6977217BD0B500DCEBB1 /* IProfilePresenter.swift */; };
 		C3DC697A217BD0CB00DCEBB1 /* ProfilePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3DC6979217BD0CB00DCEBB1 /* ProfilePresenter.swift */; };
@@ -73,6 +75,11 @@
 		C32DEFFD21656FC9009645D9 /* OutgoingMessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutgoingMessageCell.swift; sourceTree = "<group>"; };
 		C32DEFFE21656FC9009645D9 /* OutgoingMessageCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OutgoingMessageCell.xib; sourceTree = "<group>"; };
 		C344392D2153A5F20056F34D /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		C34CE227217CD1620066796A /* OperationsUserInfoStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OperationsUserInfoStorage.swift; sourceTree = "<group>"; };
+		C34CE229217CD1950066796A /* UserInfoPathProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoPathProvider.swift; sourceTree = "<group>"; };
+		C34CE22B217CD1AB0066796A /* IUserInfoPathProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IUserInfoPathProvider.swift; sourceTree = "<group>"; };
+		C34CE22D217CD7DD0066796A /* UserInfoStorageProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoStorageProvider.swift; sourceTree = "<group>"; };
+		C34CE22F217CD7F30066796A /* IUserInfoStorageProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IUserInfoStorageProvider.swift; sourceTree = "<group>"; };
 		C354F9172165F1270048320E /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 		C354F9192165F60C0048320E /* ChatCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatCell.swift; sourceTree = "<group>"; };
 		C354F91B2165F6A70048320E /* MessagesInMemoryStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagesInMemoryStorage.swift; sourceTree = "<group>"; };
@@ -99,12 +106,9 @@
 		C3DC6961217B9B3E00DCEBB1 /* EditProfileViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = EditProfileViewController.storyboard; sourceTree = "<group>"; };
 		C3DC6963217BA71500DCEBB1 /* UserInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfo.swift; sourceTree = "<group>"; };
 		C3DC6965217BB5C900DCEBB1 /* IUserInfoStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IUserInfoStorage.swift; sourceTree = "<group>"; };
-		C3DC6967217BB5E600DCEBB1 /* UserInfoStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoStorage.swift; sourceTree = "<group>"; };
+		C3DC6967217BB5E600DCEBB1 /* GCDUserInfoStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GCDUserInfoStorage.swift; sourceTree = "<group>"; };
 		C3DC6969217BB7C800DCEBB1 /* IEditProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IEditProfileView.swift; sourceTree = "<group>"; };
 		C3DC696B217BB7F100DCEBB1 /* IEditProfilePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IEditProfilePresenter.swift; sourceTree = "<group>"; };
-		C3DC696D217BCD0700DCEBB1 /* IUserInfoSaver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IUserInfoSaver.swift; sourceTree = "<group>"; };
-		C3DC696F217BCD2B00DCEBB1 /* GCDUserInfoSaver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GCDUserInfoSaver.swift; sourceTree = "<group>"; };
-		C3DC6971217BCD4800DCEBB1 /* OperationsUserInfoSaver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OperationsUserInfoSaver.swift; sourceTree = "<group>"; };
 		C3DC6975217BD0A000DCEBB1 /* IProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IProfileView.swift; sourceTree = "<group>"; };
 		C3DC6977217BD0B500DCEBB1 /* IProfilePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IProfilePresenter.swift; sourceTree = "<group>"; };
 		C3DC6979217BD0CB00DCEBB1 /* ProfilePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePresenter.swift; sourceTree = "<group>"; };
@@ -183,11 +187,12 @@
 			isa = PBXGroup;
 			children = (
 				C3DC6965217BB5C900DCEBB1 /* IUserInfoStorage.swift */,
-				C3DC6967217BB5E600DCEBB1 /* UserInfoStorage.swift */,
+				C3DC6967217BB5E600DCEBB1 /* GCDUserInfoStorage.swift */,
 				C32DEFF02165604E009645D9 /* ConversationsInMemoryStorage.swift */,
 				C354F91B2165F6A70048320E /* MessagesInMemoryStorage.swift */,
 				C354F935216605080048320E /* IConversationsStorage.swift */,
 				C354F937216605250048320E /* IMessagesStorage.swift */,
+				C34CE227217CD1620066796A /* OperationsUserInfoStorage.swift */,
 			);
 			path = Storages;
 			sourceTree = "<group>";
@@ -213,14 +218,22 @@
 			path = Conversation;
 			sourceTree = "<group>";
 		};
+		C34CE226217CCC9F0066796A /* Providers */ = {
+			isa = PBXGroup;
+			children = (
+				C34CE229217CD1950066796A /* UserInfoPathProvider.swift */,
+				C34CE22B217CD1AB0066796A /* IUserInfoPathProvider.swift */,
+				C34CE22D217CD7DD0066796A /* UserInfoStorageProvider.swift */,
+				C34CE22F217CD7F30066796A /* IUserInfoStorageProvider.swift */,
+			);
+			path = Providers;
+			sourceTree = "<group>";
+		};
 		C354F91D2165F9BC0048320E /* Services */ = {
 			isa = PBXGroup;
 			children = (
 				C354F91E2165F9D30048320E /* SelectedConversatinPreviewService.swift */,
 				C354F939216605410048320E /* ISelectedConversationPreviewService.swift */,
-				C3DC696D217BCD0700DCEBB1 /* IUserInfoSaver.swift */,
-				C3DC696F217BCD2B00DCEBB1 /* GCDUserInfoSaver.swift */,
-				C3DC6971217BCD4800DCEBB1 /* OperationsUserInfoSaver.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -314,6 +327,7 @@
 		C35707AD2152E61E00244E5E /* TinkoffChat */ = {
 			isa = PBXGroup;
 			children = (
+				C34CE226217CCC9F0066796A /* Providers */,
 				C354F9202165FD170048320E /* DI Container */,
 				C354F91D2165F9BC0048320E /* Services */,
 				C32DEFF321656C89009645D9 /* Screens */,
@@ -509,18 +523,18 @@
 			files = (
 				C3DC696C217BB7F100DCEBB1 /* IEditProfilePresenter.swift in Sources */,
 				C32DEFF621656DCB009645D9 /* ConversationViewController.swift in Sources */,
+				C34CE228217CD1620066796A /* OperationsUserInfoStorage.swift in Sources */,
 				C354F930216604100048320E /* IConversationsListView.swift in Sources */,
 				C32DEFF12165604E009645D9 /* ConversationsInMemoryStorage.swift in Sources */,
 				C354F91A2165F60C0048320E /* ChatCell.swift in Sources */,
+				C34CE230217CD7F30066796A /* IUserInfoStorageProvider.swift in Sources */,
 				C354F929216601120048320E /* IConversationPresenter.swift in Sources */,
 				C354F936216605080048320E /* IConversationsStorage.swift in Sources */,
 				C32DEFE921652B6A009645D9 /* ConversationsListCell.swift in Sources */,
 				C354F932216604250048320E /* ConversationsListPresenter.swift in Sources */,
 				C3DC6978217BD0B500DCEBB1 /* IProfilePresenter.swift in Sources */,
 				C3DC696A217BB7C800DCEBB1 /* IEditProfileView.swift in Sources */,
-				C3DC6972217BCD4800DCEBB1 /* OperationsUserInfoSaver.swift in Sources */,
 				C3DC6964217BA71500DCEBB1 /* UserInfo.swift in Sources */,
-				C3DC6970217BCD2B00DCEBB1 /* GCDUserInfoSaver.swift in Sources */,
 				C3DC697A217BD0CB00DCEBB1 /* ProfilePresenter.swift in Sources */,
 				C32DEFE4216529AA009645D9 /* ConversationsListViewController.swift in Sources */,
 				C354F938216605250048320E /* IMessagesStorage.swift in Sources */,
@@ -530,19 +544,21 @@
 				C32DEFFF21656FC9009645D9 /* OutgoingMessageCell.swift in Sources */,
 				C354F93A216605410048320E /* ISelectedConversationPreviewService.swift in Sources */,
 				C32DEFFB21656FB4009645D9 /* IncomingMessageCell.swift in Sources */,
-				C3DC6968217BB5E600DCEBB1 /* UserInfoStorage.swift in Sources */,
+				C3DC6968217BB5E600DCEBB1 /* GCDUserInfoStorage.swift in Sources */,
 				C354F9222165FD550048320E /* SwinjectContainer.swift in Sources */,
+				C34CE22A217CD1950066796A /* UserInfoPathProvider.swift in Sources */,
+				C34CE22E217CD7DE0066796A /* UserInfoStorageProvider.swift in Sources */,
 				C354F9342166043E0048320E /* IConversationsListPresenter.swift in Sources */,
 				C354F92B2166012D0048320E /* ConversationPresenter.swift in Sources */,
 				C354F91F2165F9D30048320E /* SelectedConversatinPreviewService.swift in Sources */,
 				C354F9182165F1270048320E /* Message.swift in Sources */,
 				C3DC695E217B9B0800DCEBB1 /* EditProfilePresenter.swift in Sources */,
 				C3DC6966217BB5C900DCEBB1 /* IUserInfoStorage.swift in Sources */,
+				C34CE22C217CD1AB0066796A /* IUserInfoPathProvider.swift in Sources */,
 				C32DEFEF21655B78009645D9 /* ConversationPreview.swift in Sources */,
 				C354F927216600FA0048320E /* IConversationView.swift in Sources */,
 				C3DC6960217B9B2700DCEBB1 /* EditProfileViewController.swift in Sources */,
 				C35707AF2152E61E00244E5E /* AppDelegate.swift in Sources */,
-				C3DC696E217BCD0700DCEBB1 /* IUserInfoSaver.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

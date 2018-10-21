@@ -24,7 +24,12 @@ extension SwinjectStoryboard {
             .inObjectScope(.container)
         
         defaultContainer
-            .register(IUserInfoStorage.self) { _ in UserInfoStorage() }
+            .register(IUserInfoPathProvider.self) { _ in UserInfoPathProvider() }
+            .inObjectScope(.container)
+        
+        defaultContainer
+            .register(IUserInfoStorageProvider.self) { resolver in
+                UserInfoStorageProvider(userInfoPathProvider: resolver.resolve(IUserInfoPathProvider.self)!) }
             .inObjectScope(.container)
         
         defaultContainer.register(IConversationPresenter.self) { resolver, view in
@@ -49,7 +54,7 @@ extension SwinjectStoryboard {
         
         defaultContainer.register(IEditProfilePresenter.self) { resolver, view in
             EditProfilePresenter(view: view,
-                                 userInfoService: resolver.resolve(IUserInfoStorage.self)!)
+                                 userInfoStorageProvider: resolver.resolve(IUserInfoStorageProvider.self)!)
         }
         
         defaultContainer.storyboardInitCompleted(EditProfileViewController.self) { resolver, view in
@@ -58,7 +63,7 @@ extension SwinjectStoryboard {
         
         defaultContainer.register(IProfilePresenter.self) { resolver, view in
             ProfilePresenter(view: view,
-                             userInfoStorage: resolver.resolve(IUserInfoStorage.self)!)
+                             userInfoStorageProvider: resolver.resolve(IUserInfoStorageProvider.self)!)
         }
         
         defaultContainer.storyboardInitCompleted(ProfileViewController.self) { resolver, view in
