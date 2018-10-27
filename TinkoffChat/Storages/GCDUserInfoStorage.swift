@@ -18,19 +18,13 @@ class GCDUserInfoStorage: IUserInfoStorage {
     
     func getUserInfo(_ completion: @escaping (UserInfo) -> Void) {
         DispatchQueue.global(qos: .userInitiated).async {
-            let userInfo = UserInfo(name: "No name", avatar: UIImage(named: "avatar_placeholder"))
-            do {
-                userInfo.name = try String(contentsOf: self.userInfoPathProvider.userNameFilePath)
-                userInfo.info = try String(contentsOf: self.userInfoPathProvider.infoFilePath)
-                let avatarData = try Data(contentsOf: self.userInfoPathProvider.avatarFilePath)
-                userInfo.avatar = UIImage(data: avatarData)
-                DispatchQueue.main.async {
-                    completion(userInfo)
-                }
-            } catch {
-                DispatchQueue.main.async {
-                    completion(userInfo)
-                }
+            let name = (try? String(contentsOf: self.userInfoPathProvider.userNameFilePath)) ?? "No name"
+            let info = (try? String(contentsOf: self.userInfoPathProvider.infoFilePath)) ?? ""
+            let avatarData = try? Data(contentsOf: self.userInfoPathProvider.avatarFilePath)
+            let avatar = avatarData != nil ? UIImage(data: avatarData!) : UIImage(named: "avatar_placeholder")
+            let userInfo = UserInfo(name: name, info: info, avatar: avatar)
+            DispatchQueue.main.async {
+                completion(userInfo)
             }
         }
     }
