@@ -6,6 +6,6 @@
 //  Copyright © 2018 Sofia. All rights reserved.
 //
 
-protocol ISelectedConversationPreviewService {
-    var selectedPreview: ConversationPreview? { get set }
+protocol ISelectedConversationService {
+    var selectedConversation: Conversation? { get set }
 }

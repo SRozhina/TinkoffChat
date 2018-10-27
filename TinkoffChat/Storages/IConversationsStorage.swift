@@ -7,6 +7,6 @@
 //
 
 protocol IConversationsStorage {
-    func getOnlineConversations() -> [ConversationPreview]
-    func getHistoryConversations() -> [ConversationPreview]
+    func getConversations() -> [Conversation]
+    func updateConversations(by newConversations: [Conversation])
 }

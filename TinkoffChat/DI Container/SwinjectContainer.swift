@@ -16,11 +16,7 @@ extension SwinjectStoryboard {
             .inObjectScope(.container)
         
         defaultContainer
-            .register(IMessagesStorage.self) { _ in MessagesInMemoryStorage() }
-            .inObjectScope(.container)
-        
-        defaultContainer
-            .register(ISelectedConversationPreviewService.self) { _ in SelectedConversationPreviewService() }
+            .register(ISelectedConversationService.self) { _ in SelectedConversationService() }
             .inObjectScope(.container)
         
         defaultContainer
@@ -32,24 +28,35 @@ extension SwinjectStoryboard {
                 UserInfoStorageProvider(userInfoPathProvider: resolver.resolve(IUserInfoPathProvider.self)!) }
             .inObjectScope(.container)
         
+        defaultContainer
+            .register(ICommunicationService.self) { _ in MultipeerCommunicationService() }
+            .inObjectScope(.container)
+        
+        defaultContainer
+            .register(IErrorAlertBuilder.self) { _ in ErrorAlertBuilder() }
+            .inObjectScope(.container)
+        
         defaultContainer.register(IConversationPresenter.self) { resolver, view in
             ConversationPresenter(view: view,
-                                  messagesStorage: resolver.resolve(IMessagesStorage.self)!,
-                                  selectedConversationPreviewService: resolver.resolve(ISelectedConversationPreviewService.self)!)
+                                  communicationService: resolver.resolve(ICommunicationService.self)!,
+                                  selectedConversationService: resolver.resolve(ISelectedConversationService.self)!)
         }
         
         defaultContainer.storyboardInitCompleted(ConversationViewController.self) { resolver, view in
             view.presenter = resolver.resolve(IConversationPresenter.self, argument: view as IConversationView)!
+            view.errorAlertBuilder = resolver.resolve(IErrorAlertBuilder.self)!
         }
         
         defaultContainer.register(IConversationsListPresenter.self) { resolver, view in
             ConversationsListPresenter(view: view,
                                        conversationsStorage: resolver.resolve(IConversationsStorage.self)!,
-                                       selectedConversationService: resolver.resolve(ISelectedConversationPreviewService.self)!)
+                                       selectedConversationService: resolver.resolve(ISelectedConversationService.self)!,
+                                       communicationService: resolver.resolve(ICommunicationService.self)!)
         }
         
         defaultContainer.storyboardInitCompleted(ConversationsListViewController.self) { resolver, view in
             view.presenter = resolver.resolve(IConversationsListPresenter.self, argument: view as IConversationsListView)!
+            view.errorAlertBuilder = resolver.resolve(IErrorAlertBuilder.self)!
         }
         
         defaultContainer.register(IEditProfilePresenter.self) { resolver, view in
