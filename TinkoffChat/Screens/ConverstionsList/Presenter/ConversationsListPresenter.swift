@@ -54,20 +54,24 @@ class ConversationsListPresenter: IConversationsListPresenter {
     
     private func updateOnlineConversations() {
         let previews = onlineConversations.map { getPreviewFrom(conversation: $0, isOnline: true) }
-        let unreadPreviews = previews
-            .filter { $0.hasUnreadMessages }
-            .sorted { $0.name < $1.name }
-        let otherPreviews = previews
-            .filter { !$0.hasUnreadMessages }
-            .sorted { $0.name < $1.name }
-        view.setOnlineConversations(unreadPreviews + otherPreviews)
+        let sortedPreviews = sortConversationPreviews(previews)
+        view.setOnlineConversations(sortedPreviews)
     }
     
     private func updateHistoryConversations() {
-        let previews = historyConversations
-            .map { getPreviewFrom(conversation: $0, isOnline: false) }
+        let previews = onlineConversations.map { getPreviewFrom(conversation: $0, isOnline: false) }
+        let sortedPreviews = sortConversationPreviews(previews)
+        view.setHistoryConversations(sortedPreviews)
+    }
+    
+    private func sortConversationPreviews(_ conversationPreviews: [ConversationPreview]) -> [ConversationPreview] {
+        let unreadPreviews = conversationPreviews
+            .filter { $0.hasUnreadMessages }
             .sorted { $0.name < $1.name }
-        view.setHistoryConversations(previews)
+        let otherPreviews = conversationPreviews
+            .filter { !$0.hasUnreadMessages }
+            .sorted { $0.name < $1.name }
+        return unreadPreviews + otherPreviews
     }
     
     private func getPreviewFrom(conversation: Conversation, isOnline: Bool) -> ConversationPreview {
