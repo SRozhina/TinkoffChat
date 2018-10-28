@@ -16,6 +16,7 @@
 		C308831C21847895003E1564 /* IErrorAlertBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = C308831B21847895003E1564 /* IErrorAlertBuilder.swift */; };
 		C308831E218478A6003E1564 /* ErrorAlertBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = C308831D218478A6003E1564 /* ErrorAlertBuilder.swift */; };
 		C308832021848856003E1564 /* Conversation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C308831F21848856003E1564 /* Conversation.swift */; };
+		C31C19772185B49E00F0EFD9 /* Array+firstIndex.swift in Sources */ = {isa = PBXBuildFile; fileRef = C31C19762185B49E00F0EFD9 /* Array+firstIndex.swift */; };
 		C32DEFE4216529AA009645D9 /* ConversationsListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C32DEFE3216529AA009645D9 /* ConversationsListViewController.swift */; };
 		C32DEFE6216529EB009645D9 /* ConversationsListViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C32DEFE5216529EB009645D9 /* ConversationsListViewController.storyboard */; };
 		C32DEFE921652B6A009645D9 /* ConversationsListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C32DEFE721652B6A009645D9 /* ConversationsListCell.swift */; };
@@ -77,6 +78,7 @@
 		C308831B21847895003E1564 /* IErrorAlertBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IErrorAlertBuilder.swift; sourceTree = "<group>"; };
 		C308831D218478A6003E1564 /* ErrorAlertBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorAlertBuilder.swift; sourceTree = "<group>"; };
 		C308831F21848856003E1564 /* Conversation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Conversation.swift; sourceTree = "<group>"; };
+		C31C19762185B49E00F0EFD9 /* Array+firstIndex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+firstIndex.swift"; sourceTree = "<group>"; };
 		C32DEFE3216529AA009645D9 /* ConversationsListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationsListViewController.swift; sourceTree = "<group>"; };
 		C32DEFE5216529EB009645D9 /* ConversationsListViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ConversationsListViewController.storyboard; sourceTree = "<group>"; };
 		C32DEFE721652B6A009645D9 /* ConversationsListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationsListCell.swift; sourceTree = "<group>"; };
@@ -181,6 +183,14 @@
 				C308831D218478A6003E1564 /* ErrorAlertBuilder.swift */,
 			);
 			path = Builders;
+			sourceTree = "<group>";
+		};
+		C31C19752185B48200F0EFD9 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				C31C19762185B49E00F0EFD9 /* Array+firstIndex.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 		C32DEFE221652988009645D9 /* ConverstionsList */ = {
@@ -370,6 +380,7 @@
 		C35707AD2152E61E00244E5E /* TinkoffChat */ = {
 			isa = PBXGroup;
 			children = (
+				C31C19752185B48200F0EFD9 /* Extensions */,
 				C308831A21847889003E1564 /* Builders */,
 				C308830E21839819003E1564 /* Views */,
 				C34CE226217CCC9F0066796A /* Providers */,
@@ -592,6 +603,7 @@
 				C308831321839847003E1564 /* ExpandableTextView.swift in Sources */,
 				C32DEFFF21656FC9009645D9 /* OutgoingMessageCell.swift in Sources */,
 				C354F93A216605410048320E /* ISelectedConversationService.swift in Sources */,
+				C31C19772185B49E00F0EFD9 /* Array+firstIndex.swift in Sources */,
 				C32DEFFB21656FB4009645D9 /* IncomingMessageCell.swift in Sources */,
 				C3DC6968217BB5E600DCEBB1 /* GCDUserInfoStorage.swift in Sources */,
 				C308831E218478A6003E1564 /* ErrorAlertBuilder.swift in Sources */,

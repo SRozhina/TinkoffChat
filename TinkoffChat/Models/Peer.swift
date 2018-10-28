@@ -9,12 +9,12 @@
 import Foundation
 
 class Peer: Hashable, Equatable {
-    static func == (lhs: Peer, rhs: Peer) -> Bool {
-        return lhs.name == rhs.name
+    var hashValue: Int {
+        return name.hashValue ^ name.hashValue
     }
     
-    func hash(into hasher: inout Hasher) {
-        hasher.combine(name)
+    static func == (lhs: Peer, rhs: Peer) -> Bool {
+        return lhs.name == rhs.name
     }
     
     let name: String
