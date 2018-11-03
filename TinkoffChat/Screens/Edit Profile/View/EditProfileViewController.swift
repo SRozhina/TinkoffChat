@@ -24,6 +24,7 @@ class EditProfileViewController: UIViewController, UINavigationControllerDelegat
         super.viewDidLoad()
         
         setupUI()
+        addDismissKeyboardGestureRecognizer()
         infoTextView.delegate = self
         presenter.setup()
     }
@@ -40,6 +41,17 @@ class EditProfileViewController: UIViewController, UINavigationControllerDelegat
         editAvatarButton.layer.cornerRadius = view.frame.width / 15
         infoTextView.layer.cornerRadius = 6
         setSetButtons(enabled: false)
+    }
+    
+    private func addDismissKeyboardGestureRecognizer() {
+        let tap = UITapGestureRecognizer(target: self, action: #selector(self.dismissKeyboard))
+        self.view.addGestureRecognizer(tap)
+    }
+    
+    @objc
+    private func dismissKeyboard() {
+        infoTextView.resignFirstResponder()
+        userNameTextField.resignFirstResponder()
     }
 
     @IBAction private func editAvatarTapped(_ sender: UIButton) {
@@ -107,6 +119,12 @@ class EditProfileViewController: UIViewController, UINavigationControllerDelegat
         lastSelectedSaver = .Operations
         saveUserInfo()
     }
+    
+    @IBAction func save(_ sender: Any) {
+        lastSelectedSaver = .Default
+        saveUserInfo()
+    }
+    
     
     @IBAction private func userNameEdited(_ sender: UITextField) {
         presenter.userInfoDataChanged(name: sender.text, info: infoTextView.text, avatar: avatarImageView.image)
