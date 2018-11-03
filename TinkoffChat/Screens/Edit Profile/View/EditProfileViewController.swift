@@ -120,11 +120,10 @@ class EditProfileViewController: UIViewController, UINavigationControllerDelegat
         saveUserInfo()
     }
     
-    @IBAction func save(_ sender: Any) {
+    @IBAction private func save(_ sender: Any) {
         lastSelectedSaver = .Default
         saveUserInfo()
     }
-    
     
     @IBAction private func userNameEdited(_ sender: UITextField) {
         presenter.userInfoDataChanged(name: sender.text, info: infoTextView.text, avatar: avatarImageView.image)

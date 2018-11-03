@@ -21,6 +21,10 @@ class UserInfoPathProvider: IUserInfoPathProvider {
         return getFilePath("UserInfoAvatar")
     }
     
+    var storeFilePath: URL {
+        return getFilePath("TinkoffChat.sqlite")
+    }
+    
     private func getFilePath(_ fileName: String) -> URL {
         let documentsPath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
         return documentsPath.appendingPathComponent(fileName)
