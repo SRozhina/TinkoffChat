@@ -1,8 +1,8 @@
 PODS:
   - SwiftLint (0.27.0)
   - Swinject (2.5.0)
-  - SwinjectStoryboard (2.0.2):
-    - Swinject (~> 2.4)
+  - SwinjectStoryboard (2.1.0):
+    - Swinject (~> 2.5)
 
 DEPENDENCIES:
   - SwiftLint
@@ -17,7 +17,7 @@ SPEC REPOS:
 SPEC CHECKSUMS:
   SwiftLint: 3207c1faa2240bf8973b191820a116113cd11073
   Swinject: 82cdb851f63f91bba974e3eca1d69780f2f7677e
-  SwinjectStoryboard: 365698aec11b57c6b14a3c1f52d0308759d377bf
+  SwinjectStoryboard: 688f096033103e66ffcf6ca678211acd7d7be505
 
 PODFILE CHECKSUM: 8a05d735cb399a3b6c1fd750d8e106977ca3f810
 

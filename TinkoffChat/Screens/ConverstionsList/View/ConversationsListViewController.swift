@@ -8,12 +8,13 @@
 
 import UIKit
 
-class ConversationsListViewController: UIViewController, IConversationsListView {
+class ConversationsListViewController: UIViewController {
     @IBOutlet private weak var tableView: UITableView!
     var presenter: IConversationsListPresenter!
+    var errorAlertBuilder: IErrorAlertBuilder!
     private let conversationsListCellName = String(describing: ConversationsListCell.self)
-    private var onlineConversations: [ConversationPreview] = []
-    private var historyConversations: [ConversationPreview] = []
+    private var onlineConversationPreviews: [ConversationPreview] = []
+    private var historyConversationsPreviews: [ConversationPreview] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,12 +24,14 @@ class ConversationsListViewController: UIViewController, IConversationsListView 
         presenter.setup()
     }
     
-    func setOnlineConversations(_ conversations: [ConversationPreview]) {
-        self.onlineConversations = conversations
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        presenter.saveAll()
     }
     
-    func setHistoryConversations(_ conversations: [ConversationPreview]) {
-        self.historyConversations = conversations
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        presenter.setup()
     }
     
     private func registerNibs() {
@@ -48,6 +51,24 @@ class ConversationsListViewController: UIViewController, IConversationsListView 
     }
 }
 
+// MARK: - IConversationsListView
+extension ConversationsListViewController: IConversationsListView {
+    func setOnlineConversations(_ conversations: [ConversationPreview]) {
+        self.onlineConversationPreviews = conversations
+        tableView.reloadSections(IndexSet(integer: 0), with: .automatic)
+    }
+    
+    func setHistoryConversations(_ conversations: [ConversationPreview]) {
+        self.historyConversationsPreviews = conversations
+        tableView.reloadSections(IndexSet(integer: 1), with: .automatic)
+    }
+    
+    func showErrorAlert(with title: String, retryAction: @escaping () -> Void) {
+        let alert = errorAlertBuilder.build(with: title, retryAction: retryAction)
+        present(alert, animated: true)
+    }
+}
+
 // MARK: - UITableViewDataSource
 extension ConversationsListViewController: UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -57,9 +78,9 @@ extension ConversationsListViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
         case 0:
-            return onlineConversations.count
+            return onlineConversationPreviews.count
         default:
-            return historyConversations.count
+            return historyConversationsPreviews.count
         }
     }
     
@@ -71,9 +92,9 @@ extension ConversationsListViewController: UITableViewDataSource {
         let conversation: ConversationPreview
         switch indexPath.section {
         case 0:
-            conversation = onlineConversations[indexPath.row]
+            conversation = onlineConversationPreviews[indexPath.row]
         default:
-            conversation = historyConversations[indexPath.row]
+            conversation = historyConversationsPreviews[indexPath.row]
         }
         cell.setup(with: conversation)
         return cell
@@ -93,8 +114,8 @@ extension ConversationsListViewController: UITableViewDataSource {
 extension ConversationsListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let conversation = indexPath.section == 0
-            ? onlineConversations[indexPath.row]
-            : historyConversations[indexPath.row]
+            ? onlineConversationPreviews[indexPath.row]
+            : historyConversationsPreviews[indexPath.row]
         presenter.selectConversation(conversation)
         tableView.deselectRow(at: indexPath, animated: true)
         let conversationStoryboard = UIStoryboard(name: "ConversationViewController", bundle: nil)

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="R1y-YG-i8w">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="R1y-YG-i8w">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.14"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -19,30 +19,87 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="iJ7-N9-vav">
-                                <rect key="frame" x="0.0" y="30" width="375" height="637"/>
+                                <rect key="frame" x="0.0" y="30" width="375" height="589"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <connections>
                                     <outlet property="dataSource" destination="R1y-YG-i8w" id="rlK-Sv-tJZ"/>
                                     <outlet property="delegate" destination="R1y-YG-i8w" id="5AU-1t-tgH"/>
                                 </connections>
                             </tableView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AzT-1J-OUh">
+                                <rect key="frame" x="0.0" y="619" width="375" height="48"/>
+                                <subviews>
+                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Message" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="ITY-pI-DKl" customClass="ExpandableTextView" customModule="TinkoffChat" customModuleProvider="target">
+                                        <rect key="frame" x="8" y="6" width="315" height="36"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="36" id="cdl-xM-EvJ"/>
+                                        </constraints>
+                                        <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="maxLineCount">
+                                                <integer key="value" value="3"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="color" keyPath="mainTextColor">
+                                                <color key="value" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="color" keyPath="placeholderColor">
+                                                <color key="value" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                    </textView>
+                                    <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="H4Y-jB-tfl">
+                                        <rect key="frame" x="331" y="6" width="36" height="36"/>
+                                        <color key="backgroundColor" red="0.0" green="0.62745098039215685" blue="0.94117647058823528" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" secondItem="H4Y-jB-tfl" secondAttribute="height" id="3Ap-z3-bRy"/>
+                                            <constraint firstAttribute="height" constant="36" id="bjC-6a-pLW"/>
+                                        </constraints>
+                                        <state key="normal" image="sendicon"/>
+                                        <connections>
+                                            <action selector="sendButtonTapped:" destination="R1y-YG-i8w" eventType="touchUpInside" id="db7-LH-mC0"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" red="0.8784313725490196" green="0.8784313725490196" blue="0.8784313725490196" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstItem="H4Y-jB-tfl" firstAttribute="leading" secondItem="ITY-pI-DKl" secondAttribute="trailing" constant="8" id="1Pw-Lt-2bo"/>
+                                    <constraint firstAttribute="trailing" secondItem="H4Y-jB-tfl" secondAttribute="trailing" constant="8" id="48W-Zg-pks"/>
+                                    <constraint firstAttribute="bottom" secondItem="ITY-pI-DKl" secondAttribute="bottom" constant="6" id="EAD-ZV-Lmq"/>
+                                    <constraint firstItem="H4Y-jB-tfl" firstAttribute="height" secondItem="ITY-pI-DKl" secondAttribute="height" priority="250" id="HH2-Qk-779"/>
+                                    <constraint firstItem="H4Y-jB-tfl" firstAttribute="top" secondItem="ITY-pI-DKl" secondAttribute="top" id="RKE-Wq-a8B"/>
+                                    <constraint firstItem="ITY-pI-DKl" firstAttribute="leading" secondItem="AzT-1J-OUh" secondAttribute="leading" constant="8" id="bdM-Ml-Jus"/>
+                                    <constraint firstItem="ITY-pI-DKl" firstAttribute="top" secondItem="AzT-1J-OUh" secondAttribute="top" constant="6" id="ckp-Ks-h0X"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="iJ7-N9-vav" firstAttribute="leading" secondItem="4V9-cA-dSX" secondAttribute="leading" id="9Vv-9w-pnX"/>
+                            <constraint firstItem="AzT-1J-OUh" firstAttribute="top" secondItem="iJ7-N9-vav" secondAttribute="bottom" id="GiG-QA-hXr"/>
+                            <constraint firstItem="AzT-1J-OUh" firstAttribute="leading" secondItem="4V9-cA-dSX" secondAttribute="leading" id="KRZ-vn-4Cb"/>
+                            <constraint firstItem="4V9-cA-dSX" firstAttribute="trailing" secondItem="AzT-1J-OUh" secondAttribute="trailing" id="PKb-Wp-DEj"/>
                             <constraint firstItem="iJ7-N9-vav" firstAttribute="top" secondItem="4V9-cA-dSX" secondAttribute="top" constant="10" id="bMz-cc-aFP"/>
-                            <constraint firstItem="4V9-cA-dSX" firstAttribute="bottom" secondItem="iJ7-N9-vav" secondAttribute="bottom" id="clp-5b-7VZ"/>
+                            <constraint firstItem="4V9-cA-dSX" firstAttribute="bottom" secondItem="AzT-1J-OUh" secondAttribute="bottom" id="hTo-7H-aVg"/>
                             <constraint firstItem="iJ7-N9-vav" firstAttribute="trailing" secondItem="4V9-cA-dSX" secondAttribute="trailing" id="wmy-16-bhH"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="4V9-cA-dSX"/>
                     </view>
                     <connections>
+                        <outlet property="messageTextView" destination="ITY-pI-DKl" id="IKX-g4-auF"/>
+                        <outlet property="messageViewBottom" destination="hTo-7H-aVg" id="kjS-5f-Ny5"/>
+                        <outlet property="sendButton" destination="H4Y-jB-tfl" id="2pO-He-DX1"/>
                         <outlet property="tableView" destination="iJ7-N9-vav" id="hh7-Qy-DxW"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Unz-vs-JBn" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-681" y="-254"/>
+            <point key="canvasLocation" x="-682.39999999999998" y="-254.12293853073464"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="sendicon" width="24" height="24"/>
+    </resources>
 </document>

@@ -8,4 +8,5 @@
 
 protocol IConversationPresenter {
     func setup()
+    func sendMessage(_ message: String)
 }

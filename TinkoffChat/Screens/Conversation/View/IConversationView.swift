@@ -9,4 +9,7 @@
 protocol IConversationView {
     func setMessages(_ messages: [Message])
     func setTitle(_ title: String?)
+    func showErrorAlert(with title: String, retryAction: @escaping () -> Void)
+    func enableSendButton()
+    func disableSendButton()
 }
