@@ -124,8 +124,8 @@
 		C35707BA2152E62100244E5E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C3760498218E185D00AFEEEA /* CoreDataUserInfoStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataUserInfoStorage.swift; sourceTree = "<group>"; };
 		C390585C218E1ECE002D4ED7 /* TinkoffChat.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = TinkoffChat.xcdatamodel; sourceTree = "<group>"; };
-		C3905862218E1F3D002D4ED7 /* UserInfoEntity+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "UserInfoEntity+CoreDataClass.swift"; path = "/Users/sofia/Documents/Projects/tinkoff-chat/TinkoffChat/Models/UserInfoEntity+CoreDataClass.swift"; sourceTree = "<absolute>"; };
-		C3905863218E1F3D002D4ED7 /* UserInfoEntity+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "UserInfoEntity+CoreDataProperties.swift"; path = "/Users/sofia/Documents/Projects/tinkoff-chat/TinkoffChat/Models/UserInfoEntity+CoreDataProperties.swift"; sourceTree = "<absolute>"; };
+		C3905862218E1F3D002D4ED7 /* UserInfoEntity+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserInfoEntity+CoreDataClass.swift"; sourceTree = "<group>"; };
+		C3905863218E1F3D002D4ED7 /* UserInfoEntity+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserInfoEntity+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		C3905868218E3021002D4ED7 /* CoreDataExtendedUserInfoStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataExtendedUserInfoStorage.swift; sourceTree = "<group>"; };
 		C390586B218E4203002D4ED7 /* CoreDataStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataStack.swift; sourceTree = "<group>"; };
 		C3DC695D217B9B0800DCEBB1 /* EditProfilePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfilePresenter.swift; sourceTree = "<group>"; };
