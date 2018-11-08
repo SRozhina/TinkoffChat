@@ -12,9 +12,9 @@ protocol messageCellConfiguration {
 }
 
 class Message: messageCellConfiguration, Codable {
-    enum Direction: String {
-        case incoming
-        case outgoing
+    enum Direction: Int {
+        case incoming = 0
+        case outgoing = 1
     }
     
     var text: String

@@ -8,10 +8,18 @@
 
 import UIKit
 
-class UserInfo: Codable {
+class UserInfo: Codable, Hashable, Equatable {
     var name: String
     var info: String = ""
     var avatar: UIImage?
+    
+    var hashValue: Int {
+        return name.hashValue ^ name.hashValue
+    }
+    
+    static func == (lhs: UserInfo, rhs: UserInfo) -> Bool {
+        return lhs.name == rhs.name
+    }
     
     private enum CodingKeys: String, CodingKey {
         case name

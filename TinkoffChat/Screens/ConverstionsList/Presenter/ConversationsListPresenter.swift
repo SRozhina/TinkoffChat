@@ -85,19 +85,19 @@ class ConversationsListPresenter: IConversationsListPresenter {
 }
 
 extension ConversationsListPresenter: ICommunicationServiceDelegate {
-    func communicationService(_ communicationService: ICommunicationService, didFoundPeer peer: Peer) {
+    func communicationService(_ communicationService: ICommunicationService, didFoundPeer user: UserInfo) {
         let conversation: Conversation
-        if let existingConversationIndex = historyConversations.firstIndex(where: { $0.user == peer }) {
+        if let existingConversationIndex = historyConversations.firstIndex(where: { $0.user == user }) {
             conversation = historyConversations.remove(at: existingConversationIndex)
             conversation.isOnline = true
         } else {
-            conversation = Conversation(user: peer)
+            conversation = Conversation(user: user)
         }
         onlineConversations.append(conversation)
     }
     
-    func communicationService(_ communicationService: ICommunicationService, didLostPeer peer: Peer) {
-        if let onlineConversationIndex = onlineConversations.firstIndex(where: { $0.user == peer }) {
+    func communicationService(_ communicationService: ICommunicationService, didLostPeer user: UserInfo) {
+        if let onlineConversationIndex = onlineConversations.firstIndex(where: { $0.user == user }) {
             let onlineConversation = onlineConversations.remove(at: onlineConversationIndex)
             onlineConversation.isOnline = false
             historyConversations.append(onlineConversation)
@@ -111,7 +111,7 @@ extension ConversationsListPresenter: ICommunicationServiceDelegate {
     }
     
     func communicationService(_ communicationService: ICommunicationService,
-                              didReceiveInviteFromPeer peer: Peer,
+                              didReceiveInviteFromPeer peer: UserInfo,
                               invintationClosure: (Bool) -> Void) {
         invintationClosure(true)
     }
@@ -122,8 +122,8 @@ extension ConversationsListPresenter: ICommunicationServiceDelegate {
         }
     }
     
-    func communicationService(_ communicationService: ICommunicationService, didReceiveMessage message: Message, from peer: Peer) {
-        guard let conversation = onlineConversations.first(where: { $0.user == peer }) else { return }
+    func communicationService(_ communicationService: ICommunicationService, didReceiveMessage message: Message, from user: UserInfo) {
+        guard let conversation = onlineConversations.first(where: { $0.user == user }) else { return }
         conversation.messages.append(message)
         updateOnlineConversations()
     }

@@ -58,14 +58,14 @@ class ConversationPresenter: IConversationPresenter {
 }
 
 extension ConversationPresenter: ICommunicationServiceDelegate {
-    func communicationService(_ communicationService: ICommunicationService, didFoundPeer peer: Peer) {
+    func communicationService(_ communicationService: ICommunicationService, didFoundPeer peer: UserInfo) {
         if peer == conversation.user {
             self.view.enableSendButton()
             conversation.isOnline = true
         }
     }
     
-    func communicationService(_ communicationService: ICommunicationService, didLostPeer peer: Peer) {
+    func communicationService(_ communicationService: ICommunicationService, didLostPeer peer: UserInfo) {
         if peer == conversation.user {
             self.view.disableSendButton()
             conversation.isOnline = false
@@ -79,7 +79,7 @@ extension ConversationPresenter: ICommunicationServiceDelegate {
     }
     
     func communicationService(_ communicationService: ICommunicationService,
-                              didReceiveInviteFromPeer peer: Peer,
+                              didReceiveInviteFromPeer peer: UserInfo,
                               invintationClosure: (Bool) -> Void) {
         invintationClosure(true)
     }
@@ -90,7 +90,7 @@ extension ConversationPresenter: ICommunicationServiceDelegate {
         }
     }
     
-    func communicationService(_ communicationService: ICommunicationService, didReceiveMessage message: Message, from peer: Peer) {
+    func communicationService(_ communicationService: ICommunicationService, didReceiveMessage message: Message, from peer: UserInfo) {
         message.isUnread = false
         conversation.messages.append(message)
         view.setMessages(conversation.messages)
