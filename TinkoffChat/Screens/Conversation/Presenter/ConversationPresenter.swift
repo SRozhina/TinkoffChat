@@ -35,8 +35,7 @@ class ConversationPresenter: IConversationPresenter {
     }
     
     func sendMessage(_ message: String) {
-        let currentMessage = Message(id: generateMessageID(),
-                                     text: message)
+        let currentMessage = Message(text: message)
         conversation.messages.append(currentMessage)
         view.setMessages(conversation.messages)
         communicationService.send(currentMessage, to: conversation.user)
@@ -48,12 +47,6 @@ class ConversationPresenter: IConversationPresenter {
         }
         view.setTitle(conversation.user.name)
         view.setMessages(conversation.messages)
-    }
-    
-    private func generateMessageID() -> String {
-        let string = "\(arc4random_uniform(UINT32_MAX))\(Date.timeIntervalSinceReferenceDate)\(arc4random_uniform(UINT32_MAX))"
-        let encodedString = string.data(using: .utf8)?.base64EncodedString()
-        return encodedString!
     }
 }
 

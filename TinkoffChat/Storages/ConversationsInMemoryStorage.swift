@@ -9,12 +9,14 @@ import Foundation
 
 class ConversationsInMemoryStorage: IConversationsStorage {
     private var conversations: [Conversation] = []
-    
-    func getConversations() -> [Conversation] {
-        return conversations
+
+    func getConversations(_ completion: @escaping ([Conversation]) -> Void) {
+        completion(conversations)
     }
     
     func updateConversations(by newConversations: [Conversation]) {
         self.conversations = newConversations
     }
+    
+    func updateConversation(by newConversation: Conversation) { }
 }

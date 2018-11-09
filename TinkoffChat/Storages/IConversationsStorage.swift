@@ -7,6 +7,7 @@
 //
 
 protocol IConversationsStorage {
-    func getConversations() -> [Conversation]
+    func getConversations(_ completion: @escaping ([Conversation]) -> Void)
     func updateConversations(by newConversations: [Conversation])
+    func updateConversation(by newConversation: Conversation)
 }

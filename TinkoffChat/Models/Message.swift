@@ -7,11 +7,12 @@
 //
 
 import Foundation
+
 protocol messageCellConfiguration {
     var text: String { get set }
 }
 
-class Message: messageCellConfiguration, Codable {
+class Message: messageCellConfiguration, Codable, Hashable {
     enum Direction: Int {
         case incoming = 0
         case outgoing = 1
@@ -23,11 +24,19 @@ class Message: messageCellConfiguration, Codable {
     let date: Date
     var isUnread: Bool = true
     
-    init(id: String, text: String) {
+    init(id: String = IDBuilder.generateID(), text: String) {
         self.id = id
         self.text = text
         self.date = Date()
         self.direction = .outgoing
+    }
+    
+    var hashValue: Int {
+        return id.hashValue ^ isUnread.hashValue ^ text.hashValue ^ date.hashValue
+    }
+    
+    static func == (lhs: Message, rhs: Message) -> Bool {
+        return lhs.id == rhs.id
     }
     
     private enum CodingKeys: CodingKey {

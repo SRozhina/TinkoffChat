@@ -35,9 +35,10 @@ class ConversationsListPresenter: IConversationsListPresenter {
     func setup() {
         communicationService.delegate = self
         communicationService.online = true
-        let conversations = conversationsStorage.getConversations()
-        onlineConversations = conversations.filter { $0.isOnline }
-        historyConversations = conversations.filter { !$0.isOnline }
+        conversationsStorage.getConversations { conversations in
+            self.onlineConversations = conversations.filter { $0.isOnline }
+            self.historyConversations = conversations.filter { !$0.isOnline }
+        }
     }
     
     func selectConversation(_ conversationPreview: ConversationPreview) {
