@@ -12,4 +12,5 @@ protocol IUserInfoPathProvider {
     var userNameFilePath: URL { get }
     var infoFilePath: URL { get }
     var avatarFilePath: URL { get }
+    var storeFilePath: URL { get }
 }

@@ -18,7 +18,7 @@ class ProfilePresenter: IProfilePresenter {
     }
     
     func setup() {
-        let userInfoStorage = userInfoStorageProvider.getUserInfoStorage(storageType: .GCD)
+        let userInfoStorage = userInfoStorageProvider.getUserInfoStorage(storageType: .Default)
         userInfoStorage.getUserInfo { userInfo in
             self.view.setUserInfo(userInfo)
         }

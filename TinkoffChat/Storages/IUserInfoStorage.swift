@@ -9,6 +9,7 @@
 enum StorageType {
     case GCD
     case Operations
+    case Default
 }
 
 enum Result {

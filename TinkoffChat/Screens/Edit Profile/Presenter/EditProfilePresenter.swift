@@ -21,7 +21,7 @@ class EditProfilePresenter: IEditProfilePresenter {
     }
     
     func setup() {
-        let userInfoStorage = userInfoStorageProvider.getUserInfoStorage(storageType: .GCD)
+        let userInfoStorage = userInfoStorageProvider.getUserInfoStorage(storageType: .Default)
         userInfoStorage.getUserInfo { fetchedUserInfo in
             self.userInfo = fetchedUserInfo
             self.view.setUserInfo(fetchedUserInfo)
