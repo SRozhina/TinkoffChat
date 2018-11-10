@@ -21,12 +21,6 @@ class ConversationsListViewController: UIViewController {
         
         registerNibs()
         setupNavBar()
-        presenter.setup()
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        presenter.saveAll()
     }
     
     override func viewWillAppear(_ animated: Bool) {

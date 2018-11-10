@@ -8,6 +8,9 @@
 
 protocol IConversationsStorage {
     func getConversations(_ completion: @escaping ([Conversation]) -> Void)
-    func updateConversations(by newConversations: [Conversation])
-    func updateConversation(by newConversation: Conversation)
+    func goOffline()
+    func appendMessage(_ message: Message, to conversationId: String)
+    func createConversation(_ newConversation: Conversation)
+    func setOnlineStatus(_ value: Bool, to conversationId: String)
+    func setAllMessagesAsRead(in conversationId: String)
 }

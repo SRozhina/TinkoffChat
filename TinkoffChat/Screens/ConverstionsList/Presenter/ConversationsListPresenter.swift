@@ -48,11 +48,6 @@ class ConversationsListPresenter: IConversationsListPresenter {
         selectedConversationService.selectedConversation = conversation
     }
     
-    func saveAll() {
-        let conversations = onlineConversations + historyConversations
-        conversationsStorage.updateConversations(by: conversations)
-    }
-    
     private func updateOnlineConversations() {
         let previews = onlineConversations.map { getPreviewFrom(conversation: $0, isOnline: true) }
         let sortedPreviews = sortConversationPreviews(previews)
@@ -60,7 +55,7 @@ class ConversationsListPresenter: IConversationsListPresenter {
     }
     
     private func updateHistoryConversations() {
-        let previews = onlineConversations.map { getPreviewFrom(conversation: $0, isOnline: false) }
+        let previews = historyConversations.map { getPreviewFrom(conversation: $0, isOnline: false) }
         let sortedPreviews = sortConversationPreviews(previews)
         view.setHistoryConversations(sortedPreviews)
     }
@@ -95,13 +90,15 @@ extension ConversationsListPresenter: ICommunicationServiceDelegate {
             conversation = Conversation(user: user)
         }
         onlineConversations.append(conversation)
+        conversationsStorage.createConversation(conversation)
     }
     
     func communicationService(_ communicationService: ICommunicationService, didLostPeer user: UserInfo) {
-        if let onlineConversationIndex = onlineConversations.firstIndex(where: { $0.user == user }) {
+        if let onlineConversationIndex = onlineConversations.firstIndex(where: { $0.user.name == user.name }) {
             let onlineConversation = onlineConversations.remove(at: onlineConversationIndex)
             onlineConversation.isOnline = false
             historyConversations.append(onlineConversation)
+            conversationsStorage.setOnlineStatus(false, to: onlineConversation.id)
         }
     }
     
@@ -127,5 +124,6 @@ extension ConversationsListPresenter: ICommunicationServiceDelegate {
         guard let conversation = onlineConversations.first(where: { $0.user == user }) else { return }
         conversation.messages.append(message)
         updateOnlineConversations()
+        conversationsStorage.appendMessage(message, to: conversation.id)
     }
 }

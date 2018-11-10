@@ -9,5 +9,4 @@
 protocol IConversationsListPresenter {
     func setup() 
     func selectConversation(_ conversation: ConversationPreview)
-    func saveAll()
 }

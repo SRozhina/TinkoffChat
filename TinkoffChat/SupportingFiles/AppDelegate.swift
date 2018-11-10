@@ -7,16 +7,19 @@
 //
 
 import UIKit
+import SwinjectStoryboard
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
-    //var multipeerService = MultipeerConnectionService()
     
     var window: UIWindow?
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
-        //multipeerService.setup()
         return true
+    }
+    
+    func applicationDidEnterBackground(_ application: UIApplication) {
+        SwinjectStoryboard.defaultContainer.resolve(IConversationsStorage.self)?.goOffline()
     }
 }

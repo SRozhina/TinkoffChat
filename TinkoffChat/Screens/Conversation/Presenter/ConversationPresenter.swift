@@ -13,11 +13,16 @@ class ConversationPresenter: IConversationPresenter {
     private var communicationService: ICommunicationService
     private let view: IConversationView
     private var conversation: Conversation!
+    private let conversationsStorage: IConversationsStorage
     
-    init(view: IConversationView, communicationService: ICommunicationService, selectedConversationService: ISelectedConversationService) {
+    init(view: IConversationView,
+         communicationService: ICommunicationService,
+         selectedConversationService: ISelectedConversationService,
+         conversationsStorage: IConversationsStorage) {
         self.view = view
         self.communicationService = communicationService
         self.selectedConversationService = selectedConversationService
+        self.conversationsStorage = conversationsStorage
     }
     
     func setup() {
@@ -28,17 +33,28 @@ class ConversationPresenter: IConversationPresenter {
             return
         }
         conversation = selectedConversationService.selectedConversation!
+        setAllMessagesAsRead()
+        viewSetup()
+    }
+    
+    private func setAllMessagesAsRead() {
         for message in conversation.messages {
             message.isUnread = false
         }
-        viewSetup()
+        
+        conversationsStorage.setAllMessagesAsRead(in: conversation.id)
     }
     
     func sendMessage(_ message: String) {
         let currentMessage = Message(text: message)
-        conversation.messages.append(currentMessage)
-        view.setMessages(conversation.messages)
+        addMessage(currentMessage)
         communicationService.send(currentMessage, to: conversation.user)
+    }
+    
+    private func addMessage(_ message: Message) {
+        conversation.messages.append(message)
+        conversationsStorage.appendMessage(message, to: conversation.id)
+        view.setMessages(conversation.messages)
     }
     
     private func viewSetup() {
@@ -55,6 +71,7 @@ extension ConversationPresenter: ICommunicationServiceDelegate {
         if peer == conversation.user {
             self.view.enableSendButton()
             conversation.isOnline = true
+            conversationsStorage.setOnlineStatus(true, to: conversation.id)
         }
     }
     
@@ -62,6 +79,7 @@ extension ConversationPresenter: ICommunicationServiceDelegate {
         if peer == conversation.user {
             self.view.disableSendButton()
             conversation.isOnline = false
+            conversationsStorage.setOnlineStatus(false, to: conversation.id)
         }
     }
     
@@ -85,7 +103,6 @@ extension ConversationPresenter: ICommunicationServiceDelegate {
     
     func communicationService(_ communicationService: ICommunicationService, didReceiveMessage message: Message, from peer: UserInfo) {
         message.isUnread = false
-        conversation.messages.append(message)
-        view.setMessages(conversation.messages)
+        addMessage(message)
     }
 }

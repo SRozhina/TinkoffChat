@@ -14,7 +14,7 @@ protocol IUserInfoConverter {
     func getAvatarPath(for image: UIImage?) -> URL
 }
 
-class UserInfoConverter {
+class UserInfoConverter: IUserInfoConverter {
     private let userInfoPathProvider: IUserInfoPathProvider
     
     init(userInfoPathProvider: IUserInfoPathProvider) {

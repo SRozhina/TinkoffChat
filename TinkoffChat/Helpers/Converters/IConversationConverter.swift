@@ -22,11 +22,12 @@ class ConversationConverter: IConversationConverter {
     }
     
     func makeConversation(from conversationEntity: ConversationEntity?) -> Conversation {
+        let id = conversationEntity?.id ?? IDBuilder.generateID()
         let user = userInfoConverter.makeUserInfo(from: conversationEntity?.user)
-        let messagesEntities = (conversationEntity?.messages.allObjects.compactMap { $0 as? MessageEntity }) ?? []
-        let messages = messagesEntities.map { messageConverter.makeMessage(from: $0) }
+        let messagesEntities = (conversationEntity?.messages) ?? []
+        let messages = messagesEntities.compactMap { messageConverter.makeMessage(from: $0 as? MessageEntity) }
         let isOnline = conversationEntity?.isOnline ?? false
         
-        return Conversation(user: user, messages: messages, isOnline: isOnline)
+        return Conversation(user: user, messages: messages, isOnline: isOnline, id: id)
     }
 }

@@ -2,7 +2,7 @@
 //  ConversationEntity+CoreDataProperties.swift
 //  
 //
-//  Created by Sofia on 09/11/2018.
+//  Created by Sofia on 10/11/2018.
 //
 //
 
@@ -19,7 +19,9 @@ extension ConversationEntity {
     @NSManaged
     public var isOnline: Bool
     @NSManaged
-    public var messages: NSSet
+    public var id: String
+    @NSManaged
+    public var messages: NSOrderedSet
     @NSManaged
     public var user: UserInfoEntity
 
@@ -38,10 +40,9 @@ extension ConversationEntity {
 
     @objc(addMessages:)
     @NSManaged
-    public func addToMessages(_ values: NSSet)
+    public func addToMessages(_ values: NSOrderedSet)
 
     @objc(removeMessages:)
     @NSManaged
-    public func removeFromMessages(_ values: NSSet)
-
+    public func removeFromMessages(_ values: NSOrderedSet)
 }
