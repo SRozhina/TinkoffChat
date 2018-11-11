@@ -88,13 +88,14 @@ extension ConversationsListService: NSFetchedResultsControllerDelegate {
                     at indexPath: IndexPath?,
                     for type: NSFetchedResultsChangeType,
                     newIndexPath: IndexPath?) {
-        guard let indexPath = indexPath else { return }
         switch type {
         case .update:
             delegate?.updateConversations()
         case .insert:
-            delegate?.updateConversation(in: indexPath.section)
+            guard let newIndexPath = newIndexPath else { return }
+            delegate?.updateConversation(in: newIndexPath.section)
         case .delete:
+            guard let indexPath = indexPath else { return }
             delegate?.updateConversation(in: indexPath.section)
         case .move:
             delegate?.updateConversations()

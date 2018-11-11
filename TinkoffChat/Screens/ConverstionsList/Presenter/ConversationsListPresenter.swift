@@ -101,7 +101,6 @@ extension ConversationsListPresenter: ConversationsListServiceDelegate {
         view.startUpdates()
     }
     func endUpdates() {
-        onlineConversations = conversationsListService.getOnlineConversations()
         view.endUpdates()
     }
 }
