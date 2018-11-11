@@ -7,14 +7,25 @@
 //
 
 import SwinjectStoryboard
+import CoreData
 
 extension SwinjectStoryboard {
     @objc
     class func setup() {
         defaultContainer
+            .register(NSPersistentContainer.self) { _ in
+            let container = NSPersistentContainer(name: "TinkoffChat")
+            container.loadPersistentStores(completionHandler: { _, _ in })
+            container.viewContext.automaticallyMergesChangesFromParent = true
+            return container
+        }
+            .inObjectScope(.container)
+        
+        defaultContainer
             .register(IConversationsStorage.self) { resolver in
                 CoreDataConversationsStorage(conversationConverter: resolver.resolve(IConversationConverter.self)!,
-                                             userInfoConverter: resolver.resolve(IUserInfoConverter.self)!) }
+                                             userInfoConverter: resolver.resolve(IUserInfoConverter.self)!,
+                                             container: resolver.resolve(NSPersistentContainer.self)!) }
             .inObjectScope(.container)
         
         defaultContainer
@@ -50,6 +61,14 @@ extension SwinjectStoryboard {
             .inObjectScope(.container)
         
         defaultContainer
+            .register(IConversationsListService.self) { resolver in
+                ConversationsListService(conversationsStorage: resolver.resolve(IConversationsStorage.self)!,
+                                         conversationConverter: resolver.resolve(IConversationConverter.self)!,
+                                         communicationService: resolver.resolve(ICommunicationService.self)!,
+                                         container: resolver.resolve(NSPersistentContainer.self)!) }
+            .inObjectScope(.container)
+        
+        defaultContainer
             .register(IErrorAlertBuilder.self) { _ in ErrorAlertBuilder() }
             .inObjectScope(.container)
         
@@ -67,9 +86,8 @@ extension SwinjectStoryboard {
         
         defaultContainer.register(IConversationsListPresenter.self) { resolver, view in
             ConversationsListPresenter(view: view,
-                                       conversationsStorage: resolver.resolve(IConversationsStorage.self)!,
                                        selectedConversationService: resolver.resolve(ISelectedConversationService.self)!,
-                                       communicationService: resolver.resolve(ICommunicationService.self)!)
+                                       conversationsListService: resolver.resolve(IConversationsListService.self)!)
         }
         
         defaultContainer.storyboardInitCompleted(ConversationsListViewController.self) { resolver, view in

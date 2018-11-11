@@ -5,12 +5,13 @@
 //  Created by Sofia on 04/10/2018.
 //  Copyright © 2018 Sofia. All rights reserved.
 //
+import CoreData
 
-class ConversationsListPresenter: IConversationsListPresenter {
+class ConversationsListPresenter: NSObject, IConversationsListPresenter {
     private let view: IConversationsListView
-    private let conversationsStorage: IConversationsStorage
+    private var conversationsListService: IConversationsListService
+    
     private var selectedConversationService: ISelectedConversationService
-    private var communicationService: ICommunicationService
     private var onlineConversations: [Conversation] = [] {
         didSet {
             updateOnlineConversations()
@@ -23,22 +24,19 @@ class ConversationsListPresenter: IConversationsListPresenter {
     }
     
     init(view: IConversationsListView,
-         conversationsStorage: IConversationsStorage,
          selectedConversationService: ISelectedConversationService,
-         communicationService: ICommunicationService) {
+         conversationsListService: IConversationsListService) {
         self.view = view
-        self.conversationsStorage = conversationsStorage
         self.selectedConversationService = selectedConversationService
-        self.communicationService = communicationService
+        self.conversationsListService = conversationsListService
     }
     
     func setup() {
-        communicationService.delegate = self
-        communicationService.online = true
-        conversationsStorage.getConversations { conversations in
-            self.onlineConversations = conversations.filter { $0.isOnline }
-            self.historyConversations = conversations.filter { !$0.isOnline }
-        }
+        conversationsListService.delegate = self
+        conversationsListService.setupService()
+        
+        onlineConversations = conversationsListService.getOnlineConversations()
+        historyConversations = conversationsListService.getHistoryConversations()
     }
     
     func selectConversation(_ conversationPreview: ConversationPreview) {
@@ -80,50 +78,30 @@ class ConversationsListPresenter: IConversationsListPresenter {
     }
 }
 
-extension ConversationsListPresenter: ICommunicationServiceDelegate {
-    func communicationService(_ communicationService: ICommunicationService, didFoundPeer user: UserInfo) {
-        let conversation: Conversation
-        if let existingConversationIndex = historyConversations.firstIndex(where: { $0.user == user }) {
-            conversation = historyConversations.remove(at: existingConversationIndex)
-            conversation.isOnline = true
-        } else {
-            conversation = Conversation(user: user)
-        }
-        onlineConversations.append(conversation)
-        conversationsStorage.createConversation(conversation)
-    }
-    
-    func communicationService(_ communicationService: ICommunicationService, didLostPeer user: UserInfo) {
-        if let onlineConversationIndex = onlineConversations.firstIndex(where: { $0.user.name == user.name }) {
-            let onlineConversation = onlineConversations.remove(at: onlineConversationIndex)
-            onlineConversation.isOnline = false
-            historyConversations.append(onlineConversation)
-            conversationsStorage.setOnlineStatus(false, to: onlineConversation.id)
+extension ConversationsListPresenter: ConversationsListServiceDelegate { 
+    func updateConversation(in section: Int) {
+        switch section {
+        case 0:
+            onlineConversations = conversationsListService.getOnlineConversations()
+        default:
+            historyConversations = conversationsListService.getHistoryConversations()
         }
     }
     
-    func communicationService(_ communicationService: ICommunicationService, didNotStartBrowsingForPeers error: Error) {
-        view.showErrorAlert(with: error.localizedDescription) {
-            self.communicationService.online = true
-        }
+    func updateConversations() {
+        onlineConversations = conversationsListService.getOnlineConversations()
+        historyConversations = conversationsListService.getHistoryConversations()
     }
     
-    func communicationService(_ communicationService: ICommunicationService,
-                              didReceiveInviteFromPeer peer: UserInfo,
-                              invintationClosure: (Bool) -> Void) {
-        invintationClosure(true)
+    func showError(with error: String, retryAction: @escaping () -> Void) {
+        view.showErrorAlert(with: error, retryAction: retryAction)
     }
     
-    func communicationService(_ communicationService: ICommunicationService, didNotStartAdvertisingForPeers error: Error) {
-        view.showErrorAlert(with: error.localizedDescription) {
-            self.communicationService.online = true
-        }
+    func startUpdates() {
+        view.startUpdates()
     }
-    
-    func communicationService(_ communicationService: ICommunicationService, didReceiveMessage message: Message, from user: UserInfo) {
-        guard let conversation = onlineConversations.first(where: { $0.user == user }) else { return }
-        conversation.messages.append(message)
-        updateOnlineConversations()
-        conversationsStorage.appendMessage(message, to: conversation.id)
+    func endUpdates() {
+        onlineConversations = conversationsListService.getOnlineConversations()
+        view.endUpdates()
     }
 }

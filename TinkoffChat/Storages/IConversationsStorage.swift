@@ -7,7 +7,6 @@
 //
 
 protocol IConversationsStorage {
-    func getConversations(_ completion: @escaping ([Conversation]) -> Void)
     func goOffline()
     func appendMessage(_ message: Message, to conversationId: String)
     func createConversation(_ newConversation: Conversation)

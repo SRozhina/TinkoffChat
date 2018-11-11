@@ -61,6 +61,14 @@ extension ConversationsListViewController: IConversationsListView {
         let alert = errorAlertBuilder.build(with: title, retryAction: retryAction)
         present(alert, animated: true)
     }
+    
+    func startUpdates() {
+        tableView.beginUpdates()
+    }
+    
+    func endUpdates() {
+        tableView.endUpdates()
+    }
 }
 
 // MARK: - UITableViewDataSource
