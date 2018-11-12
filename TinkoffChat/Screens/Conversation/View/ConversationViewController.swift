@@ -110,6 +110,26 @@ class ConversationViewController: UIViewController {
 }
 
 extension ConversationViewController: IConversationView {
+    func startUpdates() {
+        tableView.beginUpdates()
+    }
+    
+    func endUpdates() {
+        tableView.endUpdates()
+    }
+    
+    func updateMessage(at indexPath: IndexPath) {
+        tableView.reloadRows(at: [indexPath], with: .automatic)
+    }
+    
+    func insertMessage(at indexPath: IndexPath) {
+        tableView.insertRows(at: [indexPath], with: .automatic)
+    }
+    
+    func deleteMessage(at indexPath: IndexPath) {
+        tableView.deleteRows(at: [indexPath], with: .automatic)
+    }
+    
     func setMessages(_ messages: [Message]) {
         self.messages = messages
         tableView.reloadData()

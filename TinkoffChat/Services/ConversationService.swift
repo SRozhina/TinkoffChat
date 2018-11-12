@@ -1,81 +1,78 @@
 //
-//  ConversationsListService.swift
+//  ConversationService.swift
 //  TinkoffChat
 //
-//  Created by Sofia on 11/11/2018.
+//  Created by Sofia on 12/11/2018.
 //  Copyright © 2018 Sofia. All rights reserved.
 //
 
 import Foundation
 import CoreData
 
-protocol ConversationsListServiceDelegate: class {
+protocol ConversationServiceDelegate: class {
     func startUpdates()
     func endUpdates()
-    func updateConversation(in section: Int)
-    func updateConversations()
+    func updateMessage(at indexPath: IndexPath)
+    func insertMessage(at indexPath: IndexPath)
+    func deleteMessage(at indexPath: IndexPath)
+    func updateStateFor(_ user: UserInfo)
     func showError(with error: String, retryAction: @escaping () -> Void)
 }
 
-class ConversationsListService: NSObject, IConversationsListService {
+class ConversationService: NSObject, IConversationService {
     private let context: NSManagedObjectContext
     private let conversationsStorage: IConversationsStorage
     private var communicationService: ICommunicationService
-    private var fetchResultsController: NSFetchedResultsController<ConversationEntity>!
-    private let conversationConverter: IConversationConverter
-    weak var delegate: ConversationsListServiceDelegate?
+    private var conversationsListService: IConversationsListService
+    private var messagesFetchResultsController: NSFetchedResultsController<MessageEntity>!
+    weak var delegate: ConversationServiceDelegate?
     
     init(conversationsStorage: IConversationsStorage,
-         conversationConverter: IConversationConverter,
          communicationService: ICommunicationService,
+         conversationsListService: IConversationsListService,
          container: NSPersistentContainer) {
         self.conversationsStorage = conversationsStorage
-        self.conversationConverter = conversationConverter
         self.communicationService = communicationService
+        self.conversationsListService = conversationsListService
         self.context = container.viewContext
         super.init()
         
     }
     
-    func setupService() {
-        createFetchResultsController()
+    func setupService(for conversationId: String) {
+        createFetchResultsController(with: conversationId)
         
-        fetchResultsController.delegate = self
-        try? fetchResultsController.performFetch()
+        messagesFetchResultsController.delegate = self
+        try? messagesFetchResultsController.performFetch()
         communicationService.delegate = self
         communicationService.online = true
     }
     
-    private func createFetchResultsController() {
-        let fetchRequest = NSFetchRequest<ConversationEntity>(entityName: String(describing: ConversationEntity.self))
-        let sortDescriptorName = NSSortDescriptor(key: #keyPath(ConversationEntity.user.name), ascending: true)
-        fetchRequest.sortDescriptors = [sortDescriptorName]
-        fetchRequest.resultType = .managedObjectResultType
-
-        fetchResultsController = NSFetchedResultsController<ConversationEntity>(fetchRequest: fetchRequest,
-                                                                                managedObjectContext: context,
-                                                                                sectionNameKeyPath: nil,
-                                                                                cacheName: nil)
+    private func createFetchResultsController(with conversationId: String) {
+        let messagesPredicate = NSPredicate(format: "conversation.id==%@", conversationId)
+        let messagesFetchRequest = NSFetchRequest<MessageEntity>(entityName: String(describing: MessageEntity.self))
+        messagesFetchRequest.predicate = messagesPredicate
+        let messagesSortDescriptorName = NSSortDescriptor(key: #keyPath(MessageEntity.date), ascending: true)
+        messagesFetchRequest.sortDescriptors = [messagesSortDescriptorName]
+        messagesFetchRequest.resultType = .managedObjectResultType
+        
+        messagesFetchResultsController = NSFetchedResultsController<MessageEntity>(fetchRequest: messagesFetchRequest,
+                                                                                   managedObjectContext: context,
+                                                                                   sectionNameKeyPath: nil,
+                                                                                   cacheName: nil)
     }
     
-    func getOnlineConversations() -> [Conversation] {
-        guard let section = fetchResultsController.sections?.first else { return [] }
-        let conversationEntities = section.objects as? [ConversationEntity]
-        return conversationEntities?
-            .compactMap { conversationConverter.makeConversation(from: $0) }
-            .filter { $0.isOnline } ?? []
+    func setAllMessagesAsRead(in conversationId: String) {
+        conversationsStorage.setAllMessagesAsRead(in: conversationId)
     }
     
-    func getHistoryConversations() -> [Conversation] {
-        guard let section = fetchResultsController.sections?.first else { return [] }
-        let conversationEntities = section.objects as? [ConversationEntity]
-        return conversationEntities?
-            .compactMap { conversationConverter.makeConversation(from: $0) }
-            .filter { !$0.isOnline } ?? []
+    func sendMessage(_ message: Message, in conversation: Conversation) {
+        conversationsStorage.appendMessage(message, to: conversation.id)
+        communicationService.send(message, to: conversation.user)
     }
 }
 
-extension ConversationsListService: NSFetchedResultsControllerDelegate {
+extension ConversationService: NSFetchedResultsControllerDelegate {
     func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>,
                     didChange anObject: Any,
                     at indexPath: IndexPath?,
@@ -83,15 +80,16 @@ extension ConversationsListService: NSFetchedResultsControllerDelegate {
                     newIndexPath: IndexPath?) {
         switch type {
         case .update:
-            delegate?.updateConversations()
+            guard let indexPath = indexPath else { return }
+            delegate?.updateMessage(at: indexPath)
         case .insert:
             guard let newIndexPath = newIndexPath else { return }
-            delegate?.updateConversation(in: newIndexPath.section)
+            delegate?.insertMessage(at: newIndexPath)
         case .delete:
             guard let indexPath = indexPath else { return }
-            delegate?.updateConversation(in: indexPath.section)
-        case .move:
-            delegate?.updateConversations()
+            delegate?.deleteMessage(at: indexPath)
+        default:
+            break
         }
     }
     
@@ -104,19 +102,22 @@ extension ConversationsListService: NSFetchedResultsControllerDelegate {
     }
 }
 
-extension ConversationsListService: ICommunicationServiceDelegate {
+extension ConversationService: ICommunicationServiceDelegate {
     func communicationService(_ communicationService: ICommunicationService, didFoundPeer user: UserInfo) {
-        if let existingConversation = getHistoryConversations().filter({ $0.user.name == user.name }).first {
+        if let existingConversation = conversationsListService.getHistoryConversations().filter({ $0.user.name == user.name }).first {
             conversationsStorage.setOnlineStatus(true, to: existingConversation.id)
+            delegate?.updateStateFor(user)
             return
         }
+
         let conversation = Conversation(user: user)
         conversationsStorage.createConversation(conversation)
     }
     
     func communicationService(_ communicationService: ICommunicationService, didLostPeer user: UserInfo) {
-        if let onlineConversation = getOnlineConversations().filter({ $0.user.name == user.name }).first {
+        if let onlineConversation = conversationsListService.getOnlineConversations().filter({ $0.user.name == user.name }).first {
             conversationsStorage.setOnlineStatus(false, to: onlineConversation.id)
+            delegate?.updateStateFor(user)
         }
     }
     
@@ -139,7 +140,7 @@ extension ConversationsListService: ICommunicationServiceDelegate {
     }
     
     func communicationService(_ communicationService: ICommunicationService, didReceiveMessage message: Message, from user: UserInfo) {
-        if let conversation = getOnlineConversations().filter({ $0.user.name == user.name }).first {
+        if let conversation = conversationsListService.getOnlineConversations().filter({ $0.user.name == user.name }).first {
             conversationsStorage.appendMessage(message, to: conversation.id)
         }
     }

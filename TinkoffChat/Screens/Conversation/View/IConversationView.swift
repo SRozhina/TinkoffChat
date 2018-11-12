@@ -6,10 +6,17 @@
 //  Copyright © 2018 Sofia. All rights reserved.
 //
 
+import Foundation
+
 protocol IConversationView {
     func setMessages(_ messages: [Message])
     func setTitle(_ title: String?)
     func showErrorAlert(with title: String, retryAction: @escaping () -> Void)
     func enableSendButton()
     func disableSendButton()
+    func startUpdates()
+    func endUpdates()
+    func updateMessage(at indexPath: IndexPath)
+    func insertMessage(at indexPath: IndexPath)
+    func deleteMessage(at indexPath: IndexPath)
 }

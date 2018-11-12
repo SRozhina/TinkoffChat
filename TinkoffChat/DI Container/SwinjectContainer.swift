@@ -61,6 +61,14 @@ extension SwinjectStoryboard {
             .inObjectScope(.container)
         
         defaultContainer
+            .register(IConversationService.self) { resolver in
+                ConversationService(conversationsStorage: resolver.resolve(IConversationsStorage.self)!,
+                                    communicationService: resolver.resolve(ICommunicationService.self)!,
+                                    conversationsListService: resolver.resolve(IConversationsListService.self)!,
+                                    container: resolver.resolve(NSPersistentContainer.self)!) }
+            .inObjectScope(.container)
+        
+        defaultContainer
             .register(IConversationsListService.self) { resolver in
                 ConversationsListService(conversationsStorage: resolver.resolve(IConversationsStorage.self)!,
                                          conversationConverter: resolver.resolve(IConversationConverter.self)!,
@@ -74,9 +82,8 @@ extension SwinjectStoryboard {
         
         defaultContainer.register(IConversationPresenter.self) { resolver, view in
             ConversationPresenter(view: view,
-                                  communicationService: resolver.resolve(ICommunicationService.self)!,
                                   selectedConversationService: resolver.resolve(ISelectedConversationService.self)!,
-                                  conversationsStorage: resolver.resolve(IConversationsStorage.self)!)
+                                  conversationService: resolver.resolve(IConversationService.self)!)
         }
         
         defaultContainer.storyboardInitCompleted(ConversationViewController.self) { resolver, view in
