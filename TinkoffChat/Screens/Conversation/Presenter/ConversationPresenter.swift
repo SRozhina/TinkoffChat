@@ -10,16 +10,28 @@ import Foundation
 
 class ConversationPresenter: IConversationPresenter {
     private let selectedConversationService: ISelectedConversationService
-    private var conversationService: IConversationService
     private let view: IConversationView
     private var conversation: Conversation!
+    private let conversationsStorage: IConversationsStorage
+    private var messagesDataChangedService: IMessagesDataChangedService
+    private var communicationService: ICommunicationService
+    private var conversationsListService: IConversationsListService
+    private var userDataChangedService: IUsersDataChangedService
     
     init(view: IConversationView,
          selectedConversationService: ISelectedConversationService,
-         conversationService: IConversationService) {
+         conversationsStorage: IConversationsStorage,
+         messagesDataChangedService: IMessagesDataChangedService,
+         communicationService: ICommunicationService,
+         conversationsListService: IConversationsListService,
+         userDataChangedService: IUsersDataChangedService) {
         self.view = view
         self.selectedConversationService = selectedConversationService
-        self.conversationService = conversationService
+        self.conversationsStorage = conversationsStorage
+        self.messagesDataChangedService = messagesDataChangedService
+        self.communicationService = communicationService
+        self.conversationsListService = conversationsListService
+        self.userDataChangedService = userDataChangedService
     }
     
     func setup() {
@@ -28,20 +40,24 @@ class ConversationPresenter: IConversationPresenter {
             return
         }
         conversation = selectedConversationService.selectedConversation!
-        conversationService.delegate = self
-        conversationService.setupService(for: conversation.id)
+        communicationService.delegate = self
+        communicationService.online = true
+        messagesDataChangedService.setupService(with: conversation.id)
+        messagesDataChangedService.messagesDelegate = self
+        userDataChangedService.setupService()
+        userDataChangedService.usersDelegate = self
         setAllMessagesAsRead()
         viewSetup()
     }
     
     private func setAllMessagesAsRead() {
-        conversationService.setAllMessagesAsRead(in: conversation.id)
+        conversationsStorage.setAllMessagesAsRead(in: conversation.id)
     }
     
     func sendMessage(_ message: String) {
         let currentMessage = Message(text: message)
-
-        conversationService.sendMessage(currentMessage, in: conversation)
+        conversationsStorage.appendMessage(currentMessage, to: conversation.id)
+        communicationService.send(currentMessage, to: conversation.user)
         view.setMessages(conversation.messages)
     }
     
@@ -54,7 +70,49 @@ class ConversationPresenter: IConversationPresenter {
     }
 }
 
-extension ConversationPresenter: ConversationServiceDelegate {
+extension ConversationPresenter: ICommunicationServiceDelegate {
+    func communicationService(_ communicationService: ICommunicationService, didFoundPeer user: UserInfo) {
+        if let existingConversation = conversationsListService.getHistoryConversations().filter({ $0.user.name == user.name }).first {
+            conversationsStorage.setOnlineStatus(true, to: existingConversation.id)
+            return
+        }
+        
+        let conversation = Conversation(user: user)
+        conversationsStorage.createConversation(conversation)
+    }
+    
+    func communicationService(_ communicationService: ICommunicationService, didLostPeer user: UserInfo) {
+        if let onlineConversation = conversationsListService.getOnlineConversations().filter({ $0.user.name == user.name }).first {
+            conversationsStorage.setOnlineStatus(false, to: onlineConversation.id)
+        }
+    }
+    
+    func communicationService(_ communicationService: ICommunicationService, didNotStartBrowsingForPeers error: Error) {
+        view.showErrorAlert(with: error.localizedDescription) {
+            self.communicationService.online = true
+        }
+    }
+    
+    func communicationService(_ communicationService: ICommunicationService,
+                              didReceiveInviteFromPeer peer: UserInfo,
+                              invintationClosure: (Bool) -> Void) {
+        invintationClosure(true)
+    }
+    
+    func communicationService(_ communicationService: ICommunicationService, didNotStartAdvertisingForPeers error: Error) {
+        view.showErrorAlert(with: error.localizedDescription) {
+            self.communicationService.online = true
+        }
+    }
+    
+    func communicationService(_ communicationService: ICommunicationService, didReceiveMessage message: Message, from user: UserInfo) {
+        if let conversation = conversationsListService.getOnlineConversations().filter({ $0.user.name == user.name }).first {
+            conversationsStorage.appendMessage(message, to: conversation.id)
+        }
+    }
+}
+
+extension ConversationPresenter: MessagesDataChangedServiceDelegate {
     func startUpdates() {
         view.startUpdates()
     }
@@ -74,9 +132,13 @@ extension ConversationPresenter: ConversationServiceDelegate {
     func deleteMessage(at indexPath: IndexPath) {
         view.deleteMessage(at: indexPath)
     }
-    
-    func updateStateFor(_ user: UserInfo) {
-        if user.name == conversation.user.name {
+}
+
+extension ConversationPresenter: UsersDataChangedServiceDelegate {
+    func updateUser(with name: String? = nil, at indexPath: IndexPath) {
+        print("test: when user become online/offline move or update will be called?")
+        //TODO better to use ConversationDataChangedService, check conversationId and set state
+        if name == conversation.user.name {
             if conversation.isOnline {
                 conversation.isOnline = false
                 view.disableSendButton()
@@ -87,7 +149,20 @@ extension ConversationPresenter: ConversationServiceDelegate {
         }
     }
     
-    func showError(with error: String, retryAction: @escaping () -> Void) {
-        view.showErrorAlert(with: error, retryAction: retryAction)
+    func insertUser(at indexPath: IndexPath) { }
+    
+    func deleteUser(at indexPath: IndexPath) { }
+    
+    func moveUser(with name: String? = nil, from indexPath: IndexPath, to newIndexPath: IndexPath) {
+        print("test: when user become online/offline move or update will be called?")
+        if name == conversation.user.name {
+            if conversation.isOnline {
+                conversation.isOnline = false
+                view.disableSendButton()
+            } else {
+                conversation.isOnline = true
+                view.enableSendButton()
+            }
+        }
     }
 }

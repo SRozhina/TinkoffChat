@@ -61,19 +61,22 @@ extension SwinjectStoryboard {
             .inObjectScope(.container)
         
         defaultContainer
-            .register(IConversationService.self) { resolver in
-                ConversationService(conversationsStorage: resolver.resolve(IConversationsStorage.self)!,
-                                    communicationService: resolver.resolve(ICommunicationService.self)!,
-                                    conversationsListService: resolver.resolve(IConversationsListService.self)!,
-                                    container: resolver.resolve(NSPersistentContainer.self)!) }
+            .register(IMessagesDataChangedService.self) { resolver in
+                MessagesDataChangedService(container: resolver.resolve(NSPersistentContainer.self)!)}
             .inObjectScope(.container)
         
+        defaultContainer
+            .register(IUsersDataChangedService.self) { resolver in
+                UsersDataChangedService(container: resolver.resolve(NSPersistentContainer.self)!)}
+            .inObjectScope(.container)
+
         defaultContainer
             .register(IConversationsListService.self) { resolver in
                 ConversationsListService(conversationsStorage: resolver.resolve(IConversationsStorage.self)!,
                                          conversationConverter: resolver.resolve(IConversationConverter.self)!,
                                          communicationService: resolver.resolve(ICommunicationService.self)!,
-                                         container: resolver.resolve(NSPersistentContainer.self)!) }
+                                         container: resolver.resolve(NSPersistentContainer.self)!)
+            }
             .inObjectScope(.container)
         
         defaultContainer
@@ -83,7 +86,12 @@ extension SwinjectStoryboard {
         defaultContainer.register(IConversationPresenter.self) { resolver, view in
             ConversationPresenter(view: view,
                                   selectedConversationService: resolver.resolve(ISelectedConversationService.self)!,
-                                  conversationService: resolver.resolve(IConversationService.self)!)
+                                  conversationsStorage: resolver.resolve(IConversationsStorage.self)!,
+                                  messagesDataChangedService: resolver.resolve(IMessagesDataChangedService.self)!,
+                                  communicationService: resolver.resolve(ICommunicationService.self)!,
+                                  conversationsListService: resolver.resolve(IConversationsListService.self)!,
+                                  userDataChangedService: resolver.resolve(IUsersDataChangedService.self)!)
+            
         }
         
         defaultContainer.storyboardInitCompleted(ConversationViewController.self) { resolver, view in
