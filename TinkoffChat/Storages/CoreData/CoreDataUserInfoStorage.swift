@@ -40,6 +40,7 @@ class CoreDataUserInfoStorage: IUserInfoStorage {
         container.performBackgroundTask { backgroundContext in
             let userInfoEntity = NSEntityDescription.insertNewObject(forEntityName: String(describing: UserInfoEntity.self),
                                                                      into: backgroundContext) as? UserInfoEntity
+            userInfoEntity?.id = 0
             userInfoEntity?.name = userInfo.name
             userInfoEntity?.info = userInfo.info
             if let image = userInfo.avatar,

@@ -12,20 +12,22 @@ import UIKit
 class EditProfilePresenter: IEditProfilePresenter {
     private let view: IEditProfileView
     private let userInfoStorageProvider: IUserInfoStorageProvider
+    private let userProfileDataChangedService: IUserProfileDataChangedService
     
     private var userInfo: UserInfo!
     
-    init(view: IEditProfileView, userInfoStorageProvider: IUserInfoStorageProvider) {
+    init(view: IEditProfileView,
+         userInfoStorageProvider: IUserInfoStorageProvider,
+         userProfileDataChangedService: IUserProfileDataChangedService) {
         self.view = view
         self.userInfoStorageProvider = userInfoStorageProvider
+        self.userProfileDataChangedService = userProfileDataChangedService
     }
     
     func setup() {
-        let userInfoStorage = userInfoStorageProvider.getUserInfoStorage(storageType: .Default)
-        userInfoStorage.getUserInfo { fetchedUserInfo in
-            self.userInfo = fetchedUserInfo
-            self.view.setUserInfo(fetchedUserInfo)
-        }
+        userProfileDataChangedService.setupService()
+        userInfo = userProfileDataChangedService.getUserProfileInfo()
+        view.setUserInfo(userInfo)
     }
     
     func saveUserInfo(_ newUserInfo: UserInfo, to storageType: StorageType) {
