@@ -43,7 +43,6 @@ class FetchRequestBuilder {
     }
     
     func usersOnlineFetchRequest() -> NSFetchRequest<UserInfoEntity> {
-        //for conversation
         let predicate = NSPredicate(format: "conversation.isOnline==%@", NSNumber(value: true))
         let fetchRequest = NSFetchRequest<UserInfoEntity>(entityName: String(describing: UserInfoEntity.self))
         fetchRequest.predicate = predicate

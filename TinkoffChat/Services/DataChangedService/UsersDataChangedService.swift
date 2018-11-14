@@ -31,6 +31,7 @@ class UsersDataChangedService: NSObject, NSFetchedResultsControllerDelegate, IUs
                                                                             sectionNameKeyPath: nil,
                                                                             cacheName: nil)
         fetchResultsController.delegate = self
+        try? fetchResultsController.performFetch()
     }
     
     func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>,

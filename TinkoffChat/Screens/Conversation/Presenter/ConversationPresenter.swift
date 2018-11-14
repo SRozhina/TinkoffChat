@@ -15,7 +15,7 @@ class ConversationPresenter: IConversationPresenter {
     private let conversationsStorage: IConversationsStorage
     private var messagesDataChangedService: IMessagesDataChangedService
     private var communicationService: ICommunicationService
-    private var conversationsListService: IConversationsListService
+    private var conversationsDataChangedService: IConversationsDataChangedService
     private var userDataChangedService: IUsersDataChangedService
     
     init(view: IConversationView,
@@ -23,20 +23,20 @@ class ConversationPresenter: IConversationPresenter {
          conversationsStorage: IConversationsStorage,
          messagesDataChangedService: IMessagesDataChangedService,
          communicationService: ICommunicationService,
-         conversationsListService: IConversationsListService,
+         conversationsDataChangedService: IConversationsDataChangedService,
          userDataChangedService: IUsersDataChangedService) {
         self.view = view
         self.selectedConversationService = selectedConversationService
         self.conversationsStorage = conversationsStorage
         self.messagesDataChangedService = messagesDataChangedService
         self.communicationService = communicationService
-        self.conversationsListService = conversationsListService
+        self.conversationsDataChangedService = conversationsDataChangedService
         self.userDataChangedService = userDataChangedService
     }
     
     func setup() {
         if selectedConversationService.selectedConversation == nil {
-            view.disableSendButton()
+            view.setSendButtonEnabled(false)
             return
         }
         conversation = selectedConversationService.selectedConversation!
@@ -63,7 +63,7 @@ class ConversationPresenter: IConversationPresenter {
     
     private func viewSetup() {
         if !conversation.isOnline {
-            view.disableSendButton()
+            view.setSendButtonEnabled(false)
         }
         view.setTitle(conversation.user.name)
         view.setMessages(conversation.messages)
@@ -72,7 +72,7 @@ class ConversationPresenter: IConversationPresenter {
 
 extension ConversationPresenter: ICommunicationServiceDelegate {
     func communicationService(_ communicationService: ICommunicationService, didFoundPeer user: UserInfo) {
-        if let existingConversation = conversationsListService.getHistoryConversations().filter({ $0.user.name == user.name }).first {
+        if let existingConversation = conversationsDataChangedService.getHistoryConversations().filter({ $0.user.name == user.name }).first {
             conversationsStorage.setOnlineStatus(true, to: existingConversation.id)
             return
         }
@@ -82,7 +82,7 @@ extension ConversationPresenter: ICommunicationServiceDelegate {
     }
     
     func communicationService(_ communicationService: ICommunicationService, didLostPeer user: UserInfo) {
-        if let onlineConversation = conversationsListService.getOnlineConversations().filter({ $0.user.name == user.name }).first {
+        if let onlineConversation = conversationsDataChangedService.getOnlineConversations().filter({ $0.user.name == user.name }).first {
             conversationsStorage.setOnlineStatus(false, to: onlineConversation.id)
         }
     }
@@ -106,7 +106,7 @@ extension ConversationPresenter: ICommunicationServiceDelegate {
     }
     
     func communicationService(_ communicationService: ICommunicationService, didReceiveMessage message: Message, from user: UserInfo) {
-        if let conversation = conversationsListService.getOnlineConversations().filter({ $0.user.name == user.name }).first {
+        if let conversation = conversationsDataChangedService.getOnlineConversations().filter({ $0.user.name == user.name }).first {
             conversationsStorage.appendMessage(message, to: conversation.id)
         }
     }
@@ -134,18 +134,27 @@ extension ConversationPresenter: MessagesDataChangedServiceDelegate {
     }
 }
 
+extension ConversationPresenter: ConversationsDataChangedServiceDelegate {
+    func updateConversation(in section: Int) {
+        //TODO check will or won't be updated conversation online state (conversationsdatachanged -> conversationsListPresenter -> selectedCoversation -> current)
+//        if conversationId == conversation.id {
+//            conversation.isOnline = !conversation.isOnline
+//            view.setSendButtonEnabled(conversation.isOnline)
+//        }
+    }
+    
+    func updateConversations() {
+        //TODO check will or won't be updated conversation online state (conversationsdatachanged -> conversationsListPresenter -> selectedCoversation -> current)
+    }
+}
+
 extension ConversationPresenter: UsersDataChangedServiceDelegate {
     func updateUser(with name: String? = nil, at indexPath: IndexPath) {
         print("test: when user become online/offline move or update will be called?")
         //TODO better to use ConversationDataChangedService, check conversationId and set state
         if name == conversation.user.name {
-            if conversation.isOnline {
-                conversation.isOnline = false
-                view.disableSendButton()
-            } else {
-                conversation.isOnline = true
-                view.enableSendButton()
-            }
+            conversation.isOnline = !conversation.isOnline
+            view.setSendButtonEnabled(conversation.isOnline)
         }
     }
     
@@ -156,13 +165,8 @@ extension ConversationPresenter: UsersDataChangedServiceDelegate {
     func moveUser(with name: String? = nil, from indexPath: IndexPath, to newIndexPath: IndexPath) {
         print("test: when user become online/offline move or update will be called?")
         if name == conversation.user.name {
-            if conversation.isOnline {
-                conversation.isOnline = false
-                view.disableSendButton()
-            } else {
-                conversation.isOnline = true
-                view.enableSendButton()
-            }
+            conversation.isOnline = !conversation.isOnline
+            view.setSendButtonEnabled(conversation.isOnline)
         }
     }
 }

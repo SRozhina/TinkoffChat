@@ -144,14 +144,9 @@ extension ConversationViewController: IConversationView {
         present(alert, animated: true)
     }
     
-    func enableSendButton() {
-        sendButton.isEnabled = true
-        sendButton.tintColor = .gray
-    }
-    
-    func disableSendButton() {
-        sendButton.isEnabled = false
-        sendButton.tintColor = .white
+    func setSendButtonEnabled(_ value: Bool) {
+        sendButton.isEnabled = value
+        sendButton.tintColor = value ? .gray : .white
     }
 }
 

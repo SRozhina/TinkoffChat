@@ -9,7 +9,9 @@ import CoreData
 
 class ConversationsListPresenter: NSObject, IConversationsListPresenter {
     private let view: IConversationsListView
-    private var conversationsListService: IConversationsListService
+    private var communicationService: ICommunicationService
+    private var conversationsDataChangedService: IConversationsDataChangedService
+    private let conversationsStorage: IConversationsStorage
     
     private var selectedConversationService: ISelectedConversationService
     private var onlineConversations: [Conversation] = [] {
@@ -25,18 +27,24 @@ class ConversationsListPresenter: NSObject, IConversationsListPresenter {
     
     init(view: IConversationsListView,
          selectedConversationService: ISelectedConversationService,
-         conversationsListService: IConversationsListService) {
+         communicationService: ICommunicationService,
+         conversationsDataChangedService: IConversationsDataChangedService,
+         conversationsStorage: IConversationsStorage) {
         self.view = view
         self.selectedConversationService = selectedConversationService
-        self.conversationsListService = conversationsListService
+        self.conversationsStorage = conversationsStorage
+        self.communicationService = communicationService
+        self.conversationsDataChangedService = conversationsDataChangedService
     }
     
     func setup() {
-        conversationsListService.delegate = self
-        conversationsListService.setupService()
+        communicationService.delegate = self
+        communicationService.online = true
+        conversationsDataChangedService.setupService()
+        conversationsDataChangedService.conversationsDelegate = self
         
-        onlineConversations = conversationsListService.getOnlineConversations()
-        historyConversations = conversationsListService.getHistoryConversations()
+        onlineConversations = conversationsDataChangedService.getOnlineConversations()
+        historyConversations = conversationsDataChangedService.getHistoryConversations()
     }
     
     func selectConversation(_ conversationPreview: ConversationPreview) {
@@ -78,23 +86,60 @@ class ConversationsListPresenter: NSObject, IConversationsListPresenter {
     }
 }
 
-extension ConversationsListPresenter: ConversationsListServiceDelegate { 
+extension ConversationsListPresenter: ICommunicationServiceDelegate {
+    func communicationService(_ communicationService: ICommunicationService, didFoundPeer user: UserInfo) {
+        if let existingConversation = conversationsDataChangedService.getHistoryConversations().filter({ $0.user.name == user.name }).first {
+            conversationsStorage.setOnlineStatus(true, to: existingConversation.id)
+            return
+        }
+        let conversation = Conversation(user: user)
+        conversationsStorage.createConversation(conversation)
+    }
+    
+    func communicationService(_ communicationService: ICommunicationService, didLostPeer user: UserInfo) {
+        if let onlineConversation = conversationsDataChangedService.getOnlineConversations().filter({ $0.user.name == user.name }).first {
+            conversationsStorage.setOnlineStatus(false, to: onlineConversation.id)
+        }
+    }
+    
+    func communicationService(_ communicationService: ICommunicationService, didNotStartBrowsingForPeers error: Error) {
+        view.showErrorAlert(with: error.localizedDescription) {
+            self.communicationService.online = true
+        }
+    }
+    
+    func communicationService(_ communicationService: ICommunicationService,
+                              didReceiveInviteFromPeer peer: UserInfo,
+                              invintationClosure: (Bool) -> Void) {
+        invintationClosure(true)
+    }
+    
+    func communicationService(_ communicationService: ICommunicationService, didNotStartAdvertisingForPeers error: Error) {
+        view.showErrorAlert(with: error.localizedDescription) {
+            self.communicationService.online = true
+        }
+    }
+    
+    func communicationService(_ communicationService: ICommunicationService, didReceiveMessage message: Message, from user: UserInfo) {
+        if let conversation = conversationsDataChangedService.getOnlineConversations().filter({ $0.user.name == user.name }).first {
+            conversationsStorage.appendMessage(message, to: conversation.id)
+        }
+    }
+}
+
+extension ConversationsListPresenter: ConversationsDataChangedServiceDelegate {
     func updateConversation(in section: Int) {
         switch section {
         case 0:
-            onlineConversations = conversationsListService.getOnlineConversations()
+            onlineConversations = conversationsDataChangedService.getOnlineConversations()
         default:
-            historyConversations = conversationsListService.getHistoryConversations()
+            historyConversations = conversationsDataChangedService.getHistoryConversations()
         }
     }
     
     func updateConversations() {
-        onlineConversations = conversationsListService.getOnlineConversations()
-        historyConversations = conversationsListService.getHistoryConversations()
-    }
-    
-    func showError(with error: String, retryAction: @escaping () -> Void) {
-        view.showErrorAlert(with: error, retryAction: retryAction)
+        onlineConversations = conversationsDataChangedService.getOnlineConversations()
+        historyConversations = conversationsDataChangedService.getHistoryConversations()
     }
     
     func startUpdates() {
