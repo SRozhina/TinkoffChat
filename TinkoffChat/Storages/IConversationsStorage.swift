@@ -12,4 +12,5 @@ protocol IConversationsStorage {
     func createConversation(_ newConversation: Conversation)
     func setOnlineStatus(_ value: Bool, to conversationId: String)
     func setAllMessagesAsRead(in conversationId: String)
+    func saveUserProfile(_ newUserInfo: UserInfo)
 }

@@ -7,13 +7,10 @@
 //
 import CoreData
 
-class ConversationsListPresenter: NSObject, IConversationsListPresenter {
+class ConversationsListPresenter: IConversationsListPresenter {
     private let view: IConversationsListView
-    private var communicationService: ICommunicationService
-    private var conversationsDataChangedService: IConversationsDataChangedService
-    private let conversationsStorage: IConversationsStorage
-    
-    private var selectedConversationService: ISelectedConversationService
+    private let interactor: IConversationsListInteractor
+
     private var onlineConversations: [Conversation] = [] {
         didSet {
             updateOnlineConversations()
@@ -26,59 +23,51 @@ class ConversationsListPresenter: NSObject, IConversationsListPresenter {
     }
     
     init(view: IConversationsListView,
-         selectedConversationService: ISelectedConversationService,
-         communicationService: ICommunicationService,
-         conversationsDataChangedService: IConversationsDataChangedService,
-         conversationsStorage: IConversationsStorage) {
+         interactor: IConversationsListInteractor) {
         self.view = view
-        self.selectedConversationService = selectedConversationService
-        self.conversationsStorage = conversationsStorage
-        self.communicationService = communicationService
-        self.conversationsDataChangedService = conversationsDataChangedService
+        self.interactor = interactor
     }
     
     func setup() {
-        communicationService.delegate = self
-        communicationService.online = true
-        conversationsDataChangedService.setupService()
-        conversationsDataChangedService.conversationsDelegate = self
-        
-        onlineConversations = conversationsDataChangedService.getOnlineConversations()
-        historyConversations = conversationsDataChangedService.getHistoryConversations()
+        interactor.setup()
     }
     
     func selectConversation(_ conversationPreview: ConversationPreview) {
         let conversation = conversationPreview.online
-            ? onlineConversations.first(where: { $0.user.name == conversationPreview.name })
-            : historyConversations.first(where: { $0.user.name == conversationPreview.name })
-        selectedConversationService.selectedConversation = conversation
+            ? onlineConversations.first(where: { $0.id == conversationPreview.id })
+            : historyConversations.first(where: { $0.id == conversationPreview.id })
+        guard let selecedConversation = conversation else { return }
+        interactor.selectConversation(selecedConversation)
     }
     
     private func updateOnlineConversations() {
         let previews = onlineConversations.map { getPreviewFrom(conversation: $0, isOnline: true) }
-        let sortedPreviews = sortConversationPreviews(previews)
-        view.setOnlineConversations(sortedPreviews)
+        //TODO maybe we should not sort as new data should be sorted
+        //let sortedPreviews = sortConversationPreviews(previews)
+        view.setOnlineConversations(previews)
     }
     
     private func updateHistoryConversations() {
         let previews = historyConversations.map { getPreviewFrom(conversation: $0, isOnline: false) }
-        let sortedPreviews = sortConversationPreviews(previews)
-        view.setHistoryConversations(sortedPreviews)
+        //TODO maybe we should not sort as new data should be sorted
+        //let sortedPreviews = sortConversationPreviews(previews)
+        view.setHistoryConversations(previews)
     }
     
-    private func sortConversationPreviews(_ conversationPreviews: [ConversationPreview]) -> [ConversationPreview] {
-        let unreadPreviews = conversationPreviews
-            .filter { $0.hasUnreadMessages }
-            .sorted { $0.name < $1.name }
-        let otherPreviews = conversationPreviews
-            .filter { !$0.hasUnreadMessages }
-            .sorted { $0.name < $1.name }
-        return unreadPreviews + otherPreviews
-    }
+//    private func sortConversationPreviews(_ conversationPreviews: [ConversationPreview]) -> [ConversationPreview] {
+//        let unreadPreviews = conversationPreviews
+//            .filter { $0.hasUnreadMessages }
+//            .sorted { $0.name < $1.name }
+//        let otherPreviews = conversationPreviews
+//            .filter { !$0.hasUnreadMessages }
+//            .sorted { $0.name < $1.name }
+//        return unreadPreviews + otherPreviews
+//    }
     
     private func getPreviewFrom(conversation: Conversation, isOnline: Bool) -> ConversationPreview {
         let hasUnreadMessages = conversation.messages.contains { $0.direction == .incoming && $0.isUnread }
-        return ConversationPreview(name: conversation.user.name,
+        return ConversationPreview(id: conversation.id,
+                                   name: conversation.user.name,
                                    online: isOnline,
                                    hasUnreadMessages: hasUnreadMessages,
                                    message: conversation.messages.last?.text,
@@ -86,65 +75,23 @@ class ConversationsListPresenter: NSObject, IConversationsListPresenter {
     }
 }
 
-extension ConversationsListPresenter: ICommunicationServiceDelegate {
-    func communicationService(_ communicationService: ICommunicationService, didFoundPeer user: UserInfo) {
-        if let existingConversation = conversationsDataChangedService.getHistoryConversations().filter({ $0.user.name == user.name }).first {
-            conversationsStorage.setOnlineStatus(true, to: existingConversation.id)
-            return
-        }
-        let conversation = Conversation(user: user)
-        conversationsStorage.createConversation(conversation)
+extension ConversationsListPresenter: ConversationsListInteractorDelegate {
+    func setOnlineConversation(_ conversation: [Conversation]) {
+        onlineConversations = conversation
     }
     
-    func communicationService(_ communicationService: ICommunicationService, didLostPeer user: UserInfo) {
-        if let onlineConversation = conversationsDataChangedService.getOnlineConversations().filter({ $0.user.name == user.name }).first {
-            conversationsStorage.setOnlineStatus(false, to: onlineConversation.id)
-        }
+    func setHistoryConversations(_ conversation: [Conversation]) {
+        historyConversations = conversation
     }
     
-    func communicationService(_ communicationService: ICommunicationService, didNotStartBrowsingForPeers error: Error) {
-        view.showErrorAlert(with: error.localizedDescription) {
-            self.communicationService.online = true
-        }
-    }
-    
-    func communicationService(_ communicationService: ICommunicationService,
-                              didReceiveInviteFromPeer peer: UserInfo,
-                              invintationClosure: (Bool) -> Void) {
-        invintationClosure(true)
-    }
-    
-    func communicationService(_ communicationService: ICommunicationService, didNotStartAdvertisingForPeers error: Error) {
-        view.showErrorAlert(with: error.localizedDescription) {
-            self.communicationService.online = true
-        }
-    }
-    
-    func communicationService(_ communicationService: ICommunicationService, didReceiveMessage message: Message, from user: UserInfo) {
-        if let conversation = conversationsDataChangedService.getOnlineConversations().filter({ $0.user.name == user.name }).first {
-            conversationsStorage.appendMessage(message, to: conversation.id)
-        }
-    }
-}
-
-extension ConversationsListPresenter: ConversationsDataChangedServiceDelegate {
-    func updateConversation(in section: Int) {
-        switch section {
-        case 0:
-            onlineConversations = conversationsDataChangedService.getOnlineConversations()
-        default:
-            historyConversations = conversationsDataChangedService.getHistoryConversations()
-        }
-    }
-    
-    func updateConversations() {
-        onlineConversations = conversationsDataChangedService.getOnlineConversations()
-        historyConversations = conversationsDataChangedService.getHistoryConversations()
+    func showError(text: String, retryAction: @escaping () -> Void) {
+        view.showErrorAlert(with: text, retryAction: retryAction)
     }
     
     func startUpdates() {
         view.startUpdates()
     }
+    
     func endUpdates() {
         view.endUpdates()
     }

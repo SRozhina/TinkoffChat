@@ -13,12 +13,17 @@ import UIKit
 class CoreDataConversationsStorage: IConversationsStorage {    
     private let conversationConverter: IConversationConverter
     private let userInfoConverter: IUserInfoConverter
+    private let userInfoPathProvider: IUserInfoPathProvider
     private let container: NSPersistentContainer
     
-    init(conversationConverter: IConversationConverter, userInfoConverter: IUserInfoConverter, container: NSPersistentContainer) {
+    init(conversationConverter: IConversationConverter,
+         userInfoConverter: IUserInfoConverter,
+         container: NSPersistentContainer,
+         userInfoPathProvider: IUserInfoPathProvider) {
         self.conversationConverter = conversationConverter
         self.userInfoConverter = userInfoConverter
         self.container = container
+        self.userInfoPathProvider = userInfoPathProvider
     }
     
     func goOffline() {
@@ -48,6 +53,39 @@ class CoreDataConversationsStorage: IConversationsStorage {
             conversation?.user.avatar = userInfoConverter.getAvatarPath(for: newConversation.user.avatar)
             conversation?.isOnline = newConversation.isOnline
 
+            try? context.save()
+        }
+    }
+    
+    private func createUserProfile() -> UserInfoEntity? {
+        let context = container.viewContext
+        var userEntity: UserInfoEntity?
+        //context.performAndWait {
+            userEntity = NSEntityDescription.insertNewObject(forEntityName: String(describing: UserInfoEntity.self),
+                                                             into: context) as? UserInfoEntity
+            userEntity?.id = 0
+            userEntity?.name = "No name"
+            userEntity?.info = ""
+            try? context.save()
+            return userEntity
+        //}
+    }
+    
+    func saveUserProfile(_ newUserInfo: UserInfo) {
+        let predicate = NSPredicate(format: "id==0")
+        let fetchRequest = NSFetchRequest<UserInfoEntity>(entityName: String(describing: UserInfoEntity.self))
+        fetchRequest.predicate = predicate
+        let context = container.viewContext
+        context.performAndWait {
+            let users = try? context.fetch(fetchRequest)
+            guard let userEntity = (users?.first ?? createUserProfile()) else { return }
+            userEntity.name = newUserInfo.name
+            userEntity.info = newUserInfo.info
+            if let image = newUserInfo.avatar,
+                let imageData = UIImageJPEGRepresentation(image, 1) {
+                try? imageData.write(to: self.userInfoPathProvider.avatarFilePath)
+            }
+            userEntity.avatar = self.userInfoPathProvider.avatarFilePath
             try? context.save()
         }
     }

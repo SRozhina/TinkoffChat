@@ -25,7 +25,8 @@ extension SwinjectStoryboard {
             .register(IConversationsStorage.self) { resolver in
                 CoreDataConversationsStorage(conversationConverter: resolver.resolve(IConversationConverter.self)!,
                                              userInfoConverter: resolver.resolve(IUserInfoConverter.self)!,
-                                             container: resolver.resolve(NSPersistentContainer.self)!) }
+                                             container: resolver.resolve(NSPersistentContainer.self)!,
+                                             userInfoPathProvider: resolver.resolve(IUserInfoPathProvider.self)!) }
             .inObjectScope(.container)
         
         defaultContainer
@@ -83,13 +84,16 @@ extension SwinjectStoryboard {
         
         defaultContainer.register(IConversationPresenter.self) { resolver, view in
             ConversationPresenter(view: view,
-                                  selectedConversationService: resolver.resolve(ISelectedConversationService.self)!,
-                                  conversationsStorage: resolver.resolve(IConversationsStorage.self)!,
-                                  messagesDataChangedService: resolver.resolve(IMessagesDataChangedService.self)!,
-                                  communicationService: resolver.resolve(ICommunicationService.self)!,
-                                  conversationsDataChangedService: resolver.resolve(IConversationsDataChangedService.self)!,
-                                  userDataChangedService: resolver.resolve(IUsersDataChangedService.self)!)
-            
+                                  interactor: resolver.resolve(IConversationInteractor.self)!)
+        }
+        
+        defaultContainer.register(IConversationInteractor.self) { resolver in
+            ConversationInteractor(selectedConversationService: resolver.resolve(ISelectedConversationService.self)!,
+                                   conversationsStorage: resolver.resolve(IConversationsStorage.self)!,
+                                   messagesDataChangedService: resolver.resolve(IMessagesDataChangedService.self)!,
+                                   communicationService: resolver.resolve(ICommunicationService.self)!,
+                                   conversationsDataChangedService: resolver.resolve(IConversationsDataChangedService.self)!,
+                                   userDataChangedService: resolver.resolve(IUsersDataChangedService.self)!)
         }
         
         defaultContainer.storyboardInitCompleted(ConversationViewController.self) { resolver, view in
@@ -99,10 +103,14 @@ extension SwinjectStoryboard {
         
         defaultContainer.register(IConversationsListPresenter.self) { resolver, view in
             ConversationsListPresenter(view: view,
-                                       selectedConversationService: resolver.resolve(ISelectedConversationService.self)!,
-                                       communicationService: resolver.resolve(ICommunicationService.self)!,
-                                       conversationsDataChangedService: resolver.resolve(IConversationsDataChangedService.self)!,
-                                       conversationsStorage: resolver.resolve(IConversationsStorage.self)!)
+                                       interactor: resolver.resolve(IConversationsListInteractor.self)!)
+        }
+        
+        defaultContainer.register(IConversationsListInteractor.self) { resolver in
+            ConversationsListInteractor(selectedConversationService: resolver.resolve(ISelectedConversationService.self)!,
+                                        communicationService: resolver.resolve(ICommunicationService.self)!,
+                                        conversationsDataChangedService: resolver.resolve(IConversationsDataChangedService.self)!,
+                                        conversationsStorage: resolver.resolve(IConversationsStorage.self)!)
         }
         
         defaultContainer.storyboardInitCompleted(ConversationsListViewController.self) { resolver, view in
@@ -112,7 +120,8 @@ extension SwinjectStoryboard {
         
         defaultContainer.register(IEditProfilePresenter.self) { resolver, view in
             EditProfilePresenter(view: view,
-                                 userInfoStorageProvider: resolver.resolve(IUserInfoStorageProvider.self)!)
+                                 userInfoStorageProvider: resolver.resolve(IUserInfoStorageProvider.self)!,
+                                 userProfileDataChangedService: resolver.resolve(IUserProfileDataChangedService.self)!)
         }
         
         defaultContainer.storyboardInitCompleted(EditProfileViewController.self) { resolver, view in

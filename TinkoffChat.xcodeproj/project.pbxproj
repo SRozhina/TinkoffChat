@@ -64,6 +64,12 @@
 		C387C212219AC262005DE328 /* UsersDataChangedServiceDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C387C211219AC262005DE328 /* UsersDataChangedServiceDelegate.swift */; };
 		C387C214219AC275005DE328 /* IUsersDataChangedService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C387C213219AC275005DE328 /* IUsersDataChangedService.swift */; };
 		C387C216219AC288005DE328 /* UsersDataChangedService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C387C215219AC288005DE328 /* UsersDataChangedService.swift */; };
+		C387C21C219D6B67005DE328 /* IConversationsListInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C387C21B219D6B67005DE328 /* IConversationsListInteractor.swift */; };
+		C387C21F219D6B8A005DE328 /* ConversationsListInteractorDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C387C21E219D6B8A005DE328 /* ConversationsListInteractorDelegate.swift */; };
+		C387C221219D6BA1005DE328 /* ConversationsListInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C387C220219D6BA1005DE328 /* ConversationsListInteractor.swift */; };
+		C387C224219D74B3005DE328 /* ConversationInteractorDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C387C223219D74B3005DE328 /* ConversationInteractorDelegate.swift */; };
+		C387C226219D74C6005DE328 /* IConversationInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C387C225219D74C6005DE328 /* IConversationInteractor.swift */; };
+		C387C228219D74D8005DE328 /* ConversationInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C387C227219D74D8005DE328 /* ConversationInteractor.swift */; };
 		C390585D218E1ECE002D4ED7 /* TinkoffChat.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = C390585B218E1ECE002D4ED7 /* TinkoffChat.xcdatamodeld */; };
 		C3905869218E3021002D4ED7 /* CoreDataExtendedUserInfoStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3905868218E3021002D4ED7 /* CoreDataExtendedUserInfoStorage.swift */; };
 		C390586C218E4203002D4ED7 /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = C390586B218E4203002D4ED7 /* CoreDataStack.swift */; };
@@ -154,6 +160,12 @@
 		C387C211219AC262005DE328 /* UsersDataChangedServiceDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsersDataChangedServiceDelegate.swift; sourceTree = "<group>"; };
 		C387C213219AC275005DE328 /* IUsersDataChangedService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IUsersDataChangedService.swift; sourceTree = "<group>"; };
 		C387C215219AC288005DE328 /* UsersDataChangedService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsersDataChangedService.swift; sourceTree = "<group>"; };
+		C387C21B219D6B67005DE328 /* IConversationsListInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IConversationsListInteractor.swift; sourceTree = "<group>"; };
+		C387C21E219D6B8A005DE328 /* ConversationsListInteractorDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationsListInteractorDelegate.swift; sourceTree = "<group>"; };
+		C387C220219D6BA1005DE328 /* ConversationsListInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationsListInteractor.swift; sourceTree = "<group>"; };
+		C387C223219D74B3005DE328 /* ConversationInteractorDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationInteractorDelegate.swift; sourceTree = "<group>"; };
+		C387C225219D74C6005DE328 /* IConversationInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IConversationInteractor.swift; sourceTree = "<group>"; };
+		C387C227219D74D8005DE328 /* ConversationInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationInteractor.swift; sourceTree = "<group>"; };
 		C390585C218E1ECE002D4ED7 /* TinkoffChat.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = TinkoffChat.xcdatamodel; sourceTree = "<group>"; };
 		C3905868218E3021002D4ED7 /* CoreDataExtendedUserInfoStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataExtendedUserInfoStorage.swift; sourceTree = "<group>"; };
 		C390586B218E4203002D4ED7 /* CoreDataStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataStack.swift; sourceTree = "<group>"; };
@@ -283,6 +295,7 @@
 		C32DEFE221652988009645D9 /* ConverstionsList */ = {
 			isa = PBXGroup;
 			children = (
+				C387C21A219D6B44005DE328 /* Interactor */,
 				C354F92E2166018B0048320E /* Presenter */,
 				C354F92D216601840048320E /* View */,
 				C354F92C216601740048320E /* Cells */,
@@ -350,6 +363,7 @@
 		C32DEFF421656DAD009645D9 /* Conversation */ = {
 			isa = PBXGroup;
 			children = (
+				C387C222219D74A7005DE328 /* Interactor */,
 				C354F925216600EB0048320E /* Presenter */,
 				C354F924216600E20048320E /* View */,
 				C354F923216600D70048320E /* Cells */,
@@ -499,6 +513,26 @@
 				C3D95F04219BFEC9007911AD /* UserDataChangedService.swift */,
 			);
 			path = DataChangedService;
+			sourceTree = "<group>";
+		};
+		C387C21A219D6B44005DE328 /* Interactor */ = {
+			isa = PBXGroup;
+			children = (
+				C387C21B219D6B67005DE328 /* IConversationsListInteractor.swift */,
+				C387C21E219D6B8A005DE328 /* ConversationsListInteractorDelegate.swift */,
+				C387C220219D6BA1005DE328 /* ConversationsListInteractor.swift */,
+			);
+			path = Interactor;
+			sourceTree = "<group>";
+		};
+		C387C222219D74A7005DE328 /* Interactor */ = {
+			isa = PBXGroup;
+			children = (
+				C387C223219D74B3005DE328 /* ConversationInteractorDelegate.swift */,
+				C387C225219D74C6005DE328 /* IConversationInteractor.swift */,
+				C387C227219D74D8005DE328 /* ConversationInteractor.swift */,
+			);
+			path = Interactor;
 			sourceTree = "<group>";
 		};
 		C390586A218E41EE002D4ED7 /* CoreData */ = {
@@ -706,6 +740,7 @@
 				C387C20C219AC205005DE328 /* MessagesDataChangedServiceDelegate.swift in Sources */,
 				C30883172184783F003E1564 /* ICommunicationService.swift in Sources */,
 				C354F91A2165F60C0048320E /* ChatCell.swift in Sources */,
+				C387C21F219D6B8A005DE328 /* ConversationsListInteractorDelegate.swift in Sources */,
 				C390585D218E1ECE002D4ED7 /* TinkoffChat.xcdatamodeld in Sources */,
 				C34CE230217CD7F30066796A /* IUserInfoStorageProvider.swift in Sources */,
 				C354F929216601120048320E /* IConversationPresenter.swift in Sources */,
@@ -723,6 +758,7 @@
 				C308832021848856003E1564 /* Conversation.swift in Sources */,
 				C3DC6964217BA71500DCEBB1 /* UserInfo.swift in Sources */,
 				C3DC697A217BD0CB00DCEBB1 /* ProfilePresenter.swift in Sources */,
+				C387C228219D74D8005DE328 /* ConversationInteractor.swift in Sources */,
 				C32DEFE4216529AA009645D9 /* ConversationsListViewController.swift in Sources */,
 				C3D95EFD2198AE17007911AD /* FetchRequestBuilder.swift in Sources */,
 				C323B2F621956EAE0096AE93 /* CoreDataConversationsStorage.swift in Sources */,
@@ -730,11 +766,13 @@
 				C387C216219AC288005DE328 /* UsersDataChangedService.swift in Sources */,
 				C3DC6976217BD0A000DCEBB1 /* IProfileView.swift in Sources */,
 				C35707B12152E61E00244E5E /* ProfileViewController.swift in Sources */,
+				C387C226219D74C6005DE328 /* IConversationInteractor.swift in Sources */,
 				C308831321839847003E1564 /* ExpandableTextView.swift in Sources */,
 				C3D95F10219C01AE007911AD /* UserInfoEntity+CoreDataClass.swift in Sources */,
 				C3905869218E3021002D4ED7 /* CoreDataExtendedUserInfoStorage.swift in Sources */,
 				C3D95F11219C01AE007911AD /* UserInfoEntity+CoreDataProperties.swift in Sources */,
 				C32DEFFF21656FC9009645D9 /* OutgoingMessageCell.swift in Sources */,
+				C387C21C219D6B67005DE328 /* IConversationsListInteractor.swift in Sources */,
 				C354F93A216605410048320E /* ISelectedConversationService.swift in Sources */,
 				C387C210219AC23A005DE328 /* MessagesDataChangedService.swift in Sources */,
 				C31C19772185B49E00F0EFD9 /* Array+firstIndex.swift in Sources */,
@@ -745,11 +783,13 @@
 				C3D95F01219BFE58007911AD /* IConversationsDataChangedService.swift in Sources */,
 				C387C214219AC275005DE328 /* IUsersDataChangedService.swift in Sources */,
 				C3FF5C152180DDA000D5F899 /* MultipeerConnectionService.swift in Sources */,
+				C387C221219D6BA1005DE328 /* ConversationsListInteractor.swift in Sources */,
 				C323B30C219580800096AE93 /* IDBuilder.swift in Sources */,
 				C323B30821957EA20096AE93 /* IConversationConverter.swift in Sources */,
 				C3F835352196C5C000A2D767 /* MessageEntity+CoreDataClass.swift in Sources */,
 				C34CE22A217CD1950066796A /* UserInfoPathProvider.swift in Sources */,
 				C34CE22E217CD7DE0066796A /* UserInfoStorageProvider.swift in Sources */,
+				C387C224219D74B3005DE328 /* ConversationInteractorDelegate.swift in Sources */,
 				C3F835342196C5C000A2D767 /* MessageEntity+CoreDataProperties.swift in Sources */,
 				C3D95F05219BFEC9007911AD /* UserDataChangedService.swift in Sources */,
 				C354F9342166043E0048320E /* IConversationsListPresenter.swift in Sources */,

@@ -23,12 +23,15 @@ class UserProfileDataChangedService: NSObject, NSFetchedResultsControllerDelegat
     private let context: NSManagedObjectContext
     private var fetchResultsController: NSFetchedResultsController<UserInfoEntity>!
     private let userInfoConverter: IUserInfoConverter
+    private let conversationsStorage: IConversationsStorage
     weak var userDelegate: UserProfileDataChangedServiceDelegate?
     
     init(container: NSPersistentContainer,
-         userInfoConverter: IUserInfoConverter) {
+         userInfoConverter: IUserInfoConverter,
+         conversationsStorage: IConversationsStorage) {
         self.context = container.viewContext
         self.userInfoConverter = userInfoConverter
+        self.conversationsStorage = conversationsStorage
     }
     
     func setupService() {
@@ -48,10 +51,13 @@ class UserProfileDataChangedService: NSObject, NSFetchedResultsControllerDelegat
     }
     
     func getUserProfileInfo() -> UserInfo? {
-        //Create new userinfo if there is no in storage
         guard let userInfoEntity = fetchResultsController.fetchedObjects?.first else { return nil }
         return userInfoConverter.makeUserInfo(from: userInfoEntity)
     }
+    
+//    func saveUserProfileInfo(_ userInfo: UserInfo) {
+//        conversationsStorage.saveUserProfile(userInfo)
+//    }
     
     func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>,
                     didChange anObject: Any,
