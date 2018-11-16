@@ -83,15 +83,15 @@ extension SwinjectStoryboard {
         defaultContainer
             .register(IConversationsDataService.self) { resolver in
                 ConversationsDataService(container: resolver.resolve(NSPersistentContainer.self)!,
-                                                conversationConverter: resolver.resolve(IConversationConverter.self)!,
-                                                conversationsStorage: resolver.resolve(IConversationsStorage.self)!,
-                                                messagesStorage: resolver.resolve(IMessagesStorage.self)!)}
+                                         conversationConverter: resolver.resolve(IConversationConverter.self)!,
+                                         conversationsStorage: resolver.resolve(IConversationsStorage.self)!,
+                                         messagesStorage: resolver.resolve(IMessagesStorage.self)!)}
         
         defaultContainer.register(IUserProfileDataService.self) { resolver in
             UserProfileDataService(container: resolver.resolve(NSPersistentContainer.self)!,
-                                          userInfoConverter: resolver.resolve(IUserInfoConverter.self)!,
-                                          conversationsStorage: resolver.resolve(IConversationsStorage.self)!,
-                                          userInfoStorage: resolver.resolve(IUserInfoStorage.self)!)
+                                   userInfoConverter: resolver.resolve(IUserInfoConverter.self)!,
+                                   conversationsStorage: resolver.resolve(IConversationsStorage.self)!,
+                                   userInfoStorage: resolver.resolve(IUserInfoStorage.self)!)
         }
         
         // MARK: - Conversation
