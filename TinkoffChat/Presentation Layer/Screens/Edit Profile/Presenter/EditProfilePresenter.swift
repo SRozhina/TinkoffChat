@@ -19,7 +19,7 @@ class EditProfilePresenter: IEditProfilePresenter {
         }
     }
     
-    init(view: IEditProfileView,interactor: IEditProfileInteractor) {
+    init(view: IEditProfileView, interactor: IEditProfileInteractor) {
         self.view = view
         self.interactor = interactor
     }

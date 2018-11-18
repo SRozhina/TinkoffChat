@@ -9,7 +9,7 @@ import CoreData
 
 class ConversationsListPresenter: IConversationsListPresenter {
     private let view: IConversationsListView
-    private let interactor: IConversationsListInteractor
+    private var interactor: IConversationsListInteractor
 
     private var onlineConversations: [Conversation] = [] {
         didSet {
@@ -29,6 +29,7 @@ class ConversationsListPresenter: IConversationsListPresenter {
     }
     
     func setup() {
+        interactor.delegate = self
         interactor.setup()
     }
     
@@ -41,34 +42,20 @@ class ConversationsListPresenter: IConversationsListPresenter {
     }
     
     private func updateOnlineConversations() {
-        let previews = onlineConversations.map { getPreviewFrom(conversation: $0, isOnline: true) }
-        //TODO maybe we should not sort as new data should be sorted
-        //let sortedPreviews = sortConversationPreviews(previews)
+        let previews = onlineConversations.map { getPreviewFrom(conversation: $0) }
         view.setOnlineConversations(previews)
     }
     
     private func updateHistoryConversations() {
-        let previews = historyConversations.map { getPreviewFrom(conversation: $0, isOnline: false) }
-        //TODO maybe we should not sort as new data should be sorted
-        //let sortedPreviews = sortConversationPreviews(previews)
+        let previews = historyConversations.map { getPreviewFrom(conversation: $0) }
         view.setHistoryConversations(previews)
     }
     
-//    private func sortConversationPreviews(_ conversationPreviews: [ConversationPreview]) -> [ConversationPreview] {
-//        let unreadPreviews = conversationPreviews
-//            .filter { $0.hasUnreadMessages }
-//            .sorted { $0.name < $1.name }
-//        let otherPreviews = conversationPreviews
-//            .filter { !$0.hasUnreadMessages }
-//            .sorted { $0.name < $1.name }
-//        return unreadPreviews + otherPreviews
-//    }
-    
-    private func getPreviewFrom(conversation: Conversation, isOnline: Bool) -> ConversationPreview {
+    private func getPreviewFrom(conversation: Conversation) -> ConversationPreview {
         let hasUnreadMessages = conversation.messages.contains { $0.direction == .incoming && $0.isUnread }
         return ConversationPreview(id: conversation.id,
                                    name: conversation.user.name,
-                                   online: isOnline,
+                                   online: conversation.isOnline,
                                    hasUnreadMessages: hasUnreadMessages,
                                    message: conversation.messages.last?.text,
                                    date: conversation.messages.last?.date)
@@ -76,6 +63,15 @@ class ConversationsListPresenter: IConversationsListPresenter {
 }
 
 extension ConversationsListPresenter: ConversationsListInteractorDelegate {
+    func updateConversation(_ conversation: Conversation, at indexPath: IndexPath) {
+        onlineConversations = interactor.getOnlineConversations()
+        historyConversations = interactor.getHistoryConversations()
+    }
+    
+    func insertConversation(_ conversation: Conversation, at indexPath: IndexPath) {
+        onlineConversations.insert(conversation, at: indexPath.row)
+    }
+    
     func setOnlineConversation(_ conversation: [Conversation]) {
         onlineConversations = conversation
     }

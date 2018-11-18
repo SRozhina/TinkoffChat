@@ -10,7 +10,7 @@ import Foundation
 
 class ConversationPresenter: IConversationPresenter {
     private let view: IConversationView
-    private let interactor: IConversationInteractor
+    private var interactor: IConversationInteractor
     private var conversation: Conversation!
     
     init(view: IConversationView,
@@ -20,6 +20,7 @@ class ConversationPresenter: IConversationPresenter {
     }
     
     func setup() {
+        interactor.delegate = self
         interactor.setup()
     }
     
@@ -35,7 +36,6 @@ class ConversationPresenter: IConversationPresenter {
     func sendMessage(_ message: String) {
         let currentMessage = Message(text: message)
         interactor.sendMessage(currentMessage, to: conversation)
-        view.setMessages(conversation.messages)
     }
     
     private func viewSetup() {
@@ -47,10 +47,10 @@ class ConversationPresenter: IConversationPresenter {
     }
 }
 
-extension ConversationPresenter: ConversationInteractorDelegate {
-    func updateConversationState(for conversationId: String) {
-        if conversationId == conversation.id {
-            conversation.isOnline = !conversation.isOnline
+extension ConversationPresenter: ConversationInteractorDelegate {    
+    func updateConversation(_ conversation: Conversation, at indexPath: IndexPath) {
+        if self.conversation.id == conversation.id {
+            self.conversation.isOnline = conversation.isOnline
             view.setSendButtonEnabled(conversation.isOnline)
         }
     }
@@ -63,11 +63,14 @@ extension ConversationPresenter: ConversationInteractorDelegate {
         view.updateMessage(at: indexPath)
     }
     
-    func insertMessage(at indexPath: IndexPath) {
+    func insertMessage(_ message: Message, at indexPath: IndexPath) {
+        conversation.messages.insert(message, at: indexPath.row)
+        view.setMessages(conversation.messages)
         view.insertMessage(at: indexPath)
     }
     
     func deleteMessage(at indexPath: IndexPath) {
+        conversation.messages.remove(at: indexPath.row)
         view.deleteMessage(at: indexPath)
     }
     
@@ -77,6 +80,8 @@ extension ConversationPresenter: ConversationInteractorDelegate {
             view.setSendButtonEnabled(conversation.isOnline)
         }
     }
+    
+    func insertConversation(_ conversation: Conversation, at indexPath: IndexPath) { }
     
     func startUpdates() {
         view.startUpdates()

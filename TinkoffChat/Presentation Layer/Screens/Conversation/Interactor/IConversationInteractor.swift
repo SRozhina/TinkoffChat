@@ -11,4 +11,5 @@ import Foundation
 protocol IConversationInteractor {
     func setup()
     func sendMessage(_ message: Message, to conversation: Conversation)
+    var delegate: ConversationInteractorDelegate? { get set }
 }

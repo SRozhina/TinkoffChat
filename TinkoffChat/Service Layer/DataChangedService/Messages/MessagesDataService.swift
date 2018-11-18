@@ -12,10 +12,12 @@ import CoreData
 class MessagesDataService: NSObject, NSFetchedResultsControllerDelegate, IMessagesDataService {
     private let context: NSManagedObjectContext
     private var fetchResultsController: NSFetchedResultsController<MessageEntity>!
+    private var messageConverter: IMessageConverter!
     weak var messagesDelegate: MessagesDataServiceDelegate?
     
-    init(container: NSPersistentContainer) {
+    init(container: NSPersistentContainer, messageConverter: IMessageConverter) {
         self.context = container.viewContext
+        self.messageConverter = messageConverter
     }
     
     func setupService(with conversationId: String) {
@@ -45,7 +47,9 @@ class MessagesDataService: NSObject, NSFetchedResultsControllerDelegate, IMessag
             messagesDelegate?.updateMessage(at: indexPath)
         case .insert:
             guard let newIndexPath = newIndexPath else { return }
-            messagesDelegate?.insertMessage(at: newIndexPath)
+            guard let messageEntity = anObject as? MessageEntity else { return }
+            let message = messageConverter.makeMessage(from: messageEntity)
+            messagesDelegate?.insertMessage(message, at: newIndexPath)
         case .delete:
             guard let indexPath = indexPath else { return }
             messagesDelegate?.deleteMessage(at: indexPath)

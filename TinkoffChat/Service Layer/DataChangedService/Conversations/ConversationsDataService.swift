@@ -62,21 +62,15 @@ class ConversationsDataService: NSObject, NSFetchedResultsControllerDelegate, IC
                     at indexPath: IndexPath?,
                     for type: NSFetchedResultsChangeType,
                     newIndexPath: IndexPath?) {
+        guard let conversationEntity = anObject as? ConversationEntity else { return }
+        let conversation = conversationConverter.makeConversation(from: conversationEntity)
         switch type {
         case .update:
-            conversationsDelegate?.updateConversations()
+            guard let indexPath = indexPath else { return }
+            conversationsDelegate?.updateConversation(conversation, at: indexPath)
         case .insert:
             guard let newIndexPath = newIndexPath else { return }
-            guard let conversationEntity = anObject as? ConversationEntity else { return }
-            let conversation = conversationConverter.makeConversation(from: conversationEntity)
-            conversationsDelegate?.updateConversation(conversation, in: newIndexPath.section)
-        case .delete:
-            guard let indexPath = indexPath else { return }
-            guard let conversationEntity = anObject as? ConversationEntity else { return }
-            let conversation = conversationConverter.makeConversation(from: conversationEntity)
-            conversationsDelegate?.updateConversation(conversation, in: indexPath.section)
-        case .move:
-            conversationsDelegate?.updateConversations()
+            conversationsDelegate?.insertConversation(conversation, at: newIndexPath)
         default:
             break
         }

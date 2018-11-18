@@ -34,6 +34,11 @@ class ConversationViewController: UIViewController {
         presenter.setup()
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        scrollToBottom()
+    }
+    
     private func setupNavBar() {
         navigationItem.largeTitleDisplayMode = .never
     }
@@ -93,7 +98,7 @@ class ConversationViewController: UIViewController {
                        animations: {
                         self.view.layoutIfNeeded()
         },
-                       completion: nil)
+                       completion: { _ in self.scrollToBottom() })
     }
     
     @IBAction private func sendButtonTapped(_ sender: Any) {
@@ -107,6 +112,14 @@ class ConversationViewController: UIViewController {
         dismissKeyboard()
     }
     
+    private func scrollToBottom() {
+        if messages.count <= 0 { return }
+        DispatchQueue.main.async {
+            let indexPath = IndexPath(row: self.messages.count - 1, section: 0)
+            self.tableView.scrollToRow(at: indexPath, at: .bottom, animated: true)
+        }
+    }
+    
 }
 
 extension ConversationViewController: IConversationView {
@@ -116,6 +129,7 @@ extension ConversationViewController: IConversationView {
     
     func endUpdates() {
         tableView.endUpdates()
+        scrollToBottom()
     }
     
     func updateMessage(at indexPath: IndexPath) {
@@ -132,7 +146,6 @@ extension ConversationViewController: IConversationView {
     
     func setMessages(_ messages: [Message]) {
         self.messages = messages
-        tableView.reloadData()
     }
     
     func setTitle(_ title: String?) {

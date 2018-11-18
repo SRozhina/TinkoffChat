@@ -69,6 +69,10 @@ extension ConversationsListViewController: IConversationsListView {
     func endUpdates() {
         tableView.endUpdates()
     }
+    
+    func insertMessage(at indexPath: IndexPath) {
+        tableView.insertRows(at: [indexPath], with: .automatic)
+    }
 }
 
 // MARK: - UITableViewDataSource

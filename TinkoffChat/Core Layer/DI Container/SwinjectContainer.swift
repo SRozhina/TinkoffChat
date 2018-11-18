@@ -78,7 +78,8 @@ extension SwinjectStoryboard {
         
         defaultContainer
             .register(IMessagesDataService.self) { resolver in
-                MessagesDataService(container: resolver.resolve(NSPersistentContainer.self)!)}
+                MessagesDataService(container: resolver.resolve(NSPersistentContainer.self)!,
+                                    messageConverter: resolver.resolve(IMessageConverter.self)!)}
         
         defaultContainer
             .register(IConversationsDataService.self) { resolver in

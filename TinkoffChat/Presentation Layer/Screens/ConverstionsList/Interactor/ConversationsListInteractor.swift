@@ -81,23 +81,21 @@ extension ConversationsListInteractor: ICommunicationServiceDelegate {
     }
 }
 
-extension ConversationsListInteractor: ConversationsDataServiceDelegate {
-    func updateConversation(_ conversation: Conversation, in section: Int) {
-        switch section {
-        case 0:
-            let onlineConversations = conversationsDataChangedService.getOnlineConversations()
-            delegate?.setOnlineConversation(onlineConversations)
-        default:
-            let historyConversations = conversationsDataChangedService.getHistoryConversations()
-            delegate?.setHistoryConversations(historyConversations)
-        }
+extension ConversationsListInteractor: ConversationsDataServiceDelegate {    
+    func updateConversation(_ conversation: Conversation, at indexPath: IndexPath) {
+        delegate?.updateConversation(conversation, at: indexPath)
     }
     
-    func updateConversations() {
-        let onlineConversations = conversationsDataChangedService.getOnlineConversations()
-        delegate?.setOnlineConversation(onlineConversations)
-        let historyConversations = conversationsDataChangedService.getHistoryConversations()
-        delegate?.setHistoryConversations(historyConversations)
+    func insertConversation(_ conversation: Conversation, at indexPath: IndexPath) {
+        delegate?.insertConversation(conversation, at: indexPath)
+    }
+    
+    func getOnlineConversations() -> [Conversation] {
+        return conversationsDataChangedService.getOnlineConversations()
+    }
+    
+    func getHistoryConversations() -> [Conversation] {
+        return conversationsDataChangedService.getHistoryConversations()
     }
     
     func startUpdates() {

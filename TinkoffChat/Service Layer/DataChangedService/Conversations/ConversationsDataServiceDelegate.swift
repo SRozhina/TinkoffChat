@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol ConversationsDataServiceDelegate: BaseDataServiceDelegate {
-    func updateConversation(_ conversation: Conversation, in section: Int)
-    func updateConversations()
+protocol ConversationsDataServiceDelegate: BaseDataServiceDelegate {    
+    func insertConversation(_ conversation: Conversation, at indexPath: IndexPath)
+    func updateConversation(_ conversation: Conversation, at indexPath: IndexPath)
 }

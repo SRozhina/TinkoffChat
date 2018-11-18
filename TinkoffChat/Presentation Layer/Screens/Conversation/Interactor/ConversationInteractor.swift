@@ -33,6 +33,7 @@ class ConversationInteractor: IConversationInteractor {
         let conversation = selectedConversationService.selectedConversation!
         setupCommunicationService()
         setupMessagesDataChangedService(with: conversation.id)
+        setupConversationsDataChangedService()
         setAllMessagesAsRead(for: conversation.id)
         delegate?.updateWith(conversation: conversation)
     }
@@ -50,6 +51,11 @@ class ConversationInteractor: IConversationInteractor {
     private func setupMessagesDataChangedService(with conversationId: String) {
         messagesDataChangedService.setupService(with: conversationId)
         messagesDataChangedService.messagesDelegate = self
+    }
+    
+    private func setupConversationsDataChangedService() {
+        conversationsDataChangedService.setupService()
+        conversationsDataChangedService.conversationsDelegate = self
     }
     
     private func setAllMessagesAsRead(for conversationId: String) {
@@ -104,8 +110,8 @@ extension ConversationInteractor: MessagesDataServiceDelegate {
         delegate?.updateMessage(at: indexPath)
     }
     
-    func insertMessage(at indexPath: IndexPath) {
-        delegate?.insertMessage(at: indexPath)
+    func insertMessage(_ message: Message, at indexPath: IndexPath) {
+        delegate?.insertMessage(message, at: indexPath)
     }
     
     func deleteMessage(at indexPath: IndexPath) {
@@ -122,12 +128,11 @@ extension ConversationInteractor: MessagesDataServiceDelegate {
 }
 
 extension ConversationInteractor: ConversationsDataServiceDelegate {
-    func updateConversation(_ conversation: Conversation, in section: Int) {
-        //TODO check will or won't be updated conversation online state (conversationsdatachanged -> conversationsListPresenter -> selectedCoversation -> current)
-        delegate?.updateConversationState(for: conversation.id)
+    func updateConversation(_ conversation: Conversation, at indexPath: IndexPath) {
+        delegate?.updateConversation(conversation, at: indexPath)
     }
     
-    func updateConversations() {
-        //TODO check will or won't be updated conversation online state (conversationsdatachanged -> conversationsListPresenter -> selectedCoversation -> current)
+    func insertConversation(_ conversation: Conversation, at indexPath: IndexPath) {
+        delegate?.insertConversation(conversation, at: indexPath)
     }
 }

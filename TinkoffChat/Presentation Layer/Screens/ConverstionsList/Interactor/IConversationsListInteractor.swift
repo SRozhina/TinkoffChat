@@ -9,4 +9,7 @@
 protocol IConversationsListInteractor {
     func setup()
     func selectConversation(_ conversation: Conversation)
+    func getOnlineConversations() -> [Conversation]
+    func getHistoryConversations() -> [Conversation]
+    var delegate: ConversationsListInteractorDelegate? { get set }
 }
