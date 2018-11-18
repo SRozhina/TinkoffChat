@@ -11,5 +11,5 @@ import Foundation
 protocol ICommunicationService {
     var delegate: ICommunicationServiceDelegate? { get set }
     var online: Bool { get set }
-    func send(_ message: Message, to peer: Peer)
+    func send(_ message: Message, to user: UserInfo)
 }

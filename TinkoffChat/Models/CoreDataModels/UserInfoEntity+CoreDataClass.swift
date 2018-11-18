@@ -2,7 +2,7 @@
 //  UserInfoEntity+CoreDataClass.swift
 //  
 //
-//  Created by Sofia on 03/11/2018.
+//  Created by Sofia on 10/11/2018.
 //
 //
 
@@ -10,4 +10,6 @@ import Foundation
 import CoreData
 
 @objc(UserInfoEntity)
-public class UserInfoEntity: NSManagedObject { }
+public class UserInfoEntity: NSManagedObject {
+
+}

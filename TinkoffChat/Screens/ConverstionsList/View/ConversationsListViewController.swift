@@ -21,12 +21,6 @@ class ConversationsListViewController: UIViewController {
         
         registerNibs()
         setupNavBar()
-        presenter.setup()
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        presenter.saveAll()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -66,6 +60,14 @@ extension ConversationsListViewController: IConversationsListView {
     func showErrorAlert(with title: String, retryAction: @escaping () -> Void) {
         let alert = errorAlertBuilder.build(with: title, retryAction: retryAction)
         present(alert, animated: true)
+    }
+    
+    func startUpdates() {
+        tableView.beginUpdates()
+    }
+    
+    func endUpdates() {
+        tableView.endUpdates()
     }
 }
 

@@ -2,7 +2,7 @@
 //  UserInfoEntity+CoreDataProperties.swift
 //  
 //
-//  Created by Sofia on 03/11/2018.
+//  Created by Sofia on 10/11/2018.
 //
 //
 
@@ -17,10 +17,12 @@ extension UserInfoEntity {
     }
 
     @NSManaged
-    public var name: String?
+    public var avatar: URL?
     @NSManaged
     public var info: String?
     @NSManaged
-    public var avatar: URL?
+    public var name: String?
+    @NSManaged
+    public var conversation: ConversationEntity?
 
 }

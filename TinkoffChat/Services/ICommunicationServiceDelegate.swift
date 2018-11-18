@@ -11,17 +11,17 @@ import Foundation
 protocol ICommunicationServiceDelegate: class {
     /// Browsing
     func communicationService(_ communicationService: ICommunicationService,
-                              didFoundPeer peer: Peer)
+                              didFoundPeer peer: UserInfo)
     
     func communicationService(_ communicationService: ICommunicationService,
-                              didLostPeer peer: Peer)
+                              didLostPeer peer: UserInfo)
     
     func communicationService(_ communicationService: ICommunicationService,
                               didNotStartBrowsingForPeers error: Error)
     
     /// Advertising
     func communicationService(_ communicationService: ICommunicationService,
-                              didReceiveInviteFromPeer peer: Peer,
+                              didReceiveInviteFromPeer peer: UserInfo,
                               invintationClosure: (Bool) -> Void)
     
     func communicationService(_ communicationService: ICommunicationService,
@@ -30,5 +30,5 @@ protocol ICommunicationServiceDelegate: class {
     /// Messages
     func communicationService(_ communicationService: ICommunicationService,
                               didReceiveMessage message: Message,
-                              from peer: Peer)
+                              from peer: UserInfo)
 }

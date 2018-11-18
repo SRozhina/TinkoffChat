@@ -5,12 +5,13 @@
 //  Created by Sofia on 04/10/2018.
 //  Copyright © 2018 Sofia. All rights reserved.
 //
+import CoreData
 
-class ConversationsListPresenter: IConversationsListPresenter {
+class ConversationsListPresenter: NSObject, IConversationsListPresenter {
     private let view: IConversationsListView
-    private let conversationsStorage: IConversationsStorage
+    private var conversationsListService: IConversationsListService
+    
     private var selectedConversationService: ISelectedConversationService
-    private var communicationService: ICommunicationService
     private var onlineConversations: [Conversation] = [] {
         didSet {
             updateOnlineConversations()
@@ -23,21 +24,19 @@ class ConversationsListPresenter: IConversationsListPresenter {
     }
     
     init(view: IConversationsListView,
-         conversationsStorage: IConversationsStorage,
          selectedConversationService: ISelectedConversationService,
-         communicationService: ICommunicationService) {
+         conversationsListService: IConversationsListService) {
         self.view = view
-        self.conversationsStorage = conversationsStorage
         self.selectedConversationService = selectedConversationService
-        self.communicationService = communicationService
+        self.conversationsListService = conversationsListService
     }
     
     func setup() {
-        communicationService.delegate = self
-        communicationService.online = true
-        let conversations = conversationsStorage.getConversations()
-        onlineConversations = conversations.filter { $0.isOnline }
-        historyConversations = conversations.filter { !$0.isOnline }
+        conversationsListService.delegate = self
+        conversationsListService.setupService()
+        
+        onlineConversations = conversationsListService.getOnlineConversations()
+        historyConversations = conversationsListService.getHistoryConversations()
     }
     
     func selectConversation(_ conversationPreview: ConversationPreview) {
@@ -47,11 +46,6 @@ class ConversationsListPresenter: IConversationsListPresenter {
         selectedConversationService.selectedConversation = conversation
     }
     
-    func saveAll() {
-        let conversations = onlineConversations + historyConversations
-        conversationsStorage.updateConversations(by: conversations)
-    }
-    
     private func updateOnlineConversations() {
         let previews = onlineConversations.map { getPreviewFrom(conversation: $0, isOnline: true) }
         let sortedPreviews = sortConversationPreviews(previews)
@@ -59,7 +53,7 @@ class ConversationsListPresenter: IConversationsListPresenter {
     }
     
     private func updateHistoryConversations() {
-        let previews = onlineConversations.map { getPreviewFrom(conversation: $0, isOnline: false) }
+        let previews = historyConversations.map { getPreviewFrom(conversation: $0, isOnline: false) }
         let sortedPreviews = sortConversationPreviews(previews)
         view.setHistoryConversations(sortedPreviews)
     }
@@ -84,47 +78,29 @@ class ConversationsListPresenter: IConversationsListPresenter {
     }
 }
 
-extension ConversationsListPresenter: ICommunicationServiceDelegate {
-    func communicationService(_ communicationService: ICommunicationService, didFoundPeer peer: Peer) {
-        let conversation: Conversation
-        if let existingConversationIndex = historyConversations.firstIndex(where: { $0.user == peer }) {
-            conversation = historyConversations.remove(at: existingConversationIndex)
-            conversation.isOnline = true
-        } else {
-            conversation = Conversation(user: peer)
-        }
-        onlineConversations.append(conversation)
-    }
-    
-    func communicationService(_ communicationService: ICommunicationService, didLostPeer peer: Peer) {
-        if let onlineConversationIndex = onlineConversations.firstIndex(where: { $0.user == peer }) {
-            let onlineConversation = onlineConversations.remove(at: onlineConversationIndex)
-            onlineConversation.isOnline = false
-            historyConversations.append(onlineConversation)
+extension ConversationsListPresenter: ConversationsListServiceDelegate { 
+    func updateConversation(in section: Int) {
+        switch section {
+        case 0:
+            onlineConversations = conversationsListService.getOnlineConversations()
+        default:
+            historyConversations = conversationsListService.getHistoryConversations()
         }
     }
     
-    func communicationService(_ communicationService: ICommunicationService, didNotStartBrowsingForPeers error: Error) {
-        view.showErrorAlert(with: error.localizedDescription) {
-            self.communicationService.online = true
-        }
+    func updateConversations() {
+        onlineConversations = conversationsListService.getOnlineConversations()
+        historyConversations = conversationsListService.getHistoryConversations()
     }
     
-    func communicationService(_ communicationService: ICommunicationService,
-                              didReceiveInviteFromPeer peer: Peer,
-                              invintationClosure: (Bool) -> Void) {
-        invintationClosure(true)
+    func showError(with error: String, retryAction: @escaping () -> Void) {
+        view.showErrorAlert(with: error, retryAction: retryAction)
     }
     
-    func communicationService(_ communicationService: ICommunicationService, didNotStartAdvertisingForPeers error: Error) {
-        view.showErrorAlert(with: error.localizedDescription) {
-            self.communicationService.online = true
-        }
+    func startUpdates() {
+        view.startUpdates()
     }
-    
-    func communicationService(_ communicationService: ICommunicationService, didReceiveMessage message: Message, from peer: Peer) {
-        guard let conversation = onlineConversations.first(where: { $0.user == peer }) else { return }
-        conversation.messages.append(message)
-        updateOnlineConversations()
+    func endUpdates() {
+        view.endUpdates()
     }
 }

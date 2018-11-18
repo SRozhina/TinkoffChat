@@ -38,9 +38,9 @@ class MultipeerCommunicationService: NSObject, ICommunicationService {
         browser.delegate = self
     }
     
-    func send(_ message: Message, to peer: Peer) {
+    func send(_ message: Message, to user: UserInfo) {
         guard let messageData = getDataFrom(message) else { return }
-        if let toPeer = session.connectedPeers.first(where: { $0.displayName == peer.name }) {
+        if let toPeer = session.connectedPeers.first(where: { $0.displayName == user.name }) {
             try? session.send(messageData, toPeers: [toPeer], with: .reliable)
         }
     }
@@ -71,7 +71,7 @@ extension MultipeerCommunicationService: MCNearbyServiceAdvertiserDelegate {
                     didReceiveInvitationFromPeer peerID: MCPeerID,
                     withContext context: Data?, invitationHandler: @escaping (Bool, MCSession?) -> Void) {
         print("I'm going to accept invite from \(peerID.displayName)")
-        let peer = Peer(name: peerID.displayName)
+        let peer = UserInfo(name: peerID.displayName)
         delegate?.communicationService(self, didReceiveInviteFromPeer: peer) { accept in
             invitationHandler(accept, session)
         }
@@ -97,9 +97,9 @@ extension MultipeerCommunicationService: MCNearbyServiceBrowserDelegate {
     func browser(_ browser: MCNearbyServiceBrowser,
                  lostPeer peerID: MCPeerID) {
         print("\(peerID.displayName) was lost")
-        let peer = Peer(name: peerID.displayName)
+        let user = UserInfo(name: peerID.displayName)
         DispatchQueue.main.async {
-            self.delegate?.communicationService(self, didLostPeer: peer)
+            self.delegate?.communicationService(self, didLostPeer: user)
         }
     }
     
@@ -117,9 +117,9 @@ extension MultipeerCommunicationService: MCSessionDelegate {
         switch state {
         case .connected:
             print("\(baseString) connected")
-            let peer = Peer(name: peerID.displayName)
+            let user = UserInfo(name: peerID.displayName)
             DispatchQueue.main.async {
-                self.delegate?.communicationService(self, didFoundPeer: peer)
+                self.delegate?.communicationService(self, didFoundPeer: user)
             }
         case .connecting:
             print("\(baseString) connecting")
@@ -131,9 +131,9 @@ extension MultipeerCommunicationService: MCSessionDelegate {
     func session(_ session: MCSession, didReceive data: Data, fromPeer peerID: MCPeerID) {
         guard let message = getMessageFrom(data) else { return }
         print("Received message \(message.text) from \(peerID.displayName)")
-        let peer = Peer(name: peerID.displayName)
+        let user = UserInfo(name: peerID.displayName)
         DispatchQueue.main.async {
-            self.delegate?.communicationService(self, didReceiveMessage: message, from: peer)
+            self.delegate?.communicationService(self, didReceiveMessage: message, from: user)
         }
     }
     

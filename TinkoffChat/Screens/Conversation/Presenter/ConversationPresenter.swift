@@ -13,11 +13,16 @@ class ConversationPresenter: IConversationPresenter {
     private var communicationService: ICommunicationService
     private let view: IConversationView
     private var conversation: Conversation!
+    private let conversationsStorage: IConversationsStorage
     
-    init(view: IConversationView, communicationService: ICommunicationService, selectedConversationService: ISelectedConversationService) {
+    init(view: IConversationView,
+         communicationService: ICommunicationService,
+         selectedConversationService: ISelectedConversationService,
+         conversationsStorage: IConversationsStorage) {
         self.view = view
         self.communicationService = communicationService
         self.selectedConversationService = selectedConversationService
+        self.conversationsStorage = conversationsStorage
     }
     
     func setup() {
@@ -28,18 +33,28 @@ class ConversationPresenter: IConversationPresenter {
             return
         }
         conversation = selectedConversationService.selectedConversation!
-        for message in conversation.messages {
-            message.isUnread = false
-        }
+        setAllMessagesAsRead()
         viewSetup()
     }
     
+    private func setAllMessagesAsRead() {
+        for message in conversation.messages {
+            message.isUnread = false
+        }
+        
+        conversationsStorage.setAllMessagesAsRead(in: conversation.id)
+    }
+    
     func sendMessage(_ message: String) {
-        let currentMessage = Message(id: generateMessageID(),
-                                     text: message)
-        conversation.messages.append(currentMessage)
-        view.setMessages(conversation.messages)
+        let currentMessage = Message(text: message)
+        addMessage(currentMessage)
         communicationService.send(currentMessage, to: conversation.user)
+    }
+    
+    private func addMessage(_ message: Message) {
+        conversation.messages.append(message)
+        conversationsStorage.appendMessage(message, to: conversation.id)
+        view.setMessages(conversation.messages)
     }
     
     private func viewSetup() {
@@ -49,26 +64,22 @@ class ConversationPresenter: IConversationPresenter {
         view.setTitle(conversation.user.name)
         view.setMessages(conversation.messages)
     }
-    
-    private func generateMessageID() -> String {
-        let string = "\(arc4random_uniform(UINT32_MAX))\(Date.timeIntervalSinceReferenceDate)\(arc4random_uniform(UINT32_MAX))"
-        let encodedString = string.data(using: .utf8)?.base64EncodedString()
-        return encodedString!
-    }
 }
 
 extension ConversationPresenter: ICommunicationServiceDelegate {
-    func communicationService(_ communicationService: ICommunicationService, didFoundPeer peer: Peer) {
+    func communicationService(_ communicationService: ICommunicationService, didFoundPeer peer: UserInfo) {
         if peer == conversation.user {
             self.view.enableSendButton()
             conversation.isOnline = true
+            conversationsStorage.setOnlineStatus(true, to: conversation.id)
         }
     }
     
-    func communicationService(_ communicationService: ICommunicationService, didLostPeer peer: Peer) {
+    func communicationService(_ communicationService: ICommunicationService, didLostPeer peer: UserInfo) {
         if peer == conversation.user {
             self.view.disableSendButton()
             conversation.isOnline = false
+            conversationsStorage.setOnlineStatus(false, to: conversation.id)
         }
     }
     
@@ -79,7 +90,7 @@ extension ConversationPresenter: ICommunicationServiceDelegate {
     }
     
     func communicationService(_ communicationService: ICommunicationService,
-                              didReceiveInviteFromPeer peer: Peer,
+                              didReceiveInviteFromPeer peer: UserInfo,
                               invintationClosure: (Bool) -> Void) {
         invintationClosure(true)
     }
@@ -90,9 +101,8 @@ extension ConversationPresenter: ICommunicationServiceDelegate {
         }
     }
     
-    func communicationService(_ communicationService: ICommunicationService, didReceiveMessage message: Message, from peer: Peer) {
+    func communicationService(_ communicationService: ICommunicationService, didReceiveMessage message: Message, from peer: UserInfo) {
         message.isUnread = false
-        conversation.messages.append(message)
-        view.setMessages(conversation.messages)
+        addMessage(message)
     }
 }

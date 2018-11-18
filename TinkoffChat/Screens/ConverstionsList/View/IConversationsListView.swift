@@ -10,4 +10,6 @@ protocol IConversationsListView {
     func setOnlineConversations(_ conversations: [ConversationPreview])
     func setHistoryConversations(_ conversations: [ConversationPreview])
     func showErrorAlert(with title: String, retryAction: @escaping () -> Void)
+    func startUpdates()
+    func endUpdates()
 }
