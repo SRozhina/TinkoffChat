@@ -10,7 +10,7 @@ import Foundation
 
 protocol IUserProfileDataService {
     func setupService()
-    func getUserProfileInfo() -> UserInfo?
+    func getUserProfileInfo() -> UserInfo
     func saveUserProfileInfo(_ userInfo: UserInfo)
     var userDelegate: UserProfileDataServiceDelegate? { get set }
 }

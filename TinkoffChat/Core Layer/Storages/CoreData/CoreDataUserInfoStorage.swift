@@ -26,7 +26,7 @@ class CoreDataUserInfoStorage: IUserInfoStorage {
     }
     
     func saveUserProfile(_ newUserInfo: UserInfo) {
-        let predicate = NSPredicate(format: "id==0")
+        let predicate = NSPredicate(format: "id==%@", 0)
         saveUser(newUserInfo, with: predicate)
     }
     
@@ -36,7 +36,7 @@ class CoreDataUserInfoStorage: IUserInfoStorage {
         let context = container.viewContext
         context.performAndWait {
             let users = try? context.fetch(fetchRequest)
-            guard let userEntity = (users?.first ?? createUserProfile()) else { return }
+            guard let userEntity = users?.first else { return }
             userEntity.name = newUserInfo.name
             userEntity.info = newUserInfo.info
             if let image = newUserInfo.avatar,
@@ -48,17 +48,21 @@ class CoreDataUserInfoStorage: IUserInfoStorage {
         }
     }
     
-    private func createUserProfile() -> UserInfoEntity? {
+    func createUserProfile() {
+        //TODO make conversation not required
         let context = container.viewContext
-        var userEntity: UserInfoEntity?
         //context.performAndWait {
-        userEntity = NSEntityDescription.insertNewObject(forEntityName: String(describing: UserInfoEntity.self),
-                                                         into: context) as? UserInfoEntity
-        userEntity?.id = 0
-        userEntity?.name = "No name"
-        userEntity?.info = ""
-        try? context.save()
-        return userEntity
+            let userEntity = NSEntityDescription.insertNewObject(forEntityName: String(describing: UserInfoEntity.self),
+                                                                 into: context) as? UserInfoEntity
+            userEntity?.id = 0
+            userEntity?.name = "No name"
+            userEntity?.info = ""
+        do {
+            try context.save()
+        } catch {
+            print(error.localizedDescription)
+        }
+        
         //}
     }
 }

@@ -70,14 +70,4 @@ class CoreDataConversationsStorage: IConversationsStorage {
             try? context.save()
         }
     }
-    
-    private func createNewConversation(in context: NSManagedObjectContext) -> ConversationEntity? {
-        let conversationEntity = NSEntityDescription.insertNewObject(forEntityName: String(describing: ConversationEntity.self),
-                                                                     into: context) as? ConversationEntity
-        if let userEntity = NSEntityDescription.insertNewObject(forEntityName: String(describing: UserInfoEntity.self),
-                                                                into: context) as? UserInfoEntity {
-            conversationEntity?.user = userEntity
-        }
-        return conversationEntity
-    }
 }

@@ -8,4 +8,5 @@
 
 protocol IProfileInteractor {
     func setup()
+    var delegate: ProfileInteractorDelegate? { get set }
 }

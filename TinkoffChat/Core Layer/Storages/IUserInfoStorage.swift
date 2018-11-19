@@ -21,6 +21,7 @@ typealias SaverCompletion = (Result) -> Void
 
 protocol IUserInfoStorage {
     func saveUserProfile(_ newUserInfo: UserInfo)
+    func createUserProfile()
 }
 
 protocol IUserInfoStorageOld {

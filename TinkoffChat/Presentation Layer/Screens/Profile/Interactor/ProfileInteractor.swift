@@ -20,9 +20,8 @@ class ProfileInteractor: IProfileInteractor {
         userProfileDataChangedService.setupService()
         userProfileDataChangedService.userDelegate = self
         
-        if let userInfo = userProfileDataChangedService.getUserProfileInfo() {
-            delegate?.setUserInfo(userInfo)
-        }
+        let userInfo = userProfileDataChangedService.getUserProfileInfo()
+        delegate?.setUserInfo(userInfo)
     }
 }
 

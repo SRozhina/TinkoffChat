@@ -9,4 +9,5 @@
 protocol IEditProfileInteractor {
     func setup()
     func saveUserInfo(_ userInfo: UserInfo, completion: @escaping (Result) -> Void)
+    var delegate: EditProfileInteractorDelegate? { get set }
 }

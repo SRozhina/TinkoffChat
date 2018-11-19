@@ -25,6 +25,7 @@ class EditProfilePresenter: IEditProfilePresenter {
     }
     
     func setup() {
+        interactor.delegate = self
         interactor.setup()
     }
     

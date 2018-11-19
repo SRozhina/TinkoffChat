@@ -18,10 +18,9 @@ class EditProfileInteractor: IEditProfileInteractor {
     
     func setup() {
         userProfileDataChangedService.setupService()
-        userProfileDataChangedService.userDelegate = self
-        if let userInfo = userProfileDataChangedService.getUserProfileInfo() {
-            delegate?.setUserInfo(userInfo)
-        }
+        //userProfileDataChangedService.userDelegate = self
+        let userInfo = userProfileDataChangedService.getUserProfileInfo()
+        delegate?.setUserInfo(userInfo)
     }
     
     func saveUserInfo(_ userInfo: UserInfo, completion: @escaping (Result) -> Void) {
@@ -29,9 +28,9 @@ class EditProfileInteractor: IEditProfileInteractor {
         completion(.success)
     }
 }
-
-extension EditProfileInteractor: UserProfileDataServiceDelegate {
-    func updateUser(with userInfo: UserInfo) {
-        delegate?.setUserInfo(userInfo)
-    }
-}
+//
+//extension EditProfileInteractor: UserProfileDataServiceDelegate {
+//    func updateUser(with userInfo: UserInfo) {
+//        delegate?.setUserInfo(userInfo)
+//    }
+//}
