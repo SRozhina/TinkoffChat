@@ -58,9 +58,9 @@ class CoreDataConversationsStorage: IConversationsStorage {
     }
     
     func setOnlineStatus(_ value: Bool, to conversationId: String) {
-        let predicate = NSPredicate(format: "id==%@", "\(conversationId)")
-        let fetchRequest = NSFetchRequest<ConversationEntity>(entityName: String(describing: ConversationEntity.self))
-        fetchRequest.predicate = predicate
+        guard let fetchRequest = container.managedObjectModel
+            .fetchRequestFromTemplate(withName: "Conversation",
+                                      substitutionVariables: ["ID": conversationId]) as? NSFetchRequest<ConversationEntity> else { return }
         let context = container.viewContext
         
         context.performAndWait {

@@ -21,18 +21,19 @@ class CoreDataUserInfoStorage: IUserInfoStorage {
     }
     
     func saveUser(_ newUserInfo: UserInfo) {
-         let predicate = NSPredicate(format: "name==%@", "\(newUserInfo.name)")
-        saveUser(newUserInfo, with: predicate, isProfile: false)
+        guard let fetchRequest = container.managedObjectModel.fetchRequestFromTemplate(withName: "User",
+                                                                                       substitutionVariables: ["NAME": newUserInfo.name])
+            as? NSFetchRequest<UserInfoEntity> else { return }
+        saveUser(newUserInfo, with: fetchRequest, isProfile: false)
     }
     
     func saveUserProfile(_ newUserInfo: UserInfo) {
-        let predicate = NSPredicate(format: "id==0")
-        saveUser(newUserInfo, with: predicate, isProfile: true)
+        guard let fetchRequest = container.managedObjectModel.fetchRequestTemplate(forName: "UserProfile")
+            as? NSFetchRequest<UserInfoEntity> else { return }
+        saveUser(newUserInfo, with: fetchRequest, isProfile: true)
     }
     
-    private func saveUser(_ newUserInfo: UserInfo, with predicate: NSPredicate, isProfile: Bool) {
-        let fetchRequest = NSFetchRequest<UserInfoEntity>(entityName: String(describing: UserInfoEntity.self))
-        fetchRequest.predicate = predicate
+    private func saveUser(_ newUserInfo: UserInfo, with fetchRequest: NSFetchRequest<UserInfoEntity>, isProfile: Bool) {
         let context = container.viewContext
         context.performAndWait {
             let users = try? context.fetch(fetchRequest)

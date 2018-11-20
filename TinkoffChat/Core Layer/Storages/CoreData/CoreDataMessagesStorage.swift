@@ -18,30 +18,27 @@ class CoreDataMessagesStorage: IMessagesStorage {
     }
     
     func setAllMessagesAsRead(in conversationId: String) {
-        let predicate = NSPredicate(format: "id==%@", "\(conversationId)")
-        let fetchRequest = NSFetchRequest<ConversationEntity>(entityName: String(describing: ConversationEntity.self))
-        fetchRequest.predicate = predicate
-        
+        guard let fetchRequest = getFetchRequest(for: conversationId) else { return }
         let context = container.viewContext
         
         context.performAndWait {
-            let conversations = try? context.fetch(fetchRequest)
-            let conversation = conversations?.first
-            conversation?.messages.forEach { ($0 as? MessageEntity)?.isUnread = false }
+            //let conversations = try? context.fetch(fetchRequest)
+            //let conversation = conversations?.first
+            let messages = try? context.fetch(fetchRequest)
+            messages?.forEach { $0.isUnread = false }
             try? context.save()
         }
     }
     
     func appendMessage(_ message: Message, to conversationId: String) {
-        let predicate = NSPredicate(format: "id==%@", "\(conversationId)")
-        let fetchRequest = NSFetchRequest<ConversationEntity>(entityName: String(describing: ConversationEntity.self))
-        fetchRequest.predicate = predicate
-        
+        guard let fetchRequest = getFetchRequest(for: conversationId) else { return }
         let context = container.viewContext
         
         context.performAndWait {
-            let conversations = try? context.fetch(fetchRequest)
-            let conversation = conversations?.first
+            //let conversations = try? context.fetch(fetchRequest)
+            var messages = try? context.fetch(fetchRequest)
+
+            //let conversation = conversations?.first
             let messageEntity = NSEntityDescription.insertNewObject(forEntityName: String(describing: MessageEntity.self),
                                                                     into: context) as? MessageEntity
             messageEntity?.id = message.id
@@ -51,8 +48,15 @@ class CoreDataMessagesStorage: IMessagesStorage {
             messageEntity?.isUnread = message.isUnread
             
             guard let messageEntityUnwrapped = messageEntity else { return }
-            conversation?.addToMessages(messageEntityUnwrapped)
+            messages?.append(messageEntityUnwrapped)
+            //conversation?.addToMessages(messageEntityUnwrapped)
             try? context.save()
         }
+    }
+    
+    func getFetchRequest(for conversationId: String) -> NSFetchRequest<MessageEntity>? {
+        return container.managedObjectModel.fetchRequestFromTemplate(withName: "ConversationMessages",
+                                                                     substitutionVariables: ["CONVERSATIONID": conversationId])
+            as? NSFetchRequest<MessageEntity>
     }
 }
