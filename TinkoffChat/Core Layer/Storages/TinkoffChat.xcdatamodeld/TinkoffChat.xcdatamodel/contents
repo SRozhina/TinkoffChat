@@ -19,7 +19,7 @@
         <attribute name="id" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="info" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="conversation" maxCount="1" deletionRule="Nullify" destinationEntity="ConversationEntity" inverseName="user" inverseEntity="ConversationEntity" syncable="YES"/>
+        <relationship name="conversation" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ConversationEntity" inverseName="user" inverseEntity="ConversationEntity" syncable="YES"/>
     </entity>
     <fetchRequest name="Conversation" entity="ConversationEntity" predicateString="id == $ID"/>
     <fetchRequest name="ConversationMessages" entity="MessageEntity" predicateString="conversation.id == $CONVERSATIONID"/>

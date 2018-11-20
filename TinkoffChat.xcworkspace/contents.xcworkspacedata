@@ -2,6 +2,12 @@
 <Workspace
    version = "1.0">
    <FileRef
+      location = "group:/Users/sofia/tinkoff-chat/TinkoffChat/Presentation Layer/Models/CoreDataModels/UserInfoEntity+CoreDataProperties.swift">
+   </FileRef>
+   <FileRef
+      location = "group:/Users/sofia/tinkoff-chat/TinkoffChat/Presentation Layer/Models/CoreDataModels/UserInfoEntity+CoreDataClass.swift">
+   </FileRef>
+   <FileRef
       location = "group:TinkoffChat.xcodeproj">
    </FileRef>
    <FileRef

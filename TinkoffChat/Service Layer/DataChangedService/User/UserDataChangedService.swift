@@ -29,7 +29,7 @@ class UserProfileDataService: NSObject, NSFetchedResultsControllerDelegate, IUse
     }
     
     func setupService() {
-        let predicate = NSPredicate(format: "id==%@", 0)
+        let predicate = NSPredicate(format: "id==0")
         let fetchRequest = NSFetchRequest<UserInfoEntity>(entityName: String(describing: UserInfoEntity.self))
         fetchRequest.predicate = predicate
         let sortDescriptor = NSSortDescriptor(key: #keyPath(UserInfoEntity.name), ascending: true)
@@ -42,9 +42,6 @@ class UserProfileDataService: NSObject, NSFetchedResultsControllerDelegate, IUse
                                                                             cacheName: nil)
         fetchResultsController.delegate = self
         try? fetchResultsController.performFetch()
-        if fetchResultsController.fetchedObjects?.count == 0 {
-            userInfoStorage.createUserProfile()
-        }
     }
     
     func getUserProfileInfo() -> UserInfo {

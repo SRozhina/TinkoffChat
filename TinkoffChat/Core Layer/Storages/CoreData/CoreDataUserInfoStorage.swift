@@ -22,21 +22,26 @@ class CoreDataUserInfoStorage: IUserInfoStorage {
     
     func saveUser(_ newUserInfo: UserInfo) {
          let predicate = NSPredicate(format: "name==%@", "\(newUserInfo.name)")
-        saveUser(newUserInfo, with: predicate)
+        saveUser(newUserInfo, with: predicate, isProfile: false)
     }
     
     func saveUserProfile(_ newUserInfo: UserInfo) {
-        let predicate = NSPredicate(format: "id==%@", 0)
-        saveUser(newUserInfo, with: predicate)
+        let predicate = NSPredicate(format: "id==0")
+        saveUser(newUserInfo, with: predicate, isProfile: true)
     }
     
-    private func saveUser(_ newUserInfo: UserInfo, with predicate: NSPredicate) {
+    private func saveUser(_ newUserInfo: UserInfo, with predicate: NSPredicate, isProfile: Bool) {
         let fetchRequest = NSFetchRequest<UserInfoEntity>(entityName: String(describing: UserInfoEntity.self))
         fetchRequest.predicate = predicate
         let context = container.viewContext
         context.performAndWait {
             let users = try? context.fetch(fetchRequest)
-            guard let userEntity = users?.first else { return }
+            guard let userEntity = users?.first
+                ?? NSEntityDescription.insertNewObject(forEntityName: String(describing: UserInfoEntity.self),
+                                                       into: context) as? UserInfoEntity else { return }
+            if isProfile {
+                userEntity.id = 0
+            }
             userEntity.name = newUserInfo.name
             userEntity.info = newUserInfo.info
             if let image = newUserInfo.avatar,
@@ -46,23 +51,5 @@ class CoreDataUserInfoStorage: IUserInfoStorage {
             userEntity.avatar = self.userInfoPathProvider.avatarFilePath
             try? context.save()
         }
-    }
-    
-    func createUserProfile() {
-        //TODO make conversation not required
-        let context = container.viewContext
-        //context.performAndWait {
-            let userEntity = NSEntityDescription.insertNewObject(forEntityName: String(describing: UserInfoEntity.self),
-                                                                 into: context) as? UserInfoEntity
-            userEntity?.id = 0
-            userEntity?.name = "No name"
-            userEntity?.info = ""
-        do {
-            try context.save()
-        } catch {
-            print(error.localizedDescription)
-        }
-        
-        //}
     }
 }
