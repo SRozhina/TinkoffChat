@@ -21,10 +21,11 @@
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="conversation" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ConversationEntity" inverseName="user" inverseEntity="ConversationEntity" syncable="YES"/>
     </entity>
-    <fetchRequest name="Conversation" entity="ConversationEntity" predicateString="id == &quot;$ID&quot;"/>
+    <fetchRequest name="Conversation" entity="ConversationEntity" predicateString="id == $ID"/>
     <fetchRequest name="ConversationMessages" entity="MessageEntity" predicateString="conversation.id == $CONVERSATIONID"/>
-    <fetchRequest name="User" entity="UserInfoEntity" predicateString="name == &quot;$NAME&quot;"/>
-    <fetchRequest name="UserProfile" entity="UserInfoEntity" predicateString="id == 0"/>
+    <fetchRequest name="OnlineConversations" entity="ConversationEntity" predicateString="isOnline == 0"/>
+    <fetchRequest name="OnlineUsers" entity="UserInfoEntity" predicateString="name == &quot;$NAME&quot;"/>
+    <fetchRequest name="User" entity="UserInfoEntity"/>
     <elements>
         <element name="ConversationEntity" positionX="-59.984375" positionY="-359.08203125" width="128" height="105"/>
         <element name="MessageEntity" positionX="265.08984375" positionY="-175.87890625" width="128" height="135"/>

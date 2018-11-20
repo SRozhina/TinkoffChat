@@ -10,28 +10,26 @@ import Foundation
 import CoreData
 
 class MessagesDataService: NSObject, NSFetchedResultsControllerDelegate, IMessagesDataService {
-    private let container: NSPersistentContainer
+    private let context: NSManagedObjectContext
     private var fetchResultsController: NSFetchedResultsController<MessageEntity>!
     private var messageConverter: IMessageConverter!
     weak var messagesDelegate: MessagesDataServiceDelegate?
     
     init(container: NSPersistentContainer, messageConverter: IMessageConverter) {
-        self.container = container
+        self.context = container.viewContext
         self.messageConverter = messageConverter
     }
     
     func setupService(with conversationId: String) {
-        guard let immutableFetchRequest = container.managedObjectModel
-            .fetchRequestFromTemplate(withName: "ConversationMessages",
-                                      substitutionVariables: ["CONVERSATIONID": conversationId]) as? NSFetchRequest<MessageEntity>,
-            let fetchRequest = immutableFetchRequest.copy() as? NSFetchRequest<MessageEntity> else { return }
-        
+        let predicate = NSPredicate(format: "conversation.id==%@", conversationId)
+        let fetchRequest = NSFetchRequest<MessageEntity>(entityName: String(describing: MessageEntity.self))
+        fetchRequest.predicate = predicate
         let sortDescriptor = NSSortDescriptor(key: #keyPath(MessageEntity.date), ascending: true)
         fetchRequest.sortDescriptors = [sortDescriptor]
         fetchRequest.resultType = .managedObjectResultType
         
         fetchResultsController = NSFetchedResultsController<MessageEntity>(fetchRequest: fetchRequest,
-                                                                           managedObjectContext: container.viewContext,
+                                                                           managedObjectContext: context,
                                                                            sectionNameKeyPath: nil,
                                                                            cacheName: nil)
         fetchResultsController.delegate = self
