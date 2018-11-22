@@ -77,6 +77,10 @@ extension SwinjectStoryboard {
             .inObjectScope(.container)
         
         defaultContainer
+            .register(IAvatarNetworkService.self) { _ in PixabayAvatarNetworkService(session: URLSession.shared) }
+            .inObjectScope(.container)
+        
+        defaultContainer
             .register(IMessagesDataService.self) { resolver in
                 MessagesDataService(container: resolver.resolve(NSPersistentContainer.self)!,
                                     messageConverter: resolver.resolve(IMessageConverter.self)!)}
@@ -156,6 +160,16 @@ extension SwinjectStoryboard {
         
         defaultContainer.storyboardInitCompleted(EditProfileViewController.self) { resolver, view in
             view.presenter = resolver.resolve(IEditProfilePresenter.self, argument: view as IEditProfileView)!
+        }
+        
+        // MARK: - Load avatar
+        defaultContainer.register(ILoadAvatarPresenter.self) { resolver, view in
+            LoadAvatarPresenter(view: view,
+                                avatarNetworkService: resolver.resolve(IAvatarNetworkService.self)!)
+        }
+        
+        defaultContainer.storyboardInitCompleted(LoadAvatarViewController.self) { resolver, view in
+            view.presenter = resolver.resolve(ILoadAvatarPresenter.self, argument: view as ILoadAvatarView)!
         }
     }
 }

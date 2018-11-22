@@ -56,15 +56,23 @@ class EditProfileViewController: UIViewController, UINavigationControllerDelegat
 
     @IBAction private func editAvatarTapped(_ sender: UIButton) {
         let takePhotoAlertAction = UIAlertAction(title: "Take photo", style: .default) { _ in self.takePhotoAction() }
+        
         let chooseFromLibraryAlertAction = UIAlertAction(title: "Choose from Library", style: .default) { _ in
             self.showImagePickerController(with: .photoLibrary)
         }
+        
+        let loadAction = UIAlertAction(title: "Load", style: .default) { _ in
+            let loadAvatarStoryboard = UIStoryboard(name: "LoadAvatarViewController", bundle: nil)
+            guard let loadAvatarViewController = loadAvatarStoryboard.instantiateInitialViewController() else { return }
+            self.present(loadAvatarViewController, animated: true)
+        }
+        
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         
         showAlert(with: "Select avatar",
                   message: nil,
                   style: .actionSheet,
-                  actions: [takePhotoAlertAction, chooseFromLibraryAlertAction, cancelAction])
+                  actions: [takePhotoAlertAction, chooseFromLibraryAlertAction, loadAction, cancelAction])
     }
     
     private func takePhotoAction() {

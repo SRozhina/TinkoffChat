@@ -99,6 +99,18 @@
 		C3DC6976217BD0A000DCEBB1 /* IProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3DC6975217BD0A000DCEBB1 /* IProfileView.swift */; };
 		C3DC6978217BD0B500DCEBB1 /* IProfilePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3DC6977217BD0B500DCEBB1 /* IProfilePresenter.swift */; };
 		C3DC697A217BD0CB00DCEBB1 /* ProfilePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3DC6979217BD0CB00DCEBB1 /* ProfilePresenter.swift */; };
+		C3E9958221A6969C0067BD4D /* LoadAvatarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3E9958121A6969C0067BD4D /* LoadAvatarViewController.swift */; };
+		C3E9958421A696C90067BD4D /* LoadAvatarViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C3E9958321A696C90067BD4D /* LoadAvatarViewController.storyboard */; };
+		C3E9958721A7362F0067BD4D /* AvatarCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C3E9958621A7362F0067BD4D /* AvatarCell.xib */; };
+		C3E9958921A742C20067BD4D /* PixabayResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3E9958821A742C20067BD4D /* PixabayResult.swift */; };
+		C3E9958B21A742DF0067BD4D /* AvatarImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3E9958A21A742DF0067BD4D /* AvatarImage.swift */; };
+		C3E9958D21A742FD0067BD4D /* AvatarCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3E9958C21A742FD0067BD4D /* AvatarCell.swift */; };
+		C3E9959021A743270067BD4D /* ILoadAvatarPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3E9958F21A743270067BD4D /* ILoadAvatarPresenter.swift */; };
+		C3E9959221A743370067BD4D /* LoadAvatarPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3E9959121A743370067BD4D /* LoadAvatarPresenter.swift */; };
+		C3E9959421A743AE0067BD4D /* ILoadAvatarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3E9959321A743AE0067BD4D /* ILoadAvatarView.swift */; };
+		C3E9959721A743FD0067BD4D /* AvatarNetworkServiceDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3E9959621A743FD0067BD4D /* AvatarNetworkServiceDelegate.swift */; };
+		C3E9959921A7440E0067BD4D /* IAvatarNetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3E9959821A7440E0067BD4D /* IAvatarNetworkService.swift */; };
+		C3E9959B21A7441F0067BD4D /* PixabayAvatarNetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3E9959A21A7441F0067BD4D /* PixabayAvatarNetworkService.swift */; };
 		C3F835342196C5C000A2D767 /* MessageEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3F8352E2196C5C000A2D767 /* MessageEntity+CoreDataProperties.swift */; };
 		C3F835352196C5C000A2D767 /* MessageEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3F8352F2196C5C000A2D767 /* MessageEntity+CoreDataClass.swift */; };
 		C3FF5C152180DDA000D5F899 /* MultipeerConnectionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3FF5C142180DDA000D5F899 /* MultipeerConnectionService.swift */; };
@@ -201,6 +213,18 @@
 		C3DC6975217BD0A000DCEBB1 /* IProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IProfileView.swift; sourceTree = "<group>"; };
 		C3DC6977217BD0B500DCEBB1 /* IProfilePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IProfilePresenter.swift; sourceTree = "<group>"; };
 		C3DC6979217BD0CB00DCEBB1 /* ProfilePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePresenter.swift; sourceTree = "<group>"; };
+		C3E9958121A6969C0067BD4D /* LoadAvatarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadAvatarViewController.swift; sourceTree = "<group>"; };
+		C3E9958321A696C90067BD4D /* LoadAvatarViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LoadAvatarViewController.storyboard; sourceTree = "<group>"; };
+		C3E9958621A7362F0067BD4D /* AvatarCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AvatarCell.xib; sourceTree = "<group>"; };
+		C3E9958821A742C20067BD4D /* PixabayResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PixabayResult.swift; sourceTree = "<group>"; };
+		C3E9958A21A742DF0067BD4D /* AvatarImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarImage.swift; sourceTree = "<group>"; };
+		C3E9958C21A742FD0067BD4D /* AvatarCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarCell.swift; sourceTree = "<group>"; };
+		C3E9958F21A743270067BD4D /* ILoadAvatarPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ILoadAvatarPresenter.swift; sourceTree = "<group>"; };
+		C3E9959121A743370067BD4D /* LoadAvatarPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadAvatarPresenter.swift; sourceTree = "<group>"; };
+		C3E9959321A743AE0067BD4D /* ILoadAvatarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ILoadAvatarView.swift; sourceTree = "<group>"; };
+		C3E9959621A743FD0067BD4D /* AvatarNetworkServiceDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarNetworkServiceDelegate.swift; sourceTree = "<group>"; };
+		C3E9959821A7440E0067BD4D /* IAvatarNetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IAvatarNetworkService.swift; sourceTree = "<group>"; };
+		C3E9959A21A7441F0067BD4D /* PixabayAvatarNetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PixabayAvatarNetworkService.swift; sourceTree = "<group>"; };
 		C3F8352E2196C5C000A2D767 /* MessageEntity+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MessageEntity+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		C3F8352F2196C5C000A2D767 /* MessageEntity+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MessageEntity+CoreDataClass.swift"; sourceTree = "<group>"; };
 		C3FF5C142180DDA000D5F899 /* MultipeerConnectionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultipeerConnectionService.swift; sourceTree = "<group>"; };
@@ -344,6 +368,8 @@
 				C308831F21848856003E1564 /* Conversation.swift */,
 				C3DC6963217BA71500DCEBB1 /* UserInfo.swift */,
 				C323B2F421949B1F0096AE93 /* CoreDataModels */,
+				C3E9958821A742C20067BD4D /* PixabayResult.swift */,
+				C3E9958A21A742DF0067BD4D /* AvatarImage.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -365,6 +391,7 @@
 		C32DEFF321656C89009645D9 /* Screens */ = {
 			isa = PBXGroup;
 			children = (
+				C3E9957F21A696640067BD4D /* Load Avatar */,
 				C3DC695A217B9AC200DCEBB1 /* Edit Profile */,
 				C32DEFF421656DAD009645D9 /* Conversation */,
 				C32DEFEB21653438009645D9 /* Profile */,
@@ -556,6 +583,7 @@
 		C387C27C219DE356005DE328 /* Service Layer */ = {
 			isa = PBXGroup;
 			children = (
+				C3E9959521A743EC0067BD4D /* AvatarNetworkService */,
 				C387C208219AC1DF005DE328 /* DataChangedService */,
 				C354F91E2165F9D30048320E /* SelectedConversatinPreviewService.swift */,
 				C354F939216605410048320E /* ISelectedConversationService.swift */,
@@ -667,6 +695,46 @@
 			path = Presenter;
 			sourceTree = "<group>";
 		};
+		C3E9957F21A696640067BD4D /* Load Avatar */ = {
+			isa = PBXGroup;
+			children = (
+				C3E9958E21A7431A0067BD4D /* Presenter */,
+				C3E9958021A696870067BD4D /* View */,
+			);
+			path = "Load Avatar";
+			sourceTree = "<group>";
+		};
+		C3E9958021A696870067BD4D /* View */ = {
+			isa = PBXGroup;
+			children = (
+				C3E9958121A6969C0067BD4D /* LoadAvatarViewController.swift */,
+				C3E9958321A696C90067BD4D /* LoadAvatarViewController.storyboard */,
+				C3E9958621A7362F0067BD4D /* AvatarCell.xib */,
+				C3E9958C21A742FD0067BD4D /* AvatarCell.swift */,
+				C3E9959321A743AE0067BD4D /* ILoadAvatarView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		C3E9958E21A7431A0067BD4D /* Presenter */ = {
+			isa = PBXGroup;
+			children = (
+				C3E9958F21A743270067BD4D /* ILoadAvatarPresenter.swift */,
+				C3E9959121A743370067BD4D /* LoadAvatarPresenter.swift */,
+			);
+			path = Presenter;
+			sourceTree = "<group>";
+		};
+		C3E9959521A743EC0067BD4D /* AvatarNetworkService */ = {
+			isa = PBXGroup;
+			children = (
+				C3E9959621A743FD0067BD4D /* AvatarNetworkServiceDelegate.swift */,
+				C3E9959821A7440E0067BD4D /* IAvatarNetworkService.swift */,
+				C3E9959A21A7441F0067BD4D /* PixabayAvatarNetworkService.swift */,
+			);
+			path = AvatarNetworkService;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -729,9 +797,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				C32DEFE6216529EB009645D9 /* ConversationsListViewController.storyboard in Resources */,
+				C3E9958721A7362F0067BD4D /* AvatarCell.xib in Resources */,
 				C32DEFFC21656FB4009645D9 /* IncomingMessageCell.xib in Resources */,
 				C35707B92152E62100244E5E /* LaunchScreen.storyboard in Resources */,
 				C32DEFEA21652B6A009645D9 /* ConversationsListCell.xib in Resources */,
+				C3E9958421A696C90067BD4D /* LoadAvatarViewController.storyboard in Resources */,
 				C32DF00021656FC9009645D9 /* OutgoingMessageCell.xib in Resources */,
 				C35707B62152E62100244E5E /* Assets.xcassets in Resources */,
 				C3DC6962217B9B3E00DCEBB1 /* EditProfileViewController.storyboard in Resources */,
@@ -805,11 +875,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				C3760499218E185D00AFEEEA /* CoreDataUserInfoStorage.swift in Sources */,
+				C3E9959421A743AE0067BD4D /* ILoadAvatarView.swift in Sources */,
 				C3DC696C217BB7F100DCEBB1 /* IEditProfilePresenter.swift in Sources */,
 				C32DEFF621656DCB009645D9 /* ConversationViewController.swift in Sources */,
 				C34CE228217CD1620066796A /* OperationsUserInfoStorage.swift in Sources */,
 				C3D95EFF219BF561007911AD /* ConversationsDataService.swift in Sources */,
 				C387C283219EB623005DE328 /* IMessagesStorage.swift in Sources */,
+				C3E9959721A743FD0067BD4D /* AvatarNetworkServiceDelegate.swift in Sources */,
 				C354F930216604100048320E /* IConversationsListView.swift in Sources */,
 				C3C49C4421A3F0B200323F91 /* UserInfoEntity+CoreDataProperties.swift in Sources */,
 				C387C20C219AC205005DE328 /* MessagesDataServiceDelegate.swift in Sources */,
@@ -827,6 +899,7 @@
 				C3DC6978217BD0B500DCEBB1 /* IProfilePresenter.swift in Sources */,
 				C3DC696A217BB7C800DCEBB1 /* IEditProfileView.swift in Sources */,
 				C387C27A219DE2A7005DE328 /* EditProfileInteractor.swift in Sources */,
+				C3E9959921A7440E0067BD4D /* IAvatarNetworkService.swift in Sources */,
 				C3D95F03219BFE6B007911AD /* ConversationsDataServiceDelegate.swift in Sources */,
 				C308831C21847895003E1564 /* IErrorAlertBuilder.swift in Sources */,
 				C387C20A219AC1F1005DE328 /* BaseDataServiceDelegate.swift in Sources */,
@@ -838,6 +911,7 @@
 				C387C228219D74D8005DE328 /* ConversationInteractor.swift in Sources */,
 				C32DEFE4216529AA009645D9 /* ConversationsListViewController.swift in Sources */,
 				C3D95EFD2198AE17007911AD /* FetchRequestBuilder.swift in Sources */,
+				C3E9958D21A742FD0067BD4D /* AvatarCell.swift in Sources */,
 				C323B2F621956EAE0096AE93 /* CoreDataConversationsStorage.swift in Sources */,
 				C387C276219DE280005DE328 /* EditProfileInteractorDelegate.swift in Sources */,
 				C3D95EF82197458B007911AD /* ConversationEntity+CoreDataClass.swift in Sources */,
@@ -846,14 +920,18 @@
 				C35707B12152E61E00244E5E /* ProfileViewController.swift in Sources */,
 				C387C226219D74C6005DE328 /* IConversationInteractor.swift in Sources */,
 				C308831321839847003E1564 /* ExpandableTextView.swift in Sources */,
+				C3E9959221A743370067BD4D /* LoadAvatarPresenter.swift in Sources */,
 				C3905869218E3021002D4ED7 /* CoreDataExtendedUserInfoStorage.swift in Sources */,
 				C32DEFFF21656FC9009645D9 /* OutgoingMessageCell.swift in Sources */,
+				C3E9958B21A742DF0067BD4D /* AvatarImage.swift in Sources */,
 				C387C21C219D6B67005DE328 /* IConversationsListInteractor.swift in Sources */,
+				C3E9958921A742C20067BD4D /* PixabayResult.swift in Sources */,
 				C354F93A216605410048320E /* ISelectedConversationService.swift in Sources */,
 				C387C210219AC23A005DE328 /* MessagesDataService.swift in Sources */,
 				C31C19772185B49E00F0EFD9 /* Array+firstIndex.swift in Sources */,
 				C3C49C4521A3F0B200323F91 /* UserInfoEntity+CoreDataClass.swift in Sources */,
 				C32DEFFB21656FB4009645D9 /* IncomingMessageCell.swift in Sources */,
+				C3E9959021A743270067BD4D /* ILoadAvatarPresenter.swift in Sources */,
 				C3DC6968217BB5E600DCEBB1 /* GCDUserInfoStorage.swift in Sources */,
 				C387C278219DE291005DE328 /* IEditProfileInteractor.swift in Sources */,
 				C308831E218478A6003E1564 /* ErrorAlertBuilder.swift in Sources */,
@@ -863,6 +941,7 @@
 				C387C221219D6BA1005DE328 /* ConversationsListInteractor.swift in Sources */,
 				C323B30C219580800096AE93 /* IDBuilder.swift in Sources */,
 				C323B30821957EA20096AE93 /* IConversationConverter.swift in Sources */,
+				C3E9958221A6969C0067BD4D /* LoadAvatarViewController.swift in Sources */,
 				C387C271219DDEB2005DE328 /* IProfileInteractor.swift in Sources */,
 				C3F835352196C5C000A2D767 /* MessageEntity+CoreDataClass.swift in Sources */,
 				C34CE22A217CD1950066796A /* UserInfoPathProvider.swift in Sources */,
@@ -873,6 +952,7 @@
 				C3D95F05219BFEC9007911AD /* UserDataChangedService.swift in Sources */,
 				C354F9342166043E0048320E /* IConversationsListPresenter.swift in Sources */,
 				C354F92B2166012D0048320E /* ConversationPresenter.swift in Sources */,
+				C3E9959B21A7441F0067BD4D /* PixabayAvatarNetworkService.swift in Sources */,
 				C354F91F2165F9D30048320E /* SelectedConversatinPreviewService.swift in Sources */,
 				C3D95EF92197458B007911AD /* ConversationEntity+CoreDataProperties.swift in Sources */,
 				C354F9182165F1270048320E /* Message.swift in Sources */,
