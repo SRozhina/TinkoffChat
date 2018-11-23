@@ -35,7 +35,7 @@ class ConversationsDataService: NSObject, NSFetchedResultsControllerDelegate, IC
         
         fetchResultsController = NSFetchedResultsController<ConversationEntity>(fetchRequest: fetchRequest,
                                                                                 managedObjectContext: context,
-                                                                                sectionNameKeyPath: "isOnline",
+                                                                                sectionNameKeyPath: nil,
                                                                                 cacheName: nil)
         fetchResultsController.delegate = self
         try? fetchResultsController.performFetch()

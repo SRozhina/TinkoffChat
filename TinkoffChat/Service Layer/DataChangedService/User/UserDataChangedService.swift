@@ -11,7 +11,7 @@ import CoreData
 import UIKit
 
 class UserProfileDataService: NSObject, NSFetchedResultsControllerDelegate, IUserProfileDataService {
-    private let container: NSPersistentContainer
+    private let context: NSManagedObjectContext
     private var fetchResultsController: NSFetchedResultsController<UserInfoEntity>!
     private let userInfoConverter: IUserInfoConverter
     private let conversationsStorage: IConversationsStorage
@@ -22,22 +22,22 @@ class UserProfileDataService: NSObject, NSFetchedResultsControllerDelegate, IUse
          userInfoConverter: IUserInfoConverter,
          conversationsStorage: IConversationsStorage,
          userInfoStorage: IUserInfoStorage) {
-        self.container = container
+        self.context = container.viewContext
         self.userInfoConverter = userInfoConverter
         self.conversationsStorage = conversationsStorage
         self.userInfoStorage = userInfoStorage
     }
     
     func setupService() {
-        guard let immutableFetchRequest = container.managedObjectModel.fetchRequestTemplate(forName: "UserProfile")
-            as? NSFetchRequest<UserInfoEntity>,
-            let fetchRequest = immutableFetchRequest.copy() as? NSFetchRequest<UserInfoEntity> else { return }
+        let predicate = NSPredicate(format: "id==0")
+        let fetchRequest = NSFetchRequest<UserInfoEntity>(entityName: String(describing: UserInfoEntity.self))
+        fetchRequest.predicate = predicate
         let sortDescriptor = NSSortDescriptor(key: #keyPath(UserInfoEntity.name), ascending: true)
         fetchRequest.sortDescriptors = [sortDescriptor]
         fetchRequest.resultType = .managedObjectResultType
         
         fetchResultsController = NSFetchedResultsController<UserInfoEntity>(fetchRequest: fetchRequest,
-                                                                            managedObjectContext: container.viewContext,
+                                                                            managedObjectContext: context,
                                                                             sectionNameKeyPath: nil,
                                                                             cacheName: nil)
         fetchResultsController.delegate = self
