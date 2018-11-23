@@ -10,5 +10,6 @@ import UIKit
 
 protocol ILoadAvatarPresenter {
     func setup()
-    func getImage(from url: URL, completion: @escaping (UIImage) -> Void)
+    func getImage(for url: URL, completion: @escaping (LoadedImage) -> Void)
+    func selectImage(from url: URL)
 }

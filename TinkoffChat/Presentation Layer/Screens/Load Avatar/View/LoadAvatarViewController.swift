@@ -12,9 +12,8 @@ import UIKit
 class LoadAvatarViewController: UIViewController {
     @IBOutlet private weak var collectionView: UICollectionView!
     @IBOutlet private weak var activityIndicator: UIActivityIndicatorView!
-    var presenter: ILoadAvatarPresenter!
-    
     private var imageURLs: [URL] = []
+    var presenter: ILoadAvatarPresenter!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,8 +28,8 @@ class LoadAvatarViewController: UIViewController {
 }
 
 extension LoadAvatarViewController: ILoadAvatarView {
-    func setURLs(_ urls: [URL]) {
-        imageURLs = urls
+    func setImageURLs(_ imageURLs: [URL]) {
+        self.imageURLs = imageURLs
         collectionView.reloadData()
     }
     
@@ -47,11 +46,18 @@ extension LoadAvatarViewController: ILoadAvatarView {
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
         present(alert, animated: true)
     }
+    
+    func dismiss() {
+        dismiss(animated: true, completion: nil)
+    }
 }
 
 extension LoadAvatarViewController: UICollectionViewDelegate {
-    //TODO implement didSet
-    //TODO implement infinitive scrolling
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        collectionView.isUserInteractionEnabled = false
+        
+        presenter.selectImage(from: imageURLs[indexPath.row])
+    }
 }
 
 extension LoadAvatarViewController: UICollectionViewDataSource {
@@ -63,11 +69,8 @@ extension LoadAvatarViewController: UICollectionViewDataSource {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: AvatarCell.self), for: indexPath) as! AvatarCell
         
         let url = imageURLs[indexPath.row]
-        cell.startLoading()
-        
-        presenter.getImage(from: url) {
-            cell.setImage($0)
-        }
+        cell.startLoading(from: url)
+        presenter.getImage(for: url) { cell.setImage($0) }
         
         return cell
     }

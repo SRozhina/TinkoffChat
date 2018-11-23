@@ -165,7 +165,8 @@ extension SwinjectStoryboard {
         // MARK: - Load avatar
         defaultContainer.register(ILoadAvatarPresenter.self) { resolver, view in
             LoadAvatarPresenter(view: view,
-                                avatarNetworkService: resolver.resolve(IAvatarNetworkService.self)!)
+                                avatarNetworkService: resolver.resolve(IAvatarNetworkService.self)!,
+                                userProfileDataService: resolver.resolve(IUserProfileDataService.self)!)
         }
         
         defaultContainer.storyboardInitCompleted(LoadAvatarViewController.self) { resolver, view in

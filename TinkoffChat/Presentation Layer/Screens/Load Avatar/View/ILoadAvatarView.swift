@@ -9,8 +9,9 @@
 import Foundation
 
 protocol ILoadAvatarView {
-    func setURLs(_ urls: [URL])
+    func setImageURLs(_ images: [URL])
     func showError(with text: String)
     func startLoading()
     func stopLoading()
+    func dismiss()
 }

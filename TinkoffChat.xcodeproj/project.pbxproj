@@ -111,6 +111,7 @@
 		C3E9959721A743FD0067BD4D /* AvatarNetworkServiceDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3E9959621A743FD0067BD4D /* AvatarNetworkServiceDelegate.swift */; };
 		C3E9959921A7440E0067BD4D /* IAvatarNetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3E9959821A7440E0067BD4D /* IAvatarNetworkService.swift */; };
 		C3E9959B21A7441F0067BD4D /* PixabayAvatarNetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3E9959A21A7441F0067BD4D /* PixabayAvatarNetworkService.swift */; };
+		C3E995A321A8667E0067BD4D /* LoadedImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3E995A221A8667E0067BD4D /* LoadedImage.swift */; };
 		C3F835342196C5C000A2D767 /* MessageEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3F8352E2196C5C000A2D767 /* MessageEntity+CoreDataProperties.swift */; };
 		C3F835352196C5C000A2D767 /* MessageEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3F8352F2196C5C000A2D767 /* MessageEntity+CoreDataClass.swift */; };
 		C3FF5C152180DDA000D5F899 /* MultipeerConnectionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3FF5C142180DDA000D5F899 /* MultipeerConnectionService.swift */; };
@@ -225,6 +226,7 @@
 		C3E9959621A743FD0067BD4D /* AvatarNetworkServiceDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarNetworkServiceDelegate.swift; sourceTree = "<group>"; };
 		C3E9959821A7440E0067BD4D /* IAvatarNetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IAvatarNetworkService.swift; sourceTree = "<group>"; };
 		C3E9959A21A7441F0067BD4D /* PixabayAvatarNetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PixabayAvatarNetworkService.swift; sourceTree = "<group>"; };
+		C3E995A221A8667E0067BD4D /* LoadedImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadedImage.swift; sourceTree = "<group>"; };
 		C3F8352E2196C5C000A2D767 /* MessageEntity+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MessageEntity+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		C3F8352F2196C5C000A2D767 /* MessageEntity+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MessageEntity+CoreDataClass.swift"; sourceTree = "<group>"; };
 		C3FF5C142180DDA000D5F899 /* MultipeerConnectionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultipeerConnectionService.swift; sourceTree = "<group>"; };
@@ -370,6 +372,7 @@
 				C323B2F421949B1F0096AE93 /* CoreDataModels */,
 				C3E9958821A742C20067BD4D /* PixabayResult.swift */,
 				C3E9958A21A742DF0067BD4D /* AvatarImage.swift */,
+				C3E995A221A8667E0067BD4D /* LoadedImage.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -707,10 +710,10 @@
 		C3E9958021A696870067BD4D /* View */ = {
 			isa = PBXGroup;
 			children = (
+				C3E9959D21A7EEA00067BD4D /* Footer */,
 				C3E9958121A6969C0067BD4D /* LoadAvatarViewController.swift */,
 				C3E9958321A696C90067BD4D /* LoadAvatarViewController.storyboard */,
-				C3E9958621A7362F0067BD4D /* AvatarCell.xib */,
-				C3E9958C21A742FD0067BD4D /* AvatarCell.swift */,
+				C3E9959C21A7472F0067BD4D /* Cell */,
 				C3E9959321A743AE0067BD4D /* ILoadAvatarView.swift */,
 			);
 			path = View;
@@ -733,6 +736,22 @@
 				C3E9959A21A7441F0067BD4D /* PixabayAvatarNetworkService.swift */,
 			);
 			path = AvatarNetworkService;
+			sourceTree = "<group>";
+		};
+		C3E9959C21A7472F0067BD4D /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				C3E9958621A7362F0067BD4D /* AvatarCell.xib */,
+				C3E9958C21A742FD0067BD4D /* AvatarCell.swift */,
+			);
+			path = Cell;
+			sourceTree = "<group>";
+		};
+		C3E9959D21A7EEA00067BD4D /* Footer */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Footer;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -960,6 +979,7 @@
 				C308831921847851003E1564 /* ICommunicationServiceDelegate.swift in Sources */,
 				C387C20E219AC21E005DE328 /* IMessagesDataService.swift in Sources */,
 				C3DC695E217B9B0800DCEBB1 /* EditProfilePresenter.swift in Sources */,
+				C3E995A321A8667E0067BD4D /* LoadedImage.swift in Sources */,
 				C3DC6966217BB5C900DCEBB1 /* IUserInfoStorage.swift in Sources */,
 				C34CE22C217CD1AB0066796A /* IUserInfoPathProvider.swift in Sources */,
 				C32DEFEF21655B78009645D9 /* ConversationPreview.swift in Sources */,

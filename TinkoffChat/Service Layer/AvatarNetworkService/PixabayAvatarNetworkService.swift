@@ -11,16 +11,16 @@ import UIKit
 class PixabayAvatarNetworkService: IAvatarNetworkService {
     let baseURL = "https://pixabay.com/api/"
     let apiKey = "10769642-77b83f11e474afa137e87ba7a"
-    let batchSize = 30
     private let session: URLSession
     weak var delegate: AvatarNetworkServiceDelegate?
+    private var imageURL: URL?
     
     init(session: URLSession) {
         self.session = session
     }
     
     func getImagesURLs(completion: @escaping ([URL]) -> Void) {
-        guard let url = makeURLWith(imageKind: "kitten", batchSize: batchSize) else { return }
+        guard let url = makeURLWith(imageKind: "kitten") else { return }
         let request = URLRequest(url: url)
         
         getDataFromRequest(request) { data in
@@ -37,6 +37,7 @@ class PixabayAvatarNetworkService: IAvatarNetworkService {
     }
     
     func getImage(from url: URL, completion: @escaping (UIImage) -> Void) {
+        imageURL = url
         let request = URLRequest(url: url)
         
         getDataFromRequest(request) { data in
@@ -51,12 +52,12 @@ class PixabayAvatarNetworkService: IAvatarNetworkService {
         }
     }
     
-    private func makeURLWith(imageKind: String, batchSize: Int) -> URL? {
+    private func makeURLWith(imageKind: String) -> URL? {
         guard var components = URLComponents(string: baseURL) else { return nil }
         let keyQueryItems = URLQueryItem(name: "key", value: apiKey)
         let descriptionQueryItem = URLQueryItem(name: "q", value: imageKind)
         let prettyQueryItem = URLQueryItem(name: "pretty", value: "true")
-        let batchSizeQueryItem = URLQueryItem(name: "per_page", value: "\(batchSize)")
+        let batchSizeQueryItem = URLQueryItem(name: "per_page", value: "200")
         components.queryItems = [keyQueryItems, descriptionQueryItem, prettyQueryItem, batchSizeQueryItem]
         return components.url
     }
