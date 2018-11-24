@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol IConversationInteractor {
+protocol IConversationInteractor: class {
     func setup()
     func sendMessage(_ message: Message, to conversation: Conversation)
     var delegate: ConversationInteractorDelegate? { get set }

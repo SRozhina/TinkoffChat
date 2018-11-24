@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol IConversationView {
+protocol IConversationView: class {
     func setMessages(_ messages: [Message])
     func setTitle(_ title: String?)
     func showErrorAlert(with title: String, retryAction: @escaping () -> Void)

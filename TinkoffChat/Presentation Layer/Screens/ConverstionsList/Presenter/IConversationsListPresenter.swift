@@ -6,7 +6,7 @@
 //  Copyright © 2018 Sofia. All rights reserved.
 //
 
-protocol IConversationsListPresenter {
+protocol IConversationsListPresenter: class {
     func setup() 
     func selectConversation(_ conversation: ConversationPreview)
 }

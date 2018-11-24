@@ -6,7 +6,7 @@
 //  Copyright © 2018 Sofia. All rights reserved.
 //
 
-protocol IProfileInteractor {
+protocol IProfileInteractor: class {
     func setup()
     var delegate: ProfileInteractorDelegate? { get set }
 }

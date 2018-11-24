@@ -10,27 +10,27 @@ import Foundation
 
 class ConversationsListInteractor: IConversationsListInteractor {
     private var communicationService: ICommunicationService
-    private var conversationsDataChangedService: IConversationsDataService
+    private var conversationsDataService: IConversationsDataService
     private var selectedConversationService: ISelectedConversationService
     weak var delegate: ConversationsListInteractorDelegate?
     
     init(selectedConversationService: ISelectedConversationService,
          communicationService: ICommunicationService,
-         conversationsDataChangedService: IConversationsDataService) {
+         conversationsDataService: IConversationsDataService) {
         self.selectedConversationService = selectedConversationService
         self.communicationService = communicationService
-        self.conversationsDataChangedService = conversationsDataChangedService
+        self.conversationsDataService = conversationsDataService
     }
     
     func setup() {
         communicationService.delegate = self
         communicationService.online = true
-        conversationsDataChangedService.setupService()
-        conversationsDataChangedService.conversationsDelegate = self
+        conversationsDataService.setupService()
+        conversationsDataService.conversationsDelegate = self
         
-        let onlineConversations = conversationsDataChangedService.getOnlineConversations()
+        let onlineConversations = conversationsDataService.getOnlineConversations()
         delegate?.setOnlineConversation(onlineConversations)
-        let historyConversations = conversationsDataChangedService.getHistoryConversations()
+        let historyConversations = conversationsDataService.getHistoryConversations()
         delegate?.setHistoryConversations(historyConversations)
     }
     
@@ -41,18 +41,18 @@ class ConversationsListInteractor: IConversationsListInteractor {
 
 extension ConversationsListInteractor: ICommunicationServiceDelegate {
     func communicationService(_ communicationService: ICommunicationService, didFoundPeer peer: UserInfo) {
-        if let existingConversation = conversationsDataChangedService.getHistoryConversations().filter({ $0.user.name == peer.name }).first {
-            conversationsDataChangedService.setOnlineStatus(true, to: existingConversation.id)
+        if let existingConversation = conversationsDataService.getHistoryConversations().filter({ $0.user.name == peer.name }).first {
+            conversationsDataService.setOnlineStatus(true, to: existingConversation.id)
             return
         }
         let conversation = Conversation(user: peer)
         
-        conversationsDataChangedService.createConversation(conversation)
+        conversationsDataService.createConversation(conversation)
     }
     
     func communicationService(_ communicationService: ICommunicationService, didLostPeer peer: UserInfo) {
-        if let onlineConversation = conversationsDataChangedService.getOnlineConversations().filter({ $0.user.name == peer.name }).first {
-            conversationsDataChangedService.setOnlineStatus(false, to: onlineConversation.id)
+        if let onlineConversation = conversationsDataService.getOnlineConversations().filter({ $0.user.name == peer.name }).first {
+            conversationsDataService.setOnlineStatus(false, to: onlineConversation.id)
         }
     }
     
@@ -75,8 +75,8 @@ extension ConversationsListInteractor: ICommunicationServiceDelegate {
     }
     
     func communicationService(_ communicationService: ICommunicationService, didReceiveMessage message: Message, from peer: UserInfo) {
-        if let conversation = conversationsDataChangedService.getOnlineConversations().filter({ $0.user.name == peer.name }).first {
-            conversationsDataChangedService.appendMessage(message, to: conversation.id)
+        if let conversation = conversationsDataService.getOnlineConversations().filter({ $0.user.name == peer.name }).first {
+            conversationsDataService.appendMessage(message, to: conversation.id)
         }
     }
 }
@@ -91,11 +91,11 @@ extension ConversationsListInteractor: ConversationsDataServiceDelegate {
     }
     
     func getOnlineConversations() -> [Conversation] {
-        return conversationsDataChangedService.getOnlineConversations()
+        return conversationsDataService.getOnlineConversations()
     }
     
     func getHistoryConversations() -> [Conversation] {
-        return conversationsDataChangedService.getHistoryConversations()
+        return conversationsDataService.getHistoryConversations()
     }
     
     func startUpdates() {

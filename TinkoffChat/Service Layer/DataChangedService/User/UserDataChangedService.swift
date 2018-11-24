@@ -1,5 +1,5 @@
 //
-//  UserDataChangedService.swift
+//  UserProfileDataService.swift
 //  TinkoffChat
 //
 //  Created by Sofia on 14/11/2018.
@@ -29,7 +29,7 @@ class UserProfileDataService: NSObject, NSFetchedResultsControllerDelegate, IUse
     }
     
     func setupService() {
-        let predicate = NSPredicate(format: "id==0")
+        let predicate = NSPredicate(format: "isProfile == %@", NSNumber(value: true))
         let fetchRequest = NSFetchRequest<UserInfoEntity>(entityName: String(describing: UserInfoEntity.self))
         fetchRequest.predicate = predicate
         let sortDescriptor = NSSortDescriptor(key: #keyPath(UserInfoEntity.name), ascending: true)
@@ -48,7 +48,7 @@ class UserProfileDataService: NSObject, NSFetchedResultsControllerDelegate, IUse
         if let userInfoEntity = fetchResultsController.fetchedObjects?.first {
             return userInfoConverter.makeUserInfo(from: userInfoEntity)
         }
-        return UserInfo(name: "No name", info: "", avatar: UIImage(named: "avatar_placeholder"))
+        return UserInfo(name: "No name", info: "Profile", avatar: UIImage(named: "avatar_placeholder"))
     }
     
     func saveUserProfileInfo(_ userInfo: UserInfo) {

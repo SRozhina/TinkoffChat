@@ -134,7 +134,7 @@ class EditProfileViewController: UIViewController, UINavigationControllerDelegat
     }
     
     @IBAction private func userNameEdited(_ sender: UITextField) {
-        presenter.userInfoDataChanged(name: sender.text, info: infoTextView.text, avatar: avatarImageView.image)
+        presenter.userProfileInfoDataChanged(name: sender.text, info: infoTextView.text, avatar: avatarImageView.image)
     }
     
     private func saveUserInfo() {
@@ -194,7 +194,7 @@ extension EditProfileViewController: UIImagePickerControllerDelegate {
                                didFinishPickingMediaWithInfo info: [String: Any]) {
         guard let image = info["UIImagePickerControllerOriginalImage"] as? UIImage else { return }
         avatarImageView.image = image
-        presenter.userInfoDataChanged(name: userNameTextField.text, info: infoTextView.text, avatar: avatarImageView.image)
+        presenter.userProfileInfoDataChanged(name: userNameTextField.text, info: infoTextView.text, avatar: avatarImageView.image)
         picker.dismiss(animated: true, completion: nil)
     }
     
@@ -205,6 +205,6 @@ extension EditProfileViewController: UIImagePickerControllerDelegate {
 
 extension EditProfileViewController: UITextViewDelegate {
     func textViewDidChange(_ textView: UITextView) {
-        presenter.userInfoDataChanged(name: userNameTextField.text, info: infoTextView.text, avatar: avatarImageView.image)
+        presenter.userProfileInfoDataChanged(name: userNameTextField.text, info: infoTextView.text, avatar: avatarImageView.image)
     }
 }

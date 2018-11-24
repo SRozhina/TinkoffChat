@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol ILoadAvatarPresenter {
+protocol ILoadAvatarPresenter: class {
     func setup()
     func getImage(for url: URL, completion: @escaping (LoadedImage) -> Void)
     func selectImage(from url: URL)

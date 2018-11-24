@@ -31,7 +31,7 @@ class ConversationViewController: UIViewController {
         addKeyboardObservers()
         addGestureRecognizers()
         
-        presenter.setup()
+        presenter?.setup()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -45,7 +45,7 @@ class ConversationViewController: UIViewController {
     
     private func setupTextView() {
         messageTextView.placeholderText = placeholderText
-        messageTextView.sendAction = sendMessage
+        messageTextView.sendAction = { [unowned self] in self.sendMessage($0) }
         messageTextView.layer.cornerRadius = 5
     }
     
@@ -98,7 +98,7 @@ class ConversationViewController: UIViewController {
                        animations: {
                         self.view.layoutIfNeeded()
         },
-                       completion: { _ in self.scrollToBottom() })
+                       completion: { [unowned self] _ in self.scrollToBottom() })
     }
     
     @IBAction private func sendButtonTapped(_ sender: Any) {
@@ -114,7 +114,7 @@ class ConversationViewController: UIViewController {
     
     private func scrollToBottom() {
         if messages.count <= 0 { return }
-        DispatchQueue.main.async {
+        DispatchQueue.main.async { [unowned self] in
             let indexPath = IndexPath(row: self.messages.count - 1, section: 0)
             self.tableView.scrollToRow(at: indexPath, at: .bottom, animated: true)
         }

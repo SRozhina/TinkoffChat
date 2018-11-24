@@ -1,5 +1,5 @@
 //
-//  ConversationsDataChangedService.swift
+//  ConversationsDataService.swift
 //  TinkoffChat
 //
 //  Created by Sofia on 14/11/2018.

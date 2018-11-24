@@ -8,6 +8,6 @@
 
 import Foundation
 
-protocol IProfilePresenter {
+protocol IProfilePresenter: class {
     func setup()
 }

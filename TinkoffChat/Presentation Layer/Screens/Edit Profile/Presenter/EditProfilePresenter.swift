@@ -10,12 +10,14 @@ import Foundation
 import UIKit
 
 class EditProfilePresenter: IEditProfilePresenter {
-    private let view: IEditProfileView
+    private unowned let view: IEditProfileView
     private var interactor: IEditProfileInteractor
     
-    private var userInfo: UserInfo! {
+    private var userInfo: UserInfo? {
         didSet {
-            view.setUserInfo(userInfo)
+            if let userInfo = userInfo {
+                view.setUserInfo(userInfo)
+            }
         }
     }
     
@@ -38,8 +40,8 @@ class EditProfilePresenter: IEditProfilePresenter {
         view.setUI(forChangedData: false)
     }
         
-    func userInfoDataChanged(name: String? = nil, info: String? = nil, avatar: UIImage? = nil) {
-        view.setUI(forChangedData: userInfo.name != name || userInfo.info != info || userInfo.avatar != avatar)
+    func userProfileInfoDataChanged(name: String? = nil, info: String? = nil, avatar: UIImage? = nil) {
+        view.setUI(forChangedData: userInfo?.name != name || userInfo?.info != info || userInfo?.avatar != avatar)
     }
 }
 

@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol ILoadAvatarView {
+protocol ILoadAvatarView: class {
     func setImageURLs(_ images: [URL])
     func showError(with text: String)
     func startLoading()

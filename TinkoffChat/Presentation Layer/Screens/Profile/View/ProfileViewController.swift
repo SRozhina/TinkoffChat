@@ -21,7 +21,6 @@ class ProfileViewController: UIViewController, UINavigationControllerDelegate, I
         super.viewDidLoad()
         
         setupUIElements()
-        presenter.setup()
     }
     
     override func viewWillAppear(_ animated: Bool) {

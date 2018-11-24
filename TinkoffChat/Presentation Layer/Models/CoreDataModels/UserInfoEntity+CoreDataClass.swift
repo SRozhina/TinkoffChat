@@ -2,7 +2,7 @@
 //  UserInfoEntity+CoreDataClass.swift
 //  
 //
-//  Created by Sofia on 20/11/2018.
+//  Created by Sofia on 23/11/2018.
 //
 //
 

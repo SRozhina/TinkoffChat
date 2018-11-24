@@ -10,7 +10,7 @@ import UIKit
 
 class ConversationsListViewController: UIViewController {
     @IBOutlet private weak var tableView: UITableView!
-    var presenter: IConversationsListPresenter!
+    var presenter: IConversationsListPresenter?
     var errorAlertBuilder: IErrorAlertBuilder!
     private let conversationsListCellName = String(describing: ConversationsListCell.self)
     private var onlineConversationPreviews: [ConversationPreview] = []
@@ -25,7 +25,7 @@ class ConversationsListViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        presenter.setup()
+        presenter?.setup()
     }
     
     private func registerNibs() {
@@ -122,7 +122,7 @@ extension ConversationsListViewController: UITableViewDelegate {
         let conversation = indexPath.section == 0
             ? onlineConversationPreviews[indexPath.row]
             : historyConversationsPreviews[indexPath.row]
-        presenter.selectConversation(conversation)
+        presenter?.selectConversation(conversation)
         tableView.deselectRow(at: indexPath, animated: true)
         let conversationStoryboard = UIStoryboard(name: "ConversationViewController", bundle: nil)
         guard let conversationViewController = conversationStoryboard.instantiateInitialViewController() else { return }

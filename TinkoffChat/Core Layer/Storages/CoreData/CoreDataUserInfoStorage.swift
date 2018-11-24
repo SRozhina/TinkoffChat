@@ -26,7 +26,7 @@ class CoreDataUserInfoStorage: IUserInfoStorage {
     }
     
     func saveUserProfile(_ newUserInfo: UserInfo) {
-        let predicate = NSPredicate(format: "id==0")
+        let predicate = NSPredicate(format: "isProfile == %@", NSNumber(value: true))
         saveUser(newUserInfo, with: predicate, isProfile: true)
     }
     
@@ -39,9 +39,7 @@ class CoreDataUserInfoStorage: IUserInfoStorage {
             guard let userEntity = users?.first
                 ?? NSEntityDescription.insertNewObject(forEntityName: String(describing: UserInfoEntity.self),
                                                        into: context) as? UserInfoEntity else { return }
-            if isProfile {
-                userEntity.id = 0
-            }
+            userEntity.isProfile = isProfile
             userEntity.name = newUserInfo.name
             userEntity.info = newUserInfo.info
             if let image = newUserInfo.avatar,

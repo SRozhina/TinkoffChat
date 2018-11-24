@@ -10,19 +10,19 @@ import Foundation
 
 class ConversationInteractor: IConversationInteractor {
     private let selectedConversationService: ISelectedConversationService
-    private var messagesDataChangedService: IMessagesDataService
+    private var messagesDataService: IMessagesDataService
     private var communicationService: ICommunicationService
-    private var conversationsDataChangedService: IConversationsDataService
+    private var conversationsDataService: IConversationsDataService
     weak var delegate: ConversationInteractorDelegate?
     
     init(selectedConversationService: ISelectedConversationService,
-         messagesDataChangedService: IMessagesDataService,
+         messagesDataService: IMessagesDataService,
          communicationService: ICommunicationService,
-         conversationsDataChangedService: IConversationsDataService) {
+         conversationsDataService: IConversationsDataService) {
         self.selectedConversationService = selectedConversationService
-        self.messagesDataChangedService = messagesDataChangedService
+        self.messagesDataService = messagesDataService
         self.communicationService = communicationService
-        self.conversationsDataChangedService = conversationsDataChangedService
+        self.conversationsDataService = conversationsDataService
     }
     
     func setup() {
@@ -32,14 +32,14 @@ class ConversationInteractor: IConversationInteractor {
         }
         let conversation = selectedConversationService.selectedConversation!
         setupCommunicationService()
-        setupMessagesDataChangedService(with: conversation.id)
-        setupConversationsDataChangedService()
+        setupMessagesDataService(with: conversation.id)
+        setupConversationsDataService()
         setAllMessagesAsRead(for: conversation.id)
         delegate?.updateWith(conversation: conversation)
     }
     
     func sendMessage(_ message: Message, to conversation: Conversation) {
-        conversationsDataChangedService.appendMessage(message, to: conversation.id)
+        conversationsDataService.appendMessage(message, to: conversation.id)
         communicationService.send(message, to: conversation.user)
     }
     
@@ -48,35 +48,35 @@ class ConversationInteractor: IConversationInteractor {
         communicationService.online = true
     }
     
-    private func setupMessagesDataChangedService(with conversationId: String) {
-        messagesDataChangedService.setupService(with: conversationId)
-        messagesDataChangedService.messagesDelegate = self
+    private func setupMessagesDataService(with conversationId: String) {
+        messagesDataService.setupService(with: conversationId)
+        messagesDataService.messagesDelegate = self
     }
     
-    private func setupConversationsDataChangedService() {
-        conversationsDataChangedService.setupService()
-        conversationsDataChangedService.conversationsDelegate = self
+    private func setupConversationsDataService() {
+        conversationsDataService.setupService()
+        conversationsDataService.conversationsDelegate = self
     }
     
     private func setAllMessagesAsRead(for conversationId: String) {
-        conversationsDataChangedService.setAllMessagesAsRead(in: conversationId)
+        conversationsDataService.setAllMessagesAsRead(in: conversationId)
     }
 }
 
 extension ConversationInteractor: ICommunicationServiceDelegate {
     func communicationService(_ communicationService: ICommunicationService, didFoundPeer peer: UserInfo) {
-        if let existingConversation = conversationsDataChangedService.getHistoryConversations().filter({ $0.user.name == peer.name }).first {
-            conversationsDataChangedService.setOnlineStatus(true, to: existingConversation.id)
+        if let existingConversation = conversationsDataService.getHistoryConversations().filter({ $0.user.name == peer.name }).first {
+            conversationsDataService.setOnlineStatus(true, to: existingConversation.id)
             return
         }
         
         let conversation = Conversation(user: peer)
-        conversationsDataChangedService.createConversation(conversation)
+        conversationsDataService.createConversation(conversation)
     }
     
     func communicationService(_ communicationService: ICommunicationService, didLostPeer peer: UserInfo) {
-        if let onlineConversation = conversationsDataChangedService.getOnlineConversations().filter({ $0.user.name == peer.name }).first {
-            conversationsDataChangedService.setOnlineStatus(false, to: onlineConversation.id)
+        if let onlineConversation = conversationsDataService.getOnlineConversations().filter({ $0.user.name == peer.name }).first {
+            conversationsDataService.setOnlineStatus(false, to: onlineConversation.id)
         }
     }
     
@@ -99,8 +99,8 @@ extension ConversationInteractor: ICommunicationServiceDelegate {
     }
     
     func communicationService(_ communicationService: ICommunicationService, didReceiveMessage message: Message, from peer: UserInfo) {
-        if let conversation = conversationsDataChangedService.getOnlineConversations().filter({ $0.user.name == peer.name }).first {
-            conversationsDataChangedService.appendMessage(message, to: conversation.id)
+        if let conversation = conversationsDataService.getOnlineConversations().filter({ $0.user.name == peer.name }).first {
+            conversationsDataService.appendMessage(message, to: conversation.id)
         }
     }
 }
@@ -111,6 +111,9 @@ extension ConversationInteractor: MessagesDataServiceDelegate {
     }
     
     func insertMessage(_ message: Message, at indexPath: IndexPath) {
+        if let conversation = selectedConversationService.selectedConversation {
+            conversationsDataService.setAllMessagesAsRead(in: conversation.id)
+        }
         delegate?.insertMessage(message, at: indexPath)
     }
     

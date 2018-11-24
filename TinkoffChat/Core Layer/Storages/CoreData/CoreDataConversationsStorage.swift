@@ -48,6 +48,7 @@ class CoreDataConversationsStorage: IConversationsStorage {
             }
 
             conversation?.id = newConversation.id
+            conversation?.user.isProfile = false
             conversation?.user.name = newConversation.user.name
             conversation?.user.info = newConversation.user.info
             conversation?.user.avatar = userInfoConverter.getAvatarPath(for: newConversation.user.avatar)

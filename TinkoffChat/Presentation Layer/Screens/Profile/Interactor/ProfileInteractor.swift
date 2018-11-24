@@ -9,18 +9,18 @@
 import Foundation
 
 class ProfileInteractor: IProfileInteractor {
-    private var userProfileDataChangedService: IUserProfileDataService
+    private var userProfileDataService: IUserProfileDataService
     weak var delegate: ProfileInteractorDelegate?
     
-    init(userProfileDataChangedService: IUserProfileDataService) {
-        self.userProfileDataChangedService = userProfileDataChangedService
+    init(userProfileDataService: IUserProfileDataService) {
+        self.userProfileDataService = userProfileDataService
     }
     
     func setup() {
-        userProfileDataChangedService.setupService()
-        userProfileDataChangedService.userDelegate = self
+        userProfileDataService.setupService()
+        userProfileDataService.userDelegate = self
         
-        let userInfo = userProfileDataChangedService.getUserProfileInfo()
+        let userInfo = userProfileDataService.getUserProfileInfo()
         delegate?.setUserInfo(userInfo)
     }
 }

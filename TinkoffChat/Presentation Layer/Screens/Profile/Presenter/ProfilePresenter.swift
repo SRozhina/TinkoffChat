@@ -9,11 +9,13 @@
 import Foundation
 
 class ProfilePresenter: IProfilePresenter {
-    private let view: IProfileView
+    private unowned let view: IProfileView
     private var interactor: IProfileInteractor
-    private var userInfo: UserInfo! {
+    private var userInfo: UserInfo? {
         didSet {
-            view.setUserInfo(userInfo)
+            if let userInfo = userInfo {
+                view.setUserInfo(userInfo)
+            }
         }
     }
     

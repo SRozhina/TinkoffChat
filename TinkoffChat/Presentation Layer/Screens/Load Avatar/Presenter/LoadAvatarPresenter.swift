@@ -16,7 +16,7 @@ class LoadAvatarPresenter: ILoadAvatarPresenter {
             view.setImageURLs(images.map { $0.url })
         }
     }
-    private let view: ILoadAvatarView
+    private unowned let view: ILoadAvatarView
 
     private var userInfo: UserInfo?
     private let batchSize = 30
