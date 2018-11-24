@@ -313,8 +313,6 @@
 		C323B2F7219577980096AE93 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
-				C34CE226217CCC9F0066796A /* Providers */,
-				C308831A21847889003E1564 /* Builders */,
 				C323B2F8219577A20096AE93 /* Converters */,
 			);
 			path = Helpers;
@@ -601,6 +599,7 @@
 		C387C27D219DE360005DE328 /* Core Layer */ = {
 			isa = PBXGroup;
 			children = (
+				C394C29821A99BA700315FC5 /* Helpers */,
 				C32DEFF221656B95009645D9 /* Storages */,
 				C31C19752185B48200F0EFD9 /* Extensions */,
 				C354F9202165FD170048320E /* DI Container */,
@@ -648,6 +647,15 @@
 				C387C280219EB0BC005DE328 /* CoreDataMessagesStorage.swift */,
 			);
 			path = CoreData;
+			sourceTree = "<group>";
+		};
+		C394C29821A99BA700315FC5 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				C34CE226217CCC9F0066796A /* Providers */,
+				C308831A21847889003E1564 /* Builders */,
+			);
+			path = Helpers;
 			sourceTree = "<group>";
 		};
 		C3DC695A217B9AC200DCEBB1 /* Edit Profile */ = {
