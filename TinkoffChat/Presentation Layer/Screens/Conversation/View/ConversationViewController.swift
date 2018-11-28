@@ -158,8 +158,18 @@ extension ConversationViewController: IConversationView {
     }
     
     func setSendButtonEnabled(_ value: Bool) {
+        let color: UIColor = value ? .gray : .white
+        UIView.animate(withDuration: 0.5,
+                       animations: {
+            self.sendButton.tintColor = color
+            self.sendButton.transform = CGAffineTransform(scaleX: 1.15, y: 1.15)
+        },
+                       completion: { _ in
+            UIView.animate(withDuration: 0.5, animations: {
+                self.sendButton.transform = .identity
+            })
+        })
         sendButton.isEnabled = value
-        sendButton.tintColor = value ? .gray : .white
     }
 }
 
