@@ -6,7 +6,7 @@
 //  Copyright © 2018 Sofia. All rights reserved.
 //
 
-protocol IConversationPresenter {
+protocol IConversationPresenter: class {
     func setup()
     func sendMessage(_ message: String)
 }

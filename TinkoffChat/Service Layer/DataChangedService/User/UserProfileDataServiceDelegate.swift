@@ -1,5 +1,5 @@
 //
-//  UserProfileDataChangedServiceDelegate.swift
+//  UserProfileDataServiceDelegate.swift
 //  TinkoffChat
 //
 //  Created by Sofia on 16/11/2018.

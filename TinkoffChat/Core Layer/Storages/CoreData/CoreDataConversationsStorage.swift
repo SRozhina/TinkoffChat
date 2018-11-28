@@ -48,6 +48,7 @@ class CoreDataConversationsStorage: IConversationsStorage {
             }
 
             conversation?.id = newConversation.id
+            conversation?.user.isProfile = false
             conversation?.user.name = newConversation.user.name
             conversation?.user.info = newConversation.user.info
             conversation?.user.avatar = userInfoConverter.getAvatarPath(for: newConversation.user.avatar)
@@ -69,15 +70,5 @@ class CoreDataConversationsStorage: IConversationsStorage {
             conversation?.isOnline = value
             try? context.save()
         }
-    }
-    
-    private func createNewConversation(in context: NSManagedObjectContext) -> ConversationEntity? {
-        let conversationEntity = NSEntityDescription.insertNewObject(forEntityName: String(describing: ConversationEntity.self),
-                                                                     into: context) as? ConversationEntity
-        if let userEntity = NSEntityDescription.insertNewObject(forEntityName: String(describing: UserInfoEntity.self),
-                                                                into: context) as? UserInfoEntity {
-            conversationEntity?.user = userEntity
-        }
-        return conversationEntity
     }
 }

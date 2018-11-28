@@ -56,15 +56,23 @@ class EditProfileViewController: UIViewController, UINavigationControllerDelegat
 
     @IBAction private func editAvatarTapped(_ sender: UIButton) {
         let takePhotoAlertAction = UIAlertAction(title: "Take photo", style: .default) { _ in self.takePhotoAction() }
+        
         let chooseFromLibraryAlertAction = UIAlertAction(title: "Choose from Library", style: .default) { _ in
             self.showImagePickerController(with: .photoLibrary)
         }
+        
+        let loadAction = UIAlertAction(title: "Load", style: .default) { _ in
+            let loadAvatarStoryboard = UIStoryboard(name: "LoadAvatarViewController", bundle: nil)
+            guard let loadAvatarViewController = loadAvatarStoryboard.instantiateInitialViewController() else { return }
+            self.present(loadAvatarViewController, animated: true)
+        }
+        
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         
         showAlert(with: "Select avatar",
                   message: nil,
                   style: .actionSheet,
-                  actions: [takePhotoAlertAction, chooseFromLibraryAlertAction, cancelAction])
+                  actions: [takePhotoAlertAction, chooseFromLibraryAlertAction, loadAction, cancelAction])
     }
     
     private func takePhotoAction() {
@@ -126,7 +134,7 @@ class EditProfileViewController: UIViewController, UINavigationControllerDelegat
     }
     
     @IBAction private func userNameEdited(_ sender: UITextField) {
-        presenter.userInfoDataChanged(name: sender.text, info: infoTextView.text, avatar: avatarImageView.image)
+        presenter.userProfileInfoDataChanged(name: sender.text, info: infoTextView.text, avatar: avatarImageView.image)
     }
     
     private func saveUserInfo() {
@@ -186,7 +194,7 @@ extension EditProfileViewController: UIImagePickerControllerDelegate {
                                didFinishPickingMediaWithInfo info: [String: Any]) {
         guard let image = info["UIImagePickerControllerOriginalImage"] as? UIImage else { return }
         avatarImageView.image = image
-        presenter.userInfoDataChanged(name: userNameTextField.text, info: infoTextView.text, avatar: avatarImageView.image)
+        presenter.userProfileInfoDataChanged(name: userNameTextField.text, info: infoTextView.text, avatar: avatarImageView.image)
         picker.dismiss(animated: true, completion: nil)
     }
     
@@ -197,6 +205,6 @@ extension EditProfileViewController: UIImagePickerControllerDelegate {
 
 extension EditProfileViewController: UITextViewDelegate {
     func textViewDidChange(_ textView: UITextView) {
-        presenter.userInfoDataChanged(name: userNameTextField.text, info: infoTextView.text, avatar: avatarImageView.image)
+        presenter.userProfileInfoDataChanged(name: userNameTextField.text, info: infoTextView.text, avatar: avatarImageView.image)
     }
 }

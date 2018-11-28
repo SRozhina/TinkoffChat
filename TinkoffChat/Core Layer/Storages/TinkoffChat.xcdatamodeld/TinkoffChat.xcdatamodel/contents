@@ -16,16 +16,11 @@
     </entity>
     <entity name="UserInfoEntity" representedClassName="UserInfoEntity" syncable="YES">
         <attribute name="avatar" optional="YES" attributeType="URI" syncable="YES"/>
-        <attribute name="id" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="info" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="isProfile" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="conversation" maxCount="1" deletionRule="Nullify" destinationEntity="ConversationEntity" inverseName="user" inverseEntity="ConversationEntity" syncable="YES"/>
+        <relationship name="conversation" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ConversationEntity" inverseName="user" inverseEntity="ConversationEntity" syncable="YES"/>
     </entity>
-    <fetchRequest name="Conversation" entity="ConversationEntity" predicateString="id == $ID"/>
-    <fetchRequest name="ConversationMessages" entity="MessageEntity" predicateString="conversation.id == $CONVERSATIONID"/>
-    <fetchRequest name="OnlineConversations" entity="ConversationEntity" predicateString="isOnline == 0"/>
-    <fetchRequest name="OnlineUsers" entity="UserInfoEntity" predicateString="name == &quot;$NAME&quot;"/>
-    <fetchRequest name="User" entity="UserInfoEntity"/>
     <elements>
         <element name="ConversationEntity" positionX="-59.984375" positionY="-359.08203125" width="128" height="105"/>
         <element name="MessageEntity" positionX="265.08984375" positionY="-175.87890625" width="128" height="135"/>

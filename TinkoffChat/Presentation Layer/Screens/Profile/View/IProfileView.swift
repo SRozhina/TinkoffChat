@@ -8,6 +8,6 @@
 
 import Foundation
 
-protocol IProfileView {
+protocol IProfileView: class {
     func setUserInfo(_ userInfo: UserInfo)
 }

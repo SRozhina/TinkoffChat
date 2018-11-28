@@ -8,8 +8,8 @@
 
 import UIKit
 
-protocol IEditProfilePresenter {
+protocol IEditProfilePresenter: class {
     func setup()
     func saveUserInfo(_ userInfo: UserInfo, to saveOption: StorageType)
-    func userInfoDataChanged(name: String?, info: String?, avatar: UIImage?)
+    func userProfileInfoDataChanged(name: String?, info: String?, avatar: UIImage?)
 }

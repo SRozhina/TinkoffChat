@@ -6,7 +6,7 @@
 //  Copyright © 2018 Sofia. All rights reserved.
 //
 
-protocol IConversationsListInteractor {
+protocol IConversationsListInteractor: class {
     func setup()
     func selectConversation(_ conversation: Conversation)
     func getOnlineConversations() -> [Conversation]

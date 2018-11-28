@@ -7,7 +7,7 @@
 //
 import Foundation
 
-protocol IConversationsListView {
+protocol IConversationsListView: class {
     func setOnlineConversations(_ conversations: [ConversationPreview])
     func setHistoryConversations(_ conversations: [ConversationPreview])
     func showErrorAlert(with title: String, retryAction: @escaping () -> Void)

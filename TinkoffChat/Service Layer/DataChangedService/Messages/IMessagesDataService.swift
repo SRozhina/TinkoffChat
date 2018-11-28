@@ -1,5 +1,5 @@
 //
-//  IMessagesDataChangedService.swift
+//  IMessagesDataService.swift
 //  TinkoffChat
 //
 //  Created by Sofia on 13/11/2018.

@@ -9,23 +9,22 @@
 import Foundation
 
 class EditProfileInteractor: IEditProfileInteractor {
-    private var userProfileDataChangedService: IUserProfileDataService
+    private var userProfileDataService: IUserProfileDataService
     weak var delegate: EditProfileInteractorDelegate?
     
-    init(userProfileDataChangedService: IUserProfileDataService) {
-        self.userProfileDataChangedService = userProfileDataChangedService
+    init(userProfileDataService: IUserProfileDataService) {
+        self.userProfileDataService = userProfileDataService
     }
     
     func setup() {
-        userProfileDataChangedService.setupService()
-        userProfileDataChangedService.userDelegate = self
-        if let userInfo = userProfileDataChangedService.getUserProfileInfo() {
-            delegate?.setUserInfo(userInfo)
-        }
+        userProfileDataService.setupService()
+        userProfileDataService.userDelegate = self
+        let userInfo = userProfileDataService.getUserProfileInfo()
+        delegate?.setUserInfo(userInfo)
     }
     
     func saveUserInfo(_ userInfo: UserInfo, completion: @escaping (Result) -> Void) {
-        userProfileDataChangedService.saveUserProfileInfo(userInfo)
+        userProfileDataService.saveUserProfileInfo(userInfo)
         completion(.success)
     }
 }

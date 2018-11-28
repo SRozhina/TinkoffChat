@@ -6,7 +6,7 @@
 //  Copyright © 2018 Sofia. All rights reserved.
 //
 
-protocol IEditProfileView {
+protocol IEditProfileView: class {
     func setUserInfo(_ userInfo: UserInfo)
     func stopLoading()
     func startLoading()

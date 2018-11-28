@@ -8,7 +8,7 @@
 import CoreData
 
 class ConversationsListPresenter: IConversationsListPresenter {
-    private let view: IConversationsListView
+    private unowned let view: IConversationsListView
     private var interactor: IConversationsListInteractor
 
     private var onlineConversations: [Conversation] = [] {

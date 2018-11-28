@@ -1,5 +1,5 @@
 //
-//  UserDataChangedService.swift
+//  UserProfileDataService.swift
 //  TinkoffChat
 //
 //  Created by Sofia on 14/11/2018.
@@ -8,6 +8,7 @@
 
 import Foundation
 import CoreData
+import UIKit
 
 class UserProfileDataService: NSObject, NSFetchedResultsControllerDelegate, IUserProfileDataService {
     private let context: NSManagedObjectContext
@@ -27,9 +28,8 @@ class UserProfileDataService: NSObject, NSFetchedResultsControllerDelegate, IUse
         self.userInfoStorage = userInfoStorage
     }
     
-    //TODO stop call setup every time - do setup one time in DI container
     func setupService() {
-        let predicate = NSPredicate(format: "id==0")
+        let predicate = NSPredicate(format: "isProfile == %@", NSNumber(value: true))
         let fetchRequest = NSFetchRequest<UserInfoEntity>(entityName: String(describing: UserInfoEntity.self))
         fetchRequest.predicate = predicate
         let sortDescriptor = NSSortDescriptor(key: #keyPath(UserInfoEntity.name), ascending: true)
@@ -44,9 +44,11 @@ class UserProfileDataService: NSObject, NSFetchedResultsControllerDelegate, IUse
         try? fetchResultsController.performFetch()
     }
     
-    func getUserProfileInfo() -> UserInfo? {
-        guard let userInfoEntity = fetchResultsController.fetchedObjects?.first else { return nil }
-        return userInfoConverter.makeUserInfo(from: userInfoEntity)
+    func getUserProfileInfo() -> UserInfo {
+        if let userInfoEntity = fetchResultsController.fetchedObjects?.first {
+            return userInfoConverter.makeUserInfo(from: userInfoEntity)
+        }
+        return UserInfo(name: "No name", info: "Profile", avatar: UIImage(named: "avatar_placeholder"))
     }
     
     func saveUserProfileInfo(_ userInfo: UserInfo) {
@@ -59,7 +61,7 @@ class UserProfileDataService: NSObject, NSFetchedResultsControllerDelegate, IUse
                     for type: NSFetchedResultsChangeType,
                     newIndexPath: IndexPath?) {
         switch type {
-        case .update:
+        case .update, .insert:
             guard let userInfoEntity = anObject as? UserInfoEntity else { return }
             let userInfo = userInfoConverter.makeUserInfo(from: userInfoEntity)
             userDelegate?.updateUser(with: userInfo)

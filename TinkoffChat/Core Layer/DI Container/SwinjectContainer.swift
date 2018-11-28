@@ -5,6 +5,7 @@
 //  Created by Sofia on 04/10/2018.
 //  Copyright © 2018 Sofia. All rights reserved.
 //
+// swiftlint:disable function_body_length
 
 import SwinjectStoryboard
 import CoreData
@@ -77,6 +78,10 @@ extension SwinjectStoryboard {
             .inObjectScope(.container)
         
         defaultContainer
+            .register(IAvatarNetworkService.self) { _ in PixabayAvatarNetworkService(session: URLSession.shared) }
+            .inObjectScope(.container)
+        
+        defaultContainer
             .register(IMessagesDataService.self) { resolver in
                 MessagesDataService(container: resolver.resolve(NSPersistentContainer.self)!,
                                     messageConverter: resolver.resolve(IMessageConverter.self)!)}
@@ -103,9 +108,9 @@ extension SwinjectStoryboard {
         
         defaultContainer.register(IConversationInteractor.self) { resolver in
             ConversationInteractor(selectedConversationService: resolver.resolve(ISelectedConversationService.self)!,
-                                   messagesDataChangedService: resolver.resolve(IMessagesDataService.self)!,
+                                   messagesDataService: resolver.resolve(IMessagesDataService.self)!,
                                    communicationService: resolver.resolve(ICommunicationService.self)!,
-                                   conversationsDataChangedService: resolver.resolve(IConversationsDataService.self)!)
+                                   conversationsDataService: resolver.resolve(IConversationsDataService.self)!)
             }
         
         defaultContainer.storyboardInitCompleted(ConversationViewController.self) { resolver, view in
@@ -122,7 +127,7 @@ extension SwinjectStoryboard {
         defaultContainer.register(IConversationsListInteractor.self) { resolver in
             ConversationsListInteractor(selectedConversationService: resolver.resolve(ISelectedConversationService.self)!,
                                         communicationService: resolver.resolve(ICommunicationService.self)!,
-                                        conversationsDataChangedService: resolver.resolve(IConversationsDataService.self)!)
+                                        conversationsDataService: resolver.resolve(IConversationsDataService.self)!)
         }
         
         defaultContainer.storyboardInitCompleted(ConversationsListViewController.self) { resolver, view in
@@ -137,7 +142,7 @@ extension SwinjectStoryboard {
         }
         
         defaultContainer.register(IProfileInteractor.self) { resolver in
-            ProfileInteractor(userProfileDataChangedService: resolver.resolve(IUserProfileDataService.self)!)
+            ProfileInteractor(userProfileDataService: resolver.resolve(IUserProfileDataService.self)!)
         }
         
         defaultContainer.storyboardInitCompleted(ProfileViewController.self) { resolver, view in
@@ -151,11 +156,24 @@ extension SwinjectStoryboard {
         }
         
         defaultContainer.register(IEditProfileInteractor.self) { resolver in
-            EditProfileInteractor(userProfileDataChangedService: resolver.resolve(IUserProfileDataService.self)!)
+            EditProfileInteractor(userProfileDataService: resolver.resolve(IUserProfileDataService.self)!)
         }
         
         defaultContainer.storyboardInitCompleted(EditProfileViewController.self) { resolver, view in
             view.presenter = resolver.resolve(IEditProfilePresenter.self, argument: view as IEditProfileView)!
         }
+        
+        // MARK: - Load avatar
+        defaultContainer.register(ILoadAvatarPresenter.self) { resolver, view in
+            LoadAvatarPresenter(view: view,
+                                avatarNetworkService: resolver.resolve(IAvatarNetworkService.self)!,
+                                userProfileDataService: resolver.resolve(IUserProfileDataService.self)!)
+        }
+        
+        defaultContainer.storyboardInitCompleted(LoadAvatarViewController.self) { resolver, view in
+            view.presenter = resolver.resolve(ILoadAvatarPresenter.self, argument: view as ILoadAvatarView)!
+        }
     }
 }
+
+// swiftlint:enable function_body_length

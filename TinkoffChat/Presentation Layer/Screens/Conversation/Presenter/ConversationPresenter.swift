@@ -9,7 +9,7 @@
 import Foundation
 
 class ConversationPresenter: IConversationPresenter {
-    private let view: IConversationView
+    private unowned let view: IConversationView
     private var interactor: IConversationInteractor
     private var conversation: Conversation!
     

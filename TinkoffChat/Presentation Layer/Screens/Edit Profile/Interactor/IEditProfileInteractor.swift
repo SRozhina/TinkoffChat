@@ -6,7 +6,8 @@
 //  Copyright © 2018 Sofia. All rights reserved.
 //
 
-protocol IEditProfileInteractor {
+protocol IEditProfileInteractor: class {
     func setup()
     func saveUserInfo(_ userInfo: UserInfo, completion: @escaping (Result) -> Void)
+    var delegate: EditProfileInteractorDelegate? { get set }
 }
