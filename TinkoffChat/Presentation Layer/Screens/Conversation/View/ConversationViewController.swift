@@ -20,6 +20,19 @@ class ConversationViewController: UIViewController {
     private let incomingMessageCellIdentifier = String(describing: IncomingMessageCell.self)
     private let outgoingMessageCellIdentifier = String(describing: OutgoingMessageCell.self)
     private var placeholderText = "Message"
+    private lazy var titleLabel: UILabel = {
+        let label = UILabel(frame: CGRect(x: 0, y: 0, width: 400, height: 44))
+        label.font = UIFont.systemFont(ofSize: 12, weight: .bold)
+        label.textColor = .green
+        label.textAlignment = .center
+        return label
+    }()
+    var isOnline = false {
+        didSet {
+            changeSendButtonState()
+            updateConversationTitle()
+        }
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -41,12 +54,14 @@ class ConversationViewController: UIViewController {
     
     private func setupNavBar() {
         navigationItem.largeTitleDisplayMode = .never
+        navigationItem.titleView = titleLabel
     }
     
     private func setupTextView() {
         messageTextView.placeholderText = placeholderText
         messageTextView.sendAction = { [unowned self] in self.sendMessage($0) }
         messageTextView.layer.cornerRadius = 5
+        messageTextView.textViewDelegate = self
     }
     
     private func setupSendButton() {
@@ -120,6 +135,38 @@ class ConversationViewController: UIViewController {
         }
     }
     
+    private func changeSendButtonState() {
+        if sendButton.isEnabled == (!isOnline && messageTextView.text.isEmpty) { return }
+        let color: UIColor = !sendButton.isEnabled ? .gray : .white
+        UIView.animate(withDuration: 0.5,
+                       animations: {
+                        self.sendButton.tintColor = color
+                        self.sendButton.transform = CGAffineTransform(scaleX: 1.15, y: 1.15)
+                       },
+                       completion: { _ in
+                        UIView.animate(withDuration: 0.5, animations: {
+                            self.sendButton.transform = .identity
+                        })
+                       })
+        sendButton.isEnabled = !sendButton.isEnabled
+    }
+    
+    func updateConversationTitle() {
+        let size: CGFloat = isOnline ? 1.1 : 1
+        let color: UIColor = isOnline ? .green : .black
+        UIView.animate(withDuration: 0.5,
+                       animations: {
+            self.titleLabel.transform = CGAffineTransform(scaleX: size, y: size)
+        }, completion: { _ in
+            UIView.transition(with: self.titleLabel,
+                              duration: 0.5,
+                              options: .transitionCrossDissolve,
+                              animations: {
+                                self.titleLabel.textColor = color
+            }, completion: nil)
+        })
+    }
+    
 }
 
 extension ConversationViewController: IConversationView {
@@ -149,27 +196,12 @@ extension ConversationViewController: IConversationView {
     }
     
     func setTitle(_ title: String?) {
-        navigationItem.title = title
+        titleLabel.text = title
     }
     
     func showErrorAlert(with title: String, retryAction: @escaping () -> Void) {
         let alert = errorAlertBuilder.build(with: title, retryAction: retryAction)
         present(alert, animated: true)
-    }
-    
-    func setSendButtonEnabled(_ value: Bool) {
-        let color: UIColor = value ? .gray : .white
-        UIView.animate(withDuration: 0.5,
-                       animations: {
-            self.sendButton.tintColor = color
-            self.sendButton.transform = CGAffineTransform(scaleX: 1.15, y: 1.15)
-        },
-                       completion: { _ in
-            UIView.animate(withDuration: 0.5, animations: {
-                self.sendButton.transform = .identity
-            })
-        })
-        sendButton.isEnabled = value
     }
 }
 
@@ -195,5 +227,11 @@ extension ConversationViewController: UITableViewDataSource {
         cell.setup(with: message)
         
         return cell
+    }
+}
+
+extension ConversationViewController: ExpandableTextViewDelegate {
+    func textDidChanged() {
+        changeSendButtonState()
     }
 }

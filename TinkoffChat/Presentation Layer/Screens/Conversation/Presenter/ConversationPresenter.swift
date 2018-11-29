@@ -26,7 +26,7 @@ class ConversationPresenter: IConversationPresenter {
     
     func updateWith(conversation: Conversation?) {
         guard let selectedConversation = conversation else {
-            view.setSendButtonEnabled(false)
+            view.isOnline = false
             return
         }
         self.conversation = selectedConversation
@@ -40,7 +40,7 @@ class ConversationPresenter: IConversationPresenter {
     
     private func viewSetup() {
         if !conversation.isOnline {
-            view.setSendButtonEnabled(false)
+            view.isOnline = false
         }
         view.setTitle(conversation.user.name)
         view.setMessages(conversation.messages)
@@ -51,7 +51,7 @@ extension ConversationPresenter: ConversationInteractorDelegate {
     func updateConversation(_ conversation: Conversation, at indexPath: IndexPath) {
         if self.conversation.id == conversation.id {
             self.conversation.isOnline = conversation.isOnline
-            view.setSendButtonEnabled(conversation.isOnline)
+            view.isOnline = conversation.isOnline
         }
     }
     
@@ -77,7 +77,7 @@ extension ConversationPresenter: ConversationInteractorDelegate {
     func updateForUser(name: String?) {
         if name == conversation.user.name {
             conversation.isOnline = !conversation.isOnline
-            view.setSendButtonEnabled(conversation.isOnline)
+            view.isOnline = conversation.isOnline
         }
     }
     

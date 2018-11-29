@@ -12,10 +12,10 @@ protocol IConversationView: class {
     func setMessages(_ messages: [Message])
     func setTitle(_ title: String?)
     func showErrorAlert(with title: String, retryAction: @escaping () -> Void)
-    func setSendButtonEnabled(_ value: Bool)
     func startUpdates()
     func endUpdates()
     func updateMessage(at indexPath: IndexPath)
     func insertMessage(at indexPath: IndexPath)
     func deleteMessage(at indexPath: IndexPath)
+    var isOnline: Bool { get set }
 }
