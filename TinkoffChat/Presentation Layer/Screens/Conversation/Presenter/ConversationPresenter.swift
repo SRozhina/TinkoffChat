@@ -22,6 +22,7 @@ class ConversationPresenter: IConversationPresenter {
     func setup() {
         interactor.delegate = self
         interactor.setup()
+        view.isOnline = true
     }
     
     func updateWith(conversation: Conversation?) {

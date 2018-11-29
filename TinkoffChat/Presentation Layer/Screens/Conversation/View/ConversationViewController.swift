@@ -21,8 +21,8 @@ class ConversationViewController: UIViewController {
     private let outgoingMessageCellIdentifier = String(describing: OutgoingMessageCell.self)
     private var placeholderText = "Message"
     private lazy var titleLabel: UILabel = {
-        let label = UILabel(frame: CGRect(x: 0, y: 0, width: 400, height: 44))
-        label.font = UIFont.systemFont(ofSize: 12, weight: .bold)
+        let label = UILabel(frame: CGRect(x: 0, y: 0, width: 200, height: 44))
+        label.font = UIFont.systemFont(ofSize: 15, weight: .bold)
         label.textColor = .green
         label.textAlignment = .center
         return label
@@ -54,6 +54,7 @@ class ConversationViewController: UIViewController {
     
     private func setupNavBar() {
         navigationItem.largeTitleDisplayMode = .never
+        navigationController?.navigationBar.backItem?.title = "Back"
         navigationItem.titleView = titleLabel
     }
     
@@ -156,7 +157,7 @@ class ConversationViewController: UIViewController {
         let color: UIColor = isOnline ? .green : .black
         UIView.animate(withDuration: 0.5,
                        animations: {
-            self.titleLabel.transform = CGAffineTransform(scaleX: size, y: size)
+                        self.navigationItem.titleView?.transform = CGAffineTransform(scaleX: size, y: size)
         }, completion: { _ in
             UIView.transition(with: self.titleLabel,
                               duration: 0.5,
