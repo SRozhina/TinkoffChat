@@ -9,7 +9,7 @@
 import UIKit
 import AVFoundation
 
-class EditProfileViewController: UIViewController, UINavigationControllerDelegate {
+class EditProfileViewController: TinkoffViewController, UINavigationControllerDelegate {
     @IBOutlet private weak var avatarImageView: UIImageView!
     @IBOutlet private weak var editAvatarButton: UIButton!
     @IBOutlet private weak var userNameTextField: UITextField!

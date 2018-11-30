@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-class LoadAvatarViewController: UIViewController {
+class LoadAvatarViewController: TinkoffViewController {
     @IBOutlet private weak var collectionView: UICollectionView!
     @IBOutlet private weak var activityIndicator: UIActivityIndicatorView!
     private var imageURLs: [URL] = []
@@ -17,6 +17,8 @@ class LoadAvatarViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        removeTinkoffTapGesture()
         registerNibs()
         presenter.setup()
     }

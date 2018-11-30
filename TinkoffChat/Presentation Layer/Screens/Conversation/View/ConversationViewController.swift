@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ConversationViewController: UIViewController {
+class ConversationViewController: TinkoffViewController {
     @IBOutlet private weak var tableView: UITableView!
     @IBOutlet private weak var messageTextView: ExpandableTextView!
     @IBOutlet private weak var messageViewBottom: NSLayoutConstraint!

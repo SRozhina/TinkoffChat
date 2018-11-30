@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ConversationsListViewController: UIViewController {
+class ConversationsListViewController: TinkoffViewController {
     @IBOutlet private weak var tableView: UITableView!
     var presenter: IConversationsListPresenter?
     var errorAlertBuilder: IErrorAlertBuilder!
@@ -19,6 +19,7 @@ class ConversationsListViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        removeTinkoffTapGesture()
         registerNibs()
         setupNavBar()
     }

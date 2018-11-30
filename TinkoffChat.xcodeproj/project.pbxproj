@@ -112,6 +112,7 @@
 		C3E995A321A8667E0067BD4D /* LoadedImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3E995A221A8667E0067BD4D /* LoadedImage.swift */; };
 		C3E995A621A8A0820067BD4D /* UserInfoEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3E995A421A8A0820067BD4D /* UserInfoEntity+CoreDataClass.swift */; };
 		C3E995A721A8A0820067BD4D /* UserInfoEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3E995A521A8A0820067BD4D /* UserInfoEntity+CoreDataProperties.swift */; };
+		C3EBEF7221B12FA900B406BC /* TinkoffViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3EBEF7121B12FA900B406BC /* TinkoffViewController.swift */; };
 		C3F835342196C5C000A2D767 /* MessageEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3F8352E2196C5C000A2D767 /* MessageEntity+CoreDataProperties.swift */; };
 		C3F835352196C5C000A2D767 /* MessageEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3F8352F2196C5C000A2D767 /* MessageEntity+CoreDataClass.swift */; };
 		C3FF5C152180DDA000D5F899 /* MultipeerConnectionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3FF5C142180DDA000D5F899 /* MultipeerConnectionService.swift */; };
@@ -227,6 +228,7 @@
 		C3E995A221A8667E0067BD4D /* LoadedImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadedImage.swift; sourceTree = "<group>"; };
 		C3E995A421A8A0820067BD4D /* UserInfoEntity+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserInfoEntity+CoreDataClass.swift"; sourceTree = "<group>"; };
 		C3E995A521A8A0820067BD4D /* UserInfoEntity+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserInfoEntity+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		C3EBEF7121B12FA900B406BC /* TinkoffViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TinkoffViewController.swift; sourceTree = "<group>"; };
 		C3F8352E2196C5C000A2D767 /* MessageEntity+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MessageEntity+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		C3F8352F2196C5C000A2D767 /* MessageEntity+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MessageEntity+CoreDataClass.swift"; sourceTree = "<group>"; };
 		C3FF5C142180DDA000D5F899 /* MultipeerConnectionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultipeerConnectionService.swift; sourceTree = "<group>"; };
@@ -397,6 +399,7 @@
 				C32DEFF421656DAD009645D9 /* Conversation */,
 				C32DEFEB21653438009645D9 /* Profile */,
 				C32DEFE221652988009645D9 /* ConverstionsList */,
+				C3EBEF7121B12FA900B406BC /* TinkoffViewController.swift */,
 			);
 			path = Screens;
 			sourceTree = "<group>";
@@ -934,6 +937,7 @@
 				C3DC6964217BA71500DCEBB1 /* UserInfo.swift in Sources */,
 				C387C28A219EB692005DE328 /* IUserProfileDataService.swift in Sources */,
 				C3DC697A217BD0CB00DCEBB1 /* ProfilePresenter.swift in Sources */,
+				C3EBEF7221B12FA900B406BC /* TinkoffViewController.swift in Sources */,
 				C387C228219D74D8005DE328 /* ConversationInteractor.swift in Sources */,
 				C32DEFE4216529AA009645D9 /* ConversationsListViewController.swift in Sources */,
 				C3D95EFD2198AE17007911AD /* FetchRequestBuilder.swift in Sources */,
