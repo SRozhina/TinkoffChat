@@ -104,3 +104,45 @@ class ConversationsDataService: NSObject, NSFetchedResultsControllerDelegate, IC
         messagesStorage.setAllMessagesAsRead(in: conversationId)
     }
 }
+
+
+class OnlineConversationsDataService: NSObject, NSFetchedResultsControllerDelegate {
+    private let context: NSManagedObjectContext
+    private var fetchResultsController: NSFetchedResultsController<ConversationEntity>!
+    private let conversationConverter: IConversationConverter
+    private let conversationsStorage: IConversationsStorage
+    private let messagesStorage: IMessagesStorage
+    
+    init(container: NSPersistentContainer,
+         conversationConverter: IConversationConverter,
+         conversationsStorage: IConversationsStorage,
+         messagesStorage: IMessagesStorage) {
+        self.context = container.viewContext
+        self.conversationConverter = conversationConverter
+        self.conversationsStorage = conversationsStorage
+        self.messagesStorage = messagesStorage
+    }
+    
+    func setupService() {
+        let fetchRequest = NSFetchRequest<ConversationEntity>(entityName: String(describing: ConversationEntity.self))
+        let predicate = NSPredicate(format: "isOnline == %@", NSNumber(value: true))
+        let sortDescriptorHasUnreadMessages = NSSortDescriptor(key: #keyPath(ConversationEntity.messages), ascending: true, comparator: {
+            guard let first = $0 as? [MessageEntity], let second = $1 as? [MessageEntity] else { return .orderedAscending }
+            if first.contains(where: { $0.isUnread }) { return .orderedAscending }
+            if second.contains(where: { $0.isUnread }) { return .orderedDescending }
+            return .orderedAscending
+        })
+        let sortDescriptorName = NSSortDescriptor(key: #keyPath(ConversationEntity.user.name), ascending: true)
+        fetchRequest.sortDescriptors = [sortDescriptorHasUnreadMessages, sortDescriptorName]
+        fetchRequest.predicate = predicate
+        fetchRequest.resultType = .managedObjectResultType
+        
+        fetchResultsController = NSFetchedResultsController<ConversationEntity>(fetchRequest: fetchRequest,
+                                                                                managedObjectContext: context,
+                                                                                sectionNameKeyPath: nil,
+                                                                                cacheName: nil)
+        fetchResultsController.delegate = self
+        try? fetchResultsController.performFetch()
+    }
+}
+
