@@ -50,6 +50,7 @@ class ConversationViewController: TinkoffViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         scrollToBottom()
+        updateConversationTitle()
     }
     
     private func setupNavBar() {
@@ -181,16 +182,8 @@ extension ConversationViewController: IConversationView {
         scrollToBottom()
     }
     
-    func updateMessage(at indexPath: IndexPath) {
-        tableView.reloadRows(at: [indexPath], with: .automatic)
-    }
-    
     func insertMessage(at indexPath: IndexPath) {
         tableView.insertRows(at: [indexPath], with: .automatic)
-    }
-    
-    func deleteMessage(at indexPath: IndexPath) {
-        tableView.deleteRows(at: [indexPath], with: .automatic)
     }
     
     func setMessages(_ messages: [Message]) {

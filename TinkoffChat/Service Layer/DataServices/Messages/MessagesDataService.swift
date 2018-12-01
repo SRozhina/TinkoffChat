@@ -13,14 +13,18 @@ class MessagesDataService: NSObject, NSFetchedResultsControllerDelegate, IMessag
     private let context: NSManagedObjectContext
     private var fetchResultsController: NSFetchedResultsController<MessageEntity>!
     private var messageConverter: IMessageConverter!
+    private let messagesStorage: IMessagesStorage
     weak var messagesDelegate: MessagesDataServiceDelegate?
+    private var conversationId: String = ""
     
-    init(container: NSPersistentContainer, messageConverter: IMessageConverter) {
+    init(container: NSPersistentContainer, messageConverter: IMessageConverter, messagesStorage: IMessagesStorage) {
         self.context = container.viewContext
         self.messageConverter = messageConverter
+        self.messagesStorage = messagesStorage
     }
     
     func setupService(with conversationId: String) {
+        self.conversationId = conversationId
         let predicate = NSPredicate(format: "conversation.id==%@", conversationId)
         let fetchRequest = NSFetchRequest<MessageEntity>(entityName: String(describing: MessageEntity.self))
         fetchRequest.predicate = predicate
@@ -36,23 +40,26 @@ class MessagesDataService: NSObject, NSFetchedResultsControllerDelegate, IMessag
         try? fetchResultsController.performFetch()
     }
     
+    func setAllMessagesAsRead() {
+        if conversationId.isEmpty { return }
+        messagesStorage.setAllMessagesAsRead(in: conversationId)
+    }
+    
+    func appendMessage(_ message: Message) {
+        messagesStorage.appendMessage(message, to: conversationId)
+    }
+    
     func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>,
                     didChange anObject: Any,
                     at indexPath: IndexPath?,
                     for type: NSFetchedResultsChangeType,
                     newIndexPath: IndexPath?) {
         switch type {
-        case .update:
-            guard let indexPath = indexPath else { return }
-            messagesDelegate?.updateMessage(at: indexPath)
         case .insert:
             guard let newIndexPath = newIndexPath else { return }
             guard let messageEntity = anObject as? MessageEntity else { return }
             let message = messageConverter.makeMessage(from: messageEntity)
             messagesDelegate?.insertMessage(message, at: newIndexPath)
-        case .delete:
-            guard let indexPath = indexPath else { return }
-            messagesDelegate?.deleteMessage(at: indexPath)
         default:
             break
         }

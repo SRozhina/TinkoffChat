@@ -65,6 +65,7 @@ extension ConversationsListViewController: IConversationsListView {
     
     func setOnlineConversations(_ conversations: [ConversationPreview]) {
         self.onlineConversationPreviews = conversations
+        tableView.reloadData()
     }
     
     func showErrorAlert(with title: String, retryAction: @escaping () -> Void) {

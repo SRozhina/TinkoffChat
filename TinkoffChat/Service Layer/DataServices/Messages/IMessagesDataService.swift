@@ -8,5 +8,7 @@
 
 protocol IMessagesDataService {
     func setupService(with conversationId: String)
+    func setAllMessagesAsRead()
+    func appendMessage(_ message: Message)
     var messagesDelegate: MessagesDataServiceDelegate? { get set }
 }

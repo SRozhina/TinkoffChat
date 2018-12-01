@@ -84,14 +84,13 @@ extension SwinjectStoryboard {
         defaultContainer
             .register(IMessagesDataService.self) { resolver in
                 MessagesDataService(container: resolver.resolve(NSPersistentContainer.self)!,
-                                    messageConverter: resolver.resolve(IMessageConverter.self)!)}
+                                    messageConverter: resolver.resolve(IMessageConverter.self)!,
+                                    messagesStorage: resolver.resolve(IMessagesStorage.self)!)}
         
         defaultContainer
-            .register(IConversationsDataService.self) { resolver in
-                ConversationsDataService(container: resolver.resolve(NSPersistentContainer.self)!,
-                                         conversationConverter: resolver.resolve(IConversationConverter.self)!,
-                                         conversationsStorage: resolver.resolve(IConversationsStorage.self)!,
-                                         messagesStorage: resolver.resolve(IMessagesStorage.self)!)}
+            .register(IConversationDataService.self) { resolver in
+                ConversationDataService(container: resolver.resolve(NSPersistentContainer.self)!,
+                                        conversationConverter: resolver.resolve(IConversationConverter.self)!)}
         
         defaultContainer
             .register(IOnlineConversationsDataService.self) { resolver in
@@ -117,7 +116,7 @@ extension SwinjectStoryboard {
             ConversationInteractor(selectedConversationService: resolver.resolve(ISelectedConversationService.self)!,
                                    messagesDataService: resolver.resolve(IMessagesDataService.self)!,
                                    communicationService: resolver.resolve(ICommunicationService.self)!,
-                                   conversationsDataService: resolver.resolve(IConversationsDataService.self)!)
+                                   conversationDataService: resolver.resolve(IConversationDataService.self)!)
             }
         
         defaultContainer.storyboardInitCompleted(ConversationViewController.self) { resolver, view in

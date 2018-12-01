@@ -14,8 +14,6 @@ protocol IConversationView: class {
     func showErrorAlert(with title: String, retryAction: @escaping () -> Void)
     func startUpdates()
     func endUpdates()
-    func updateMessage(at indexPath: IndexPath)
     func insertMessage(at indexPath: IndexPath)
-    func deleteMessage(at indexPath: IndexPath)
     var isOnline: Bool { get set }
 }
