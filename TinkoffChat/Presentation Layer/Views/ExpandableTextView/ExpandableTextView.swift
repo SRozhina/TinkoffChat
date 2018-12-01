@@ -29,6 +29,10 @@ class ExpandableTextView: UITextView {
         return lineSize.height
     }
     
+    var isEmpty: Bool {
+        return text.isEmpty || text == placeholderText
+    }
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         delegate = self

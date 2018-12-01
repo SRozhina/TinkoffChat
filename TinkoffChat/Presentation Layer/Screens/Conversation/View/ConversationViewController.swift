@@ -118,7 +118,7 @@ class ConversationViewController: TinkoffViewController {
     }
     
     @IBAction private func sendButtonTapped(_ sender: Any) {
-        if messageTextView.text == placeholderText { return }
+        if messageTextView.isEmpty { return }
         sendMessage(messageTextView.text)
     }
     
@@ -137,8 +137,9 @@ class ConversationViewController: TinkoffViewController {
     }
     
     private func changeSendButtonState() {
-        if sendButton.isEnabled == (!isOnline && messageTextView.text.isEmpty) { return }
-        let color: UIColor = !sendButton.isEnabled ? .gray : .white
+        let sendButtonEnabled = isOnline && !messageTextView.isEmpty
+        let color: UIColor = sendButtonEnabled ? .gray : .white
+        if sendButton.isEnabled == sendButtonEnabled { return }
         UIView.animate(withDuration: 0.5,
                        animations: {
                         self.sendButton.tintColor = color

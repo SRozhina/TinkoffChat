@@ -10,13 +10,13 @@ import Foundation
 
 class ConversationsListInteractor: IConversationsListInteractor {
     private var communicationService: ICommunicationService
-    private var conversationsDataService: IConversationsDataService
+    private var conversationsDataService: IOnlineConversationsDataService
     private var selectedConversationService: ISelectedConversationService
     weak var delegate: ConversationsListInteractorDelegate?
     
     init(selectedConversationService: ISelectedConversationService,
          communicationService: ICommunicationService,
-         conversationsDataService: IConversationsDataService) {
+         conversationsDataService: IOnlineConversationsDataService) {
         self.selectedConversationService = selectedConversationService
         self.communicationService = communicationService
         self.conversationsDataService = conversationsDataService
@@ -28,10 +28,8 @@ class ConversationsListInteractor: IConversationsListInteractor {
         conversationsDataService.setupService()
         conversationsDataService.conversationsDelegate = self
         
-        let onlineConversations = conversationsDataService.getOnlineConversations()
-        delegate?.setOnlineConversation(onlineConversations)
-        let historyConversations = conversationsDataService.getHistoryConversations()
-        delegate?.setHistoryConversations(historyConversations)
+        let onlineConversation = conversationsDataService.getConversations()
+        delegate?.setOnlineConversation(onlineConversation)
     }
     
     func selectConversation(_ conversation: Conversation) {
@@ -41,17 +39,12 @@ class ConversationsListInteractor: IConversationsListInteractor {
 
 extension ConversationsListInteractor: ICommunicationServiceDelegate {
     func communicationService(_ communicationService: ICommunicationService, didFoundPeer peer: UserInfo) {
-        if let existingConversation = conversationsDataService.getHistoryConversations().filter({ $0.user.name == peer.name }).first {
-            conversationsDataService.setOnlineStatus(true, to: existingConversation.id)
-            return
-        }
         let conversation = Conversation(user: peer)
-        
         conversationsDataService.createConversation(conversation)
     }
     
     func communicationService(_ communicationService: ICommunicationService, didLostPeer peer: UserInfo) {
-        if let onlineConversation = conversationsDataService.getOnlineConversations().filter({ $0.user.name == peer.name }).first {
+        if let onlineConversation = conversationsDataService.getConversations().filter({ $0.user.name == peer.name }).first {
             conversationsDataService.setOnlineStatus(false, to: onlineConversation.id)
         }
     }
@@ -75,13 +68,13 @@ extension ConversationsListInteractor: ICommunicationServiceDelegate {
     }
     
     func communicationService(_ communicationService: ICommunicationService, didReceiveMessage message: Message, from peer: UserInfo) {
-        if let conversation = conversationsDataService.getOnlineConversations().filter({ $0.user.name == peer.name }).first {
+        if let conversation = conversationsDataService.getConversations().filter({ $0.user.name == peer.name }).first {
             conversationsDataService.appendMessage(message, to: conversation.id)
         }
     }
 }
 
-extension ConversationsListInteractor: ConversationsDataServiceDelegate {    
+extension ConversationsListInteractor: OnlineConversationsDataServiceDelegate {
     func updateConversation(_ conversation: Conversation, at indexPath: IndexPath) {
         delegate?.updateConversation(conversation, at: indexPath)
     }
@@ -90,12 +83,12 @@ extension ConversationsListInteractor: ConversationsDataServiceDelegate {
         delegate?.insertConversation(conversation, at: indexPath)
     }
     
-    func getOnlineConversations() -> [Conversation] {
-        return conversationsDataService.getOnlineConversations()
+    func moveConversation(_ conversation: Conversation, from indexPath: IndexPath, to newIndexPath: IndexPath) {
+        delegate?.moveConversation(from: indexPath, to: newIndexPath)
     }
     
-    func getHistoryConversations() -> [Conversation] {
-        return conversationsDataService.getHistoryConversations()
+    func deleteConversation(_ conversation: Conversation, at indexPath: IndexPath) {
+        delegate?.deleteConversation(at: indexPath)
     }
     
     func startUpdates() {

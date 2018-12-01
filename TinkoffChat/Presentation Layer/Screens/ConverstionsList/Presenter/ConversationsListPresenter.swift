@@ -13,15 +13,11 @@ class ConversationsListPresenter: IConversationsListPresenter {
 
     private var onlineConversations: [Conversation] = [] {
         didSet {
-            updateOnlineConversations()
+            let previews = onlineConversations.map { getPreviewFrom(conversation: $0) }
+            view.setOnlineConversations(previews)
         }
     }
-    private var historyConversations: [Conversation] = [] {
-        didSet {
-            updateHistoryConversations()
-        }
-    }
-    
+
     init(view: IConversationsListView,
          interactor: IConversationsListInteractor) {
         self.view = view
@@ -34,21 +30,9 @@ class ConversationsListPresenter: IConversationsListPresenter {
     }
     
     func selectConversation(_ conversationPreview: ConversationPreview) {
-        let conversation = conversationPreview.online
-            ? onlineConversations.first(where: { $0.id == conversationPreview.id })
-            : historyConversations.first(where: { $0.id == conversationPreview.id })
+        let conversation = onlineConversations.first(where: { $0.id == conversationPreview.id })
         guard let selecedConversation = conversation else { return }
         interactor.selectConversation(selecedConversation)
-    }
-    
-    private func updateOnlineConversations() {
-        let previews = onlineConversations.map { getPreviewFrom(conversation: $0) }
-        view.setOnlineConversations(previews)
-    }
-    
-    private func updateHistoryConversations() {
-        let previews = historyConversations.map { getPreviewFrom(conversation: $0) }
-        view.setHistoryConversations(previews)
     }
     
     private func getPreviewFrom(conversation: Conversation) -> ConversationPreview {
@@ -64,20 +48,28 @@ class ConversationsListPresenter: IConversationsListPresenter {
 
 extension ConversationsListPresenter: ConversationsListInteractorDelegate {
     func updateConversation(_ conversation: Conversation, at indexPath: IndexPath) {
-        onlineConversations = interactor.getOnlineConversations()
-        historyConversations = interactor.getHistoryConversations()
+        onlineConversations[indexPath.row] = conversation
+        view.updateConversation(at: indexPath)
     }
     
     func insertConversation(_ conversation: Conversation, at indexPath: IndexPath) {
         onlineConversations.insert(conversation, at: indexPath.row)
+        view.insertConversation(at: indexPath)
+    }
+    
+    func moveConversation(from indexPath: IndexPath, to newIndexPath: IndexPath) {
+        let conversation = onlineConversations.remove(at: indexPath.row)
+        onlineConversations.insert(conversation, at: newIndexPath.row)
+        view.moveConversation(from: indexPath, to: newIndexPath)
+    }
+    
+    func deleteConversation(at indexPath: IndexPath) {
+        onlineConversations.remove(at: indexPath.row)
+        view.deleteConversation(at: indexPath)
     }
     
     func setOnlineConversation(_ conversation: [Conversation]) {
         onlineConversations = conversation
-    }
-    
-    func setHistoryConversations(_ conversation: [Conversation]) {
-        historyConversations = conversation
     }
     
     func showError(text: String, retryAction: @escaping () -> Void) {

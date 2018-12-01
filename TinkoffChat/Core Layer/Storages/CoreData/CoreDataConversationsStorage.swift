@@ -39,7 +39,17 @@ class CoreDataConversationsStorage: IConversationsStorage {
     
     func createConversation(_ newConversation: Conversation) {
         let context = container.viewContext
+        
+        let fetchRequest = NSFetchRequest<ConversationEntity>(entityName: String(describing: ConversationEntity.self))
+        let predicate = NSPredicate(format: "user.name==%@", "\(newConversation.user.name)")
+        fetchRequest.predicate = predicate
+        
         context.performAndWait {
+            if let conversation = (try? context.fetch(fetchRequest))?.first {
+                conversation.isOnline = newConversation.isOnline
+                return
+            }
+            
             let conversation = NSEntityDescription.insertNewObject(forEntityName: String(describing: ConversationEntity.self),
                                                                    into: context) as? ConversationEntity
             if let user = NSEntityDescription.insertNewObject(forEntityName: String(describing: UserInfoEntity.self),

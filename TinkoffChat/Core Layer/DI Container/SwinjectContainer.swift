@@ -93,6 +93,13 @@ extension SwinjectStoryboard {
                                          conversationsStorage: resolver.resolve(IConversationsStorage.self)!,
                                          messagesStorage: resolver.resolve(IMessagesStorage.self)!)}
         
+        defaultContainer
+            .register(IOnlineConversationsDataService.self) { resolver in
+                OnlineConversationsDataService(container: resolver.resolve(NSPersistentContainer.self)!,
+                                               conversationConverter: resolver.resolve(IConversationConverter.self)!,
+                                               conversationsStorage: resolver.resolve(IConversationsStorage.self)!,
+                                               messagesStorage: resolver.resolve(IMessagesStorage.self)!)}
+        
         defaultContainer.register(IUserProfileDataService.self) { resolver in
             UserProfileDataService(container: resolver.resolve(NSPersistentContainer.self)!,
                                    userInfoConverter: resolver.resolve(IUserInfoConverter.self)!,
@@ -127,7 +134,7 @@ extension SwinjectStoryboard {
         defaultContainer.register(IConversationsListInteractor.self) { resolver in
             ConversationsListInteractor(selectedConversationService: resolver.resolve(ISelectedConversationService.self)!,
                                         communicationService: resolver.resolve(ICommunicationService.self)!,
-                                        conversationsDataService: resolver.resolve(IConversationsDataService.self)!)
+                                        conversationsDataService: resolver.resolve(IOnlineConversationsDataService.self)!)
         }
         
         defaultContainer.storyboardInitCompleted(ConversationsListViewController.self) { resolver, view in
