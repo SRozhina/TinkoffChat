@@ -24,7 +24,6 @@ extension ConversationEntity {
     public var messages: NSOrderedSet
     @NSManaged
     public var user: UserInfoEntity
-
 }
 
 // MARK: Generated accessors for messages

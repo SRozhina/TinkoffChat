@@ -7,6 +7,10 @@
 
 import UIKit
 
+protocol ExpandableTextViewDelegate: class {
+    func textDidChanged()
+}
+
 class ExpandableTextView: UITextView {
     @IBInspectable
     var placeholderColor: UIColor = .gray
@@ -16,12 +20,17 @@ class ExpandableTextView: UITextView {
     @IBInspectable
     var maxLineCount: Int = 1
     var sendAction: ((String) -> Void)?
+    weak var textViewDelegate: ExpandableTextViewDelegate?
     
     private var textViewHeight: NSLayoutConstraint?
     private var oneLineHeight: CGFloat {
         let lineHeight = font?.lineHeight ?? 1
         let lineSize = UITextView().sizeThatFits(CGSize(width: frame.width, height: lineHeight))
         return lineSize.height
+    }
+    
+    var isEmpty: Bool {
+        return text.isEmpty || text == placeholderText
     }
     
     override func awakeFromNib() {
@@ -67,16 +76,7 @@ extension ExpandableTextView: UITextViewDelegate {
             textView.isScrollEnabled = false
             textViewHeight?.constant = newSize.height
         }
-    }
-    
-    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
-        if text == "\n" {
-            sendAction?(textView.text)
-            clear()
-            resignFirstResponder()
-            return false
-        }
-        return true
+        textViewDelegate?.textDidChanged()
     }
     
     func textViewDidBeginEditing(_ textView: UITextView) {

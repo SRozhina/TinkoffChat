@@ -9,7 +9,5 @@
 import Foundation
 
 protocol MessagesDataServiceDelegate: BaseDataServiceDelegate {
-    func updateMessage(at indexPath: IndexPath)
     func insertMessage(_ message: Message, at indexPath: IndexPath)
-    func deleteMessage(at indexPath: IndexPath)
 }

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ConversationViewController: UIViewController {
+class ConversationViewController: TinkoffViewController {
     @IBOutlet private weak var tableView: UITableView!
     @IBOutlet private weak var messageTextView: ExpandableTextView!
     @IBOutlet private weak var messageViewBottom: NSLayoutConstraint!
@@ -20,6 +20,19 @@ class ConversationViewController: UIViewController {
     private let incomingMessageCellIdentifier = String(describing: IncomingMessageCell.self)
     private let outgoingMessageCellIdentifier = String(describing: OutgoingMessageCell.self)
     private var placeholderText = "Message"
+    private lazy var titleLabel: UILabel = {
+        let label = UILabel(frame: CGRect(x: 0, y: 0, width: 200, height: 44))
+        label.font = UIFont.systemFont(ofSize: 15, weight: .bold)
+        label.textColor = .green
+        label.textAlignment = .center
+        return label
+    }()
+    var isOnline = false {
+        didSet {
+            changeSendButtonState()
+            updateConversationTitle()
+        }
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,16 +50,20 @@ class ConversationViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         scrollToBottom()
+        updateConversationTitle()
     }
     
     private func setupNavBar() {
         navigationItem.largeTitleDisplayMode = .never
+        navigationController?.navigationBar.backItem?.title = "Back"
+        navigationItem.titleView = titleLabel
     }
     
     private func setupTextView() {
         messageTextView.placeholderText = placeholderText
         messageTextView.sendAction = { [unowned self] in self.sendMessage($0) }
         messageTextView.layer.cornerRadius = 5
+        messageTextView.textViewDelegate = self
     }
     
     private func setupSendButton() {
@@ -102,7 +119,7 @@ class ConversationViewController: UIViewController {
     }
     
     @IBAction private func sendButtonTapped(_ sender: Any) {
-        if messageTextView.text == placeholderText { return }
+        if messageTextView.isEmpty { return }
         sendMessage(messageTextView.text)
     }
     
@@ -120,6 +137,39 @@ class ConversationViewController: UIViewController {
         }
     }
     
+    private func changeSendButtonState() {
+        let sendButtonEnabled = isOnline && !messageTextView.isEmpty
+        let color: UIColor = sendButtonEnabled ? .gray : .white
+        if sendButton.isEnabled == sendButtonEnabled { return }
+        UIView.animate(withDuration: 0.5,
+                       animations: {
+                        self.sendButton.tintColor = color
+                        self.sendButton.transform = CGAffineTransform(scaleX: 1.15, y: 1.15)
+                       },
+                       completion: { _ in
+                        UIView.animate(withDuration: 0.5, animations: {
+                            self.sendButton.transform = .identity
+                        })
+                       })
+        sendButton.isEnabled = !sendButton.isEnabled
+    }
+    
+    func updateConversationTitle() {
+        let size: CGFloat = isOnline ? 1.1 : 1
+        let color: UIColor = isOnline ? .green : .black
+        UIView.animate(withDuration: 0.5,
+                       animations: {
+                        self.navigationItem.titleView?.transform = CGAffineTransform(scaleX: size, y: size)
+        }, completion: { _ in
+            UIView.transition(with: self.titleLabel,
+                              duration: 0.5,
+                              options: .transitionCrossDissolve,
+                              animations: {
+                                self.titleLabel.textColor = color
+            }, completion: nil)
+        })
+    }
+    
 }
 
 extension ConversationViewController: IConversationView {
@@ -132,16 +182,8 @@ extension ConversationViewController: IConversationView {
         scrollToBottom()
     }
     
-    func updateMessage(at indexPath: IndexPath) {
-        tableView.reloadRows(at: [indexPath], with: .automatic)
-    }
-    
     func insertMessage(at indexPath: IndexPath) {
         tableView.insertRows(at: [indexPath], with: .automatic)
-    }
-    
-    func deleteMessage(at indexPath: IndexPath) {
-        tableView.deleteRows(at: [indexPath], with: .automatic)
     }
     
     func setMessages(_ messages: [Message]) {
@@ -149,27 +191,12 @@ extension ConversationViewController: IConversationView {
     }
     
     func setTitle(_ title: String?) {
-        navigationItem.title = title
+        titleLabel.text = title
     }
     
     func showErrorAlert(with title: String, retryAction: @escaping () -> Void) {
         let alert = errorAlertBuilder.build(with: title, retryAction: retryAction)
         present(alert, animated: true)
-    }
-    
-    func setSendButtonEnabled(_ value: Bool) {
-        let color: UIColor = value ? .gray : .white
-        UIView.animate(withDuration: 0.5,
-                       animations: {
-            self.sendButton.tintColor = color
-            self.sendButton.transform = CGAffineTransform(scaleX: 1.15, y: 1.15)
-        },
-                       completion: { _ in
-            UIView.animate(withDuration: 0.5, animations: {
-                self.sendButton.transform = .identity
-            })
-        })
-        sendButton.isEnabled = value
     }
 }
 
@@ -195,5 +222,11 @@ extension ConversationViewController: UITableViewDataSource {
         cell.setup(with: message)
         
         return cell
+    }
+}
+
+extension ConversationViewController: ExpandableTextViewDelegate {
+    func textDidChanged() {
+        changeSendButtonState()
     }
 }

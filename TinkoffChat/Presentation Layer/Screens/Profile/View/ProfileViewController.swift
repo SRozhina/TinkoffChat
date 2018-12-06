@@ -9,7 +9,7 @@
 import UIKit
 import AVFoundation
 
-class ProfileViewController: UIViewController, UINavigationControllerDelegate, IProfileView {
+class ProfileViewController: TinkoffViewController, UINavigationControllerDelegate, IProfileView {
     @IBOutlet private weak var avatarImageView: UIImageView!
     @IBOutlet private weak var nameLabel: UILabel!
     @IBOutlet private weak var descriptionLabel: UILabel!
