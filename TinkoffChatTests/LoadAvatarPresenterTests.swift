@@ -35,8 +35,10 @@ class LoadAvatarPresenterTests: XCTestCase {
         userProfileDataServiceMock.stubbedGetUserProfileInfoResult = userInfo
         let url = URL(string: "https://www.google.com")!
         avatarNetworkServiceMock.stubbedGetImagesURLsCompletionResult = ([url], ())
+        
         //when
         presenter.setup()
+        
         //then
         XCTAssert(userProfileDataServiceMock.invokedSetupService)
         XCTAssert(userProfileDataServiceMock.invokedGetUserProfileInfo)
@@ -47,14 +49,25 @@ class LoadAvatarPresenterTests: XCTestCase {
     
     func testGettingImage() {
         //given
-        let url = URL(string: "https://www.google.com")!
+        let userInfo = UserInfo(name: "TestUser")
+        userProfileDataServiceMock.stubbedGetUserProfileInfoResult = userInfo
         let image = UIImage(named: "logo")!
+        let url = URL(string: "https://www.google.com")!
+        avatarNetworkServiceMock.stubbedGetImagesURLsCompletionResult = ([url], ())
         avatarNetworkServiceMock.stubbedGetImageCompletionResult = (image, ())
+        presenter.setup()
+        let imageExpectation = expectation(description: "image loaded")
+        var resultImage: UIImage?
+        
         //when
         presenter.getImage(for: url) {
-            //then
-            XCTAssertEqual($0.image, image)
+            resultImage = $0.image
+            imageExpectation.fulfill()
         }
+        
+        //then
+        waitForExpectations(timeout: 15, handler: nil)
+        XCTAssertEqual(resultImage, image)
     }
     
     func testSelectingImage() {
@@ -64,11 +77,11 @@ class LoadAvatarPresenterTests: XCTestCase {
         let url = URL(string: "https://www.google.com")!
         avatarNetworkServiceMock.stubbedGetImagesURLsCompletionResult = ([url], ())
         presenter.setup()
+        
         //when
         presenter.selectImage(from: url)
+        
         //then
-        XCTAssert(viewMock.invokedStartLoading)
         XCTAssert(userProfileDataServiceMock.invokedSaveUserProfileInfo)
-        XCTAssert(viewMock.invokedDismiss)
     }
 }
